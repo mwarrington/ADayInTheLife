@@ -18,6 +18,9 @@ namespace PixelCrushers.DialogueSystem.Examples {
 	/// 
 	/// If the player presses the use button (which defaults to spacebar and Fire2), the targeted
 	/// object will receive an "OnUse" message.
+	/// 
+	/// You can hook into SelectedUsableObject and DeselectedUsableObject to get notifications
+	/// when the current target has changed.
 	/// </summary>
 	public class Selector : MonoBehaviour {
 		
@@ -35,7 +38,7 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// <summary>
 		/// Specifies how to target: center of screen or under the mouse cursor.
 		/// </summary>
-		public enum SelectAt { CenterOfScreen, MousePosition };
+		public enum SelectAt { CenterOfScreen, MousePosition, CustomPosition };
 		
 		/// <summary>
 		/// Specifies whether to compute range from the targeted object (distance to the camera
@@ -67,6 +70,12 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// The max selection distance. The selector won't target objects farther than this.
 		/// </summary>
 		public float maxSelectionDistance = 30f;
+		
+		/// <summary>
+		/// If <c>true</c>, uses a default OnGUI to display a selection message and
+		/// targeting reticle.
+		/// </summary>
+		public bool useDefaultGUI = true;
 		
 		/// <summary>
 		/// The GUI skin to use for the target's information (name and use message).
@@ -103,11 +112,40 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// </summary>
 		public string defaultUseMessage = "(spacebar to interact)";
 		
+		/// <summary>
+		/// If ticked, the OnUse message is broadcast to the usable object's children.
+		/// </summary>
+		public bool broadcastToChildren = true;
+		
+		/// <summary>
+		/// Gets or sets the custom position used when the selectAt is set to SelectAt.CustomPosition.
+		/// You can use, for example, to slide around a targeting icon onscreen using a gamepad.
+		/// </summary>
+		/// <value>
+		/// The custom position.
+		/// </value>
+		public Vector3 CustomPosition { get; set; }
+		
+		/// <summary>
+		/// Occurs when the selector has targeted a usable object.
+		/// </summary>
+		public event SelectedUsableObjectDelegate SelectedUsableObject = null;
+		
+		/// <summary>
+		/// Occurs when the selector has untargeted a usable object.
+		/// </summary>
+		public event DeselectedUsableObjectDelegate DeselectedUsableObject = null;
+		
 		private GameObject selection = null;
 		private Usable usable = null;
 		private float distance = 0;
 		private GUIStyle guiStyle = null;
 		
+		/// <summary>
+		/// Runs a raycast to see what's under the selection point. Updates the selection and
+		/// calls the selection delegates if the selection has changed. If the player hits the
+		/// use button, sends an OnUse message to the selection.
+		/// </summary>
 		void Update() {
 			// Exit if disabled or paused:
 			if (!enabled || (Time.timeScale <= 0)) return;
@@ -125,20 +163,36 @@ namespace PixelCrushers.DialogueSystem.Examples {
 					if (hitUsable != null) {
 						usable = hitUsable;
 						selection = hit.collider.gameObject;
+						if (SelectedUsableObject != null) SelectedUsableObject(usable);
 					} else {
-						usable = null;
-						selection = null;
+						DeselectTarget();
 					}
 				}
 			} else {
-				usable = null;
-				selection = null;
+				DeselectTarget();
 			}
 			
 			// If the player presses the use key/button, send the OnUse message:
 			if (IsUseButtonDown() && (usable != null) && (distance <= usable.maxUseDistance)) {
-				usable.gameObject.BroadcastMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
+				if (usable.overrideName == "Door")
+					{
+						Debug.Log("DOOR");	
+					}
+				else
+				{
+					if (broadcastToChildren) {
+						usable.gameObject.BroadcastMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
+					} else {
+						usable.gameObject.SendMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
+					}
+				}
 			}
+		}
+		
+		private void DeselectTarget() {
+			if ((usable != null) && (DeselectedUsableObject != null)) DeselectedUsableObject(usable);
+			usable = null;
+			selection = null;
 		}
 		
 		private bool IsUseButtonDown() {
@@ -148,28 +202,38 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		
 		private Vector3 GetSelectionPoint() {
 			switch (selectAt) {
-			case SelectAt.MousePosition: return Input.mousePosition;
+			case SelectAt.MousePosition: 
+				return Input.mousePosition;
+			case SelectAt.CustomPosition:
+				return CustomPosition;
 			default:
-			case SelectAt.CenterOfScreen: return new Vector3(Screen.width / 2, Screen.height / 2);
+			case SelectAt.CenterOfScreen:
+				return new Vector3(Screen.width / 2, Screen.height / 2);
 			}
 		}
 		
+		/// <summary>
+		/// If useDefaultGUI is <c>true</c> and a usable object has been targeted, this method
+		/// draws a selection message and targeting reticle.
+		/// </summary>
 		void OnGUI() {
-			GUI.skin = UnityGUITools.GetValidGUISkin(guiSkin);
-			if (guiStyle == null) {
-				guiStyle = new GUIStyle(GUI.skin.label);
-				guiStyle.alignment = TextAnchor.UpperCenter;
-			}
-			Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
-			if (usable != null) {
-				bool inUseRange = (distance <= usable.maxUseDistance);
-				guiStyle.normal.textColor = inUseRange ? inRangeColor : outOfRangeColor;
-				string heading = string.IsNullOrEmpty(usable.overrideName) ? usable.name : usable.overrideName;
-				string useMessage = string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage;
-				UnityGUITools.DrawText(screenRect, heading, guiStyle, TextStyle.Shadow);
-				UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, TextStyle.Shadow);
-				Texture2D reticleTexture = inUseRange ? reticle.inRange : reticle.outOfRange;
-				if (reticleTexture != null) GUI.Label(new Rect(0.5f * (Screen.width - reticle.width), 0.5f * (Screen.height - reticle.height), reticle.width, reticle.height), reticleTexture);
+			if (useDefaultGUI) {
+				GUI.skin = UnityGUITools.GetValidGUISkin(guiSkin);
+				if (guiStyle == null) {
+					guiStyle = new GUIStyle(GUI.skin.label);
+					guiStyle.alignment = TextAnchor.UpperCenter;
+				}
+				Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+				if (usable != null) {
+					bool inUseRange = (distance <= usable.maxUseDistance);
+					guiStyle.normal.textColor = inUseRange ? inRangeColor : outOfRangeColor;
+					string heading = string.IsNullOrEmpty(usable.overrideName) ? usable.name : usable.overrideName;
+					string useMessage = string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage;
+					UnityGUITools.DrawText(screenRect, heading, guiStyle, TextStyle.Shadow);
+					UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, TextStyle.Shadow);
+					Texture2D reticleTexture = inUseRange ? reticle.inRange : reticle.outOfRange;
+					if (reticleTexture != null) GUI.Label(new Rect(0.5f * (Screen.width - reticle.width), 0.5f * (Screen.height - reticle.height), reticle.width, reticle.height), reticleTexture);
+				}
 			}
 		}
 		

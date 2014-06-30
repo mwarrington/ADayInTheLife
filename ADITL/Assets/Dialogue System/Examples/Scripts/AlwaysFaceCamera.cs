@@ -7,6 +7,8 @@ namespace PixelCrushers.DialogueSystem.Examples {
 	/// </summary>
 	public class AlwaysFaceCamera : MonoBehaviour {
 		
+		public bool yAxisOnly = false;
+		
 		private Transform myTransform = null;
 		
 		void Awake() {
@@ -15,7 +17,11 @@ namespace PixelCrushers.DialogueSystem.Examples {
 	
 		void Update() {
 			if ((myTransform != null) && (Camera.main != null)) {
-				myTransform.LookAt(Camera.main.transform);
+				if (yAxisOnly) {
+					myTransform.LookAt(new Vector3(Camera.main.transform.position.x, myTransform.position.y, Camera.main.transform.position.z));
+				} else {
+					myTransform.LookAt(Camera.main.transform);
+				}
 			}
 		}
 		

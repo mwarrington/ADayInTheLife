@@ -10,4 +10,6 @@ your cutscene sequences.
 
 Unity Dialogue UIs: Contains a large selection of Unity GUI-based dialogue UIs that you can use
 to set the Dialogue System's appearance in your project.
+
+iOS: Contains platform-specific utility files for iOS projects.
 */

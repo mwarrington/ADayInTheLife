@@ -10,7 +10,7 @@ namespace PixelCrushers.DialogueSystem.Examples {
 	public class FeatureDemo : MonoBehaviour {
 		
 		public GUISkin guiSkin;
-		public UnityQuestLogWindow questLogWindow;
+		public QuestLogWindow questLogWindow;
 		
 		private bool isMenuOpen = false;
 		private Rect windowRect = new Rect(0, 0, 500, 500);

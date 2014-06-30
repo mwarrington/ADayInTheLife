@@ -10,9 +10,12 @@ You can import "Source Code.unitypackage" to unpack the source code.
 
 	1. Delete the Assets/DialogueSystem/DLLs folder. Otherwise Unity will complain that two 
 	versions of the Dialogue System components exist (the DLL version and the source script
-	version).
+	version), generating several warnings and errors about the scripts being defined multiple
+	times.
 	
 	2. The Dialogue System prefabs reference the components in the DLLs. You will have to
-	manually rebuild or relink the prefabs to the source script versions.
+	manually rebuild or relink the prefabs to the source script versions. It may help to have
+	two Dialogue System projects open so you can switch between them to see what script each 
+	component was originally linked to.
 	
 */
