@@ -1,0 +1,5 @@
+/*
+Dialogue System Bark Example
+
+This folder contains a scene that demonstrates barks between two NPCs.
+*/

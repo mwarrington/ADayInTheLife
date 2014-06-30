@@ -1,0 +1,3 @@
+/*
+This folder contains scripts used by the example scenes.
+*/
