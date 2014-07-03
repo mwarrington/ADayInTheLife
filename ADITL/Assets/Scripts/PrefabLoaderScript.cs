@@ -18,7 +18,7 @@ public class PrefabLoaderScript : MonoBehaviour {
 		PrefabLoaderScript.instance = this;
 	}
 
-	// Use this for initialization
+	//I changed that shit. WHATS GOING TO HAPPEN?!?!?!
 	void Start () {
 
 	
