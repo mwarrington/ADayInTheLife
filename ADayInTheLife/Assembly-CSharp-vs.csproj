@@ -72,7 +72,13 @@
      <Compile Include="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\Dialog\ConversationLogger.cs" />
      <Compile Include="Assets\Scripts\Dialog\Usable.cs" />
+     <Compile Include="Assets\Scripts\Interface\CharacterTilt.cs" />
+     <Compile Include="Assets\Scripts\Interface\Credits.cs" />
      <Compile Include="Assets\Scripts\Interface\DialogueVisualUI.cs" />
+     <Compile Include="Assets\Scripts\Interface\DreamSpiral.cs" />
+     <Compile Include="Assets\Scripts\Interface\LogoSpiral.cs" />
+     <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
+     <Compile Include="Assets\Scripts\Interface\NPCThoughtCloud.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
