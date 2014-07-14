@@ -101,6 +101,9 @@
  <Reference Include="DialogueSystem">
  <HintPath>C:/Users/Ci3/Documents/GitHub/ADayInTheLife/ADayInTheLife/Assets/Dialogue System/DLLs/DialogueSystem.dll</HintPath>
  </Reference>
+ <Reference Include="LuaInterpreter">
+ <HintPath>C:/Users/Ci3/Documents/GitHub/ADayInTheLife/ADayInTheLife/Assets/Dialogue System/DLLs/LuaInterpreter.dll</HintPath>
+ </Reference>
  <Reference Include="DialogueSystemEditors">
  <HintPath>C:/Users/Ci3/Documents/GitHub/ADayInTheLife/ADayInTheLife/Assets/Dialogue System/DLLs/Editor/DialogueSystemEditors.dll</HintPath>
  </Reference>
@@ -115,9 +118,6 @@
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="LuaInterpreter">
- <HintPath>C:/Users/Ci3/Documents/GitHub/ADayInTheLife/ADayInTheLife/Assets/Dialogue System/DLLs/LuaInterpreter.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

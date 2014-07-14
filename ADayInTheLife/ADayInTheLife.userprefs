@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\NPCScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WorldObjects\Door.cs">
     <Files>
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScript.cs" Line="39" Column="54" />
+      <File FileName="Assets\Dialogue System\Scripts\Supplemental\Utility\Editor\SupplementalMenuItems.cs" Line="10" Column="26" />
+      <File FileName="Assets\Scripts\WorldObjects\Door.cs" Line="13" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
