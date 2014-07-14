@@ -29,7 +29,8 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// Starts the component by registering the sqrt() function.
 		/// </summary>
 		void Start() {
-			Lua.RegisterFunction("sqrt", this, this.GetType().GetMethod("sqrt"));
+			// Alternate way to register: Lua.RegisterFunction("sqrt", this, this.GetType().GetMethod("sqrt"));
+			Lua.RegisterFunction("sqrt", null, SymbolExtensions.GetMethodInfo(() => sqrt(0)));
 			AddOutputLine("Registered function sqrt(x)");
 		}
 	

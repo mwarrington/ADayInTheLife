@@ -1,4 +1,7 @@
 /*
+
+*** To use link.xml, move it into the root Assets folder. ***
+
 The link.xml file in this folder allows iOS Pro users to build Dialogue System
 projects with Stripping Level set to "Strip assemblies" or "Strip ByteCode".
 The Dialogue System uses the System DLLs, so it doesn't support

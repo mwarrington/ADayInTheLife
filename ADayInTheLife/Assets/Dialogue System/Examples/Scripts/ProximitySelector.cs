@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PixelCrushers.DialogueSystem.UnityGUI;
 
 namespace PixelCrushers.DialogueSystem.Examples {
-
+	
 	/// <summary>
 	/// This component implements a proximity-based selector that allows the player to move into
 	/// range and use a usable object. 
@@ -53,6 +53,16 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		public Color color = Color.yellow;
 		
 		/// <summary>
+		/// The text style for the text.
+		/// </summary>
+		public TextStyle textStyle = TextStyle.Shadow;
+		
+		/// <summary>
+		/// The color of the text style's outline or shadow.
+		/// </summary>
+		public Color textStyleColor = Color.black;
+		
+		/// <summary>
 		/// The default use message. This can be overridden in the target's Usable component.
 		/// </summary>
 		public string defaultUseMessage = "(spacebar to interact)";
@@ -66,6 +76,17 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// The button that sends an OnUse message.
 		/// </summary>
 		public string useButton = "Fire2";
+
+		/// <summary>
+		/// Tick to enable touch triggering.
+		/// </summary>
+		public bool enableTouch = false;
+
+		/// <summary>
+		/// If touch triggering is enabled and there's a touch in this area,
+		/// the selector triggers.
+		/// </summary>
+		public ScaledRect touchArea = new ScaledRect(ScaledRect.empty);
 		
 		/// <summary>
 		/// If ticked, the OnUse message is broadcast to the usable object's children.
@@ -91,7 +112,7 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// The current usable that will receive an OnUse message if the player hits the use button.
 		/// </summary>
 		private Usable currentUsable = null;
-
+		
 		/// <summary>
 		/// Caches the GUI style to use when displaying the selection message in OnGUI.
 		/// </summary>
@@ -110,7 +131,6 @@ namespace PixelCrushers.DialogueSystem.Examples {
 					currentUsable.gameObject.BroadcastMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
 				} else {
 					currentUsable.gameObject.SendMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
-
 				}
 			}
 		}
@@ -122,10 +142,21 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		/// <c>true</c> if the use button/key is down; otherwise, <c>false</c>.
 		/// </returns>
 		private bool IsUseButtonDown() {
+			if (enableTouch && IsTouchDown()) return true;
 			return ((useKey != KeyCode.None) && Input.GetKeyDown(useKey))
 				|| (!string.IsNullOrEmpty(useButton)  && Input.GetButtonUp(useButton));
 		}
-
+		
+		private bool IsTouchDown() {
+			if (Input.touchCount >= 1){
+				foreach (Touch touch in Input.touches) {
+					Vector2 screenPosition = new Vector2(touch.position.x, Screen.height - touch.position.y);
+					if (touchArea.GetPixelRect().Contains(screenPosition)) return true;
+				}
+			}
+			return false;
+		}
+		
 		/// <summary>
 		/// If we entered a trigger, check if it's a usable object. If so, update the selection
 		/// and raise the SelectedUsableObject event.
@@ -136,7 +167,7 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		void OnTriggerEnter(Collider other) {
 			CheckTriggerEnter(other.gameObject);
 		}
-
+		
 		/// <summary>
 		/// If we entered a 2D trigger, check if it's a usable object. If so, update the selection
 		/// and raise the SelectedUsableObject event.
@@ -159,7 +190,7 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		void OnTriggerExit(Collider other) {
 			CheckTriggerExit(other.gameObject);
 		}
-
+		
 		/// <summary>
 		/// If we just left a 2D trigger, check if it's the current selection. If so, clear the
 		/// selection and raise the DeselectedUsableObject event. If we're still in range of
@@ -171,17 +202,16 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		void OnTriggerExit2D(Collider2D other) {
 			CheckTriggerExit(other.gameObject);
 		}
-
+		
 		private void CheckTriggerEnter(GameObject other) {
 			Usable usable = other.GetComponent<Usable>();
 			if (usable != null) {
 				currentUsable = usable;
 				if (!usablesInRange.Contains(usable)) usablesInRange.Add(usable);
 				if (SelectedUsableObject != null) SelectedUsableObject(usable);
-			
 			}
 		}
-
+		
 		private void CheckTriggerExit(GameObject other) {
 			Usable usable = other.GetComponent<Usable>();
 			if (usable != null) {
@@ -213,12 +243,12 @@ namespace PixelCrushers.DialogueSystem.Examples {
 				if (currentUsable != null) {
 					string heading = string.IsNullOrEmpty(currentUsable.overrideName) ? currentUsable.name : currentUsable.overrideName;
 					string useMessage = string.IsNullOrEmpty(currentUsable.overrideUseMessage) ? defaultUseMessage : currentUsable.overrideUseMessage;
-					UnityGUITools.DrawText(screenRect, heading, guiStyle, TextStyle.Shadow);
-					UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, TextStyle.Shadow);
+					UnityGUITools.DrawText(screenRect, heading, guiStyle, textStyle, textStyleColor);
+					UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, textStyle, textStyleColor);
 				}
 			}
 		}
 		
 	}
-
+	
 }

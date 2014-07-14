@@ -106,11 +106,15 @@ namespace PixelCrushers.DialogueSystem.Editors {
 			EditorWindowTools.StartIndentedSection();
 			EditorGUILayout.HelpBox("This wizard will help you configure the Dialogue Manager object. The first step is to assign an initial dialogue database asset. This asset contains your conversations and related data.", MessageType.Info);
 			EditorGUILayout.BeginHorizontal();
-			DialogueManager.Instance.initialDatabase = EditorGUILayout.ObjectField("Database", DialogueManager.Instance.initialDatabase, typeof(DialogueDatabase), false) as DialogueDatabase;
-			bool disabled = (DialogueManager.Instance.initialDatabase != null);
-			EditorGUI.BeginDisabledGroup(disabled);
-			if (GUILayout.Button("Create New", GUILayout.Width (100))) createNewDatabase = true;
-			EditorGUI.EndDisabledGroup();
+			if (DialogueManager.Instance == null) {
+				EditorGUILayout.LabelField("Dialogue Manager object is null. Creating a new instance...");
+			} else {
+				DialogueManager.Instance.initialDatabase = EditorGUILayout.ObjectField("Database", DialogueManager.Instance.initialDatabase, typeof(DialogueDatabase), false) as DialogueDatabase;
+				bool disabled = (DialogueManager.Instance.initialDatabase != null);
+				EditorGUI.BeginDisabledGroup(disabled);
+				if (GUILayout.Button("Create New", GUILayout.Width (100))) createNewDatabase = true;
+				EditorGUI.EndDisabledGroup();
+			}
 			EditorGUILayout.EndHorizontal();
 			EditorWindowTools.EndIndentedSection();
 			DrawNavigationButtons(false, (DialogueManager.Instance.initialDatabase != null), false);

@@ -83,6 +83,16 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		public GUISkin guiSkin;
 		
 		/// <summary>
+		/// The text style for the text.
+		/// </summary>
+		public TextStyle textStyle = TextStyle.Shadow;
+		
+		/// <summary>
+		/// The color of the text style's outline or shadow.
+		/// </summary>
+		public Color textStyleColor = Color.black;
+		
+		/// <summary>
 		/// The color of the information labels when the target is in range.
 		/// </summary>
 		public Color inRangeColor = Color.yellow;
@@ -174,17 +184,10 @@ namespace PixelCrushers.DialogueSystem.Examples {
 			
 			// If the player presses the use key/button, send the OnUse message:
 			if (IsUseButtonDown() && (usable != null) && (distance <= usable.maxUseDistance)) {
-				if (usable.overrideName == "Door")
-					{
-						Debug.Log("DOOR");	
-					}
-				else
-				{
-					if (broadcastToChildren) {
-						usable.gameObject.BroadcastMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
-					} else {
-						usable.gameObject.SendMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
-					}
+				if (broadcastToChildren) {
+					usable.gameObject.BroadcastMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
+				} else {
+					usable.gameObject.SendMessage("OnUse", this.transform, SendMessageOptions.DontRequireReceiver);
 				}
 			}
 		}
@@ -229,8 +232,8 @@ namespace PixelCrushers.DialogueSystem.Examples {
 					guiStyle.normal.textColor = inUseRange ? inRangeColor : outOfRangeColor;
 					string heading = string.IsNullOrEmpty(usable.overrideName) ? usable.name : usable.overrideName;
 					string useMessage = string.IsNullOrEmpty(usable.overrideUseMessage) ? defaultUseMessage : usable.overrideUseMessage;
-					UnityGUITools.DrawText(screenRect, heading, guiStyle, TextStyle.Shadow);
-					UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, TextStyle.Shadow);
+					UnityGUITools.DrawText(screenRect, heading, guiStyle, textStyle, textStyleColor);
+					UnityGUITools.DrawText(new Rect(0, guiStyle.CalcSize(new GUIContent("Ay")).y, Screen.width, Screen.height), useMessage, guiStyle, textStyle, textStyleColor);
 					Texture2D reticleTexture = inUseRange ? reticle.inRange : reticle.outOfRange;
 					if (reticleTexture != null) GUI.Label(new Rect(0.5f * (Screen.width - reticle.width), 0.5f * (Screen.height - reticle.height), reticle.width, reticle.height), reticleTexture);
 				}

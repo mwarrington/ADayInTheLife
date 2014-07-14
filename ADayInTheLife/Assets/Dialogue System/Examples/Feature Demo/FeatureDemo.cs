@@ -24,6 +24,11 @@ namespace PixelCrushers.DialogueSystem.Examples {
 			if (Input.GetKeyDown(KeyCode.Escape) && !DialogueManager.IsConversationActive && !IsQuestLogOpen()) {
 				SetMenuStatus(!isMenuOpen);
 			}
+			// If you want to lock the cursor during gameplay, add ShowCursorOnConversation to the Player,
+			// and uncomment the code below:
+			//if (!DialogueManager.IsConversationActive && !isMenuOpen && !IsQuestLogOpen ()) {
+			//	Screen.lockCursor = true;
+			//}
 		}
 		
 		void OnGUI() {
@@ -84,14 +89,19 @@ namespace PixelCrushers.DialogueSystem.Examples {
 			if (PlayerPrefs.HasKey("SavedGame")) {
 				string saveData = PlayerPrefs.GetString("SavedGame");
 				Debug.Log("Load Game Data: " + saveData);
-				PersistentDataManager.ApplySaveData(saveData);
+				LevelManager levelManager = GetComponentInChildren<LevelManager>();
+				if (levelManager != null) {
+					levelManager.LoadGame(saveData);
+				} else {
+					PersistentDataManager.ApplySaveData(saveData);
+				}
 				DialogueManager.ShowAlert("Game Loaded from PlayerPrefs");
 			} else {
 				DialogueManager.ShowAlert("Save a game first");
 			}
 		}
-			
-	
+		
+
 		private void ClearSavedGame() {
 			if (PlayerPrefs.HasKey("SavedGame")) {
 				PlayerPrefs.DeleteKey("SavedGame");

@@ -7,7 +7,7 @@ namespace PixelCrushers.DialogueSystem.Editors {
 	/// <summary>
 	/// This class defines menu items for the supplemental utility scripts in the Dialogue System menu.
 	/// </summary>
-	static public class SupplementalMenuItems {
+	static public class MoreExampleMenuItems {
 		
 		[MenuItem("Window/Dialogue System/Component/Supplemental/Usable", false, 300)]
 		public static void AddComponentUsable() {
@@ -49,9 +49,14 @@ namespace PixelCrushers.DialogueSystem.Editors {
 			DialogueSystemMenuItems.AddComponentToSelection<ConversationLogger>();
 		}
 		
-		[MenuItem("Window/Dialogue System/Component/Supplemental/Quest Tracker", false, 306)]
+		[MenuItem("Window/Dialogue System/Component/Supplemental/Quest Tracker", false, 310)]
 		public static void AddComponentQuestTracker() {
 			DialogueSystemMenuItems.AddComponentToSelection<QuestTracker>();
+		}
+		
+		[MenuItem("Window/Dialogue System/Component/Supplemental/Increment On Destroy", false, 311)]
+		public static void AddComponentIncrementOnDestroy() {
+			DialogueSystemMenuItems.AddComponentToSelection<IncrementOnDestroy>();
 		}
 		
 		[MenuItem("Window/Dialogue System/Component/Supplemental/Unity Community/Smooth Camera With Bumper", false, 353)]

@@ -46,6 +46,26 @@ namespace PixelCrushers.DialogueSystem.Examples {
 		}
 
 		/// <summary>
+		/// Activates the target game objects and components if the condition is true.
+		/// </summary>
+		/// <param name='other'>
+		/// The 2D collider that entered the trigger.
+		/// </param>
+		public void OnTriggerEnter2D(Collider2D other) {
+			if (condition.IsTrue(other.transform)) SetTargets(true);
+		}
+		
+		/// <summary>
+		/// Deactivates the target game objects and components if the condition is true.
+		/// </summary>
+		/// <param name='other'>
+		/// The 2D collider that exited the trigger.
+		/// </param>
+		public void OnTriggerExit2D(Collider2D other) {
+			if (condition.IsTrue(other.transform)) SetTargets(false);
+		}
+		
+		/// <summary>
 		/// Sets the targets active/inactive. Colliders and Renderers aren't MonoBehaviours, so we
 		/// cast them separately to access their 'enabled' properties.
 		/// </summary>
@@ -61,6 +81,10 @@ namespace PixelCrushers.DialogueSystem.Examples {
 					(component as Collider).enabled = value;
 				} else if (component is Renderer) {
 					(component as Renderer).enabled = value;
+				} else if (component is Animation) {
+					(component as Animation).enabled = value;
+				} else if (component is Animator) {
+					(component as Animator).enabled = value;
 				} else if (component is MonoBehaviour) {
 					(component as MonoBehaviour).enabled = value;
 				} else {

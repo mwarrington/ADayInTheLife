@@ -27,6 +27,25 @@ namespace PixelCrushers.DialogueSystem {
 			Debug.Log(string.Format("NWScript({0}) stub returning false.", scriptName));
 			return false;
 		}
+
+		// The version below works by finding a C# method in this class that matches the
+		// script name. For example, if your NWN conversation calls a script named 'script_01',
+		// this version calls a C# method in this class named script_01(). You must define
+		// these C# methods. To use this version, comment out the version of NWScript() above
+		// and uncomment the version below:
+		//
+		//public bool NWScript(string scriptName) {
+		//	// Find a method matching scriptName (e.g., "script_01"):
+		//	MethodInfo methodInfo = typeof(MyNWScript).GetMethod(scriptName);
+		//	if (methodInfo == null) {
+		//		if (DialogueDebug.LogWarnings) Debug.LogWarning(string.Format("{0}: Can't find NWScript method {1}", DialogueDebug.Prefix, scriptName));
+		//		return false;
+		//	}
+		//	// Call the method:
+		//	return (bool) methodInfo.Invoke(this, null);
+		//}
+		
+
 		
 	}
 

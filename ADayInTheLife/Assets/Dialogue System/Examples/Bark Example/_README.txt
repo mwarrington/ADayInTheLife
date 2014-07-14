@@ -14,4 +14,7 @@ has a Set Enabled On Dialogue Event component that keeps the right NPC's
 Bark On dialogue Event component active.
 
 See Three NPCs Bark for an alternate method using SendMessage.
+
+See Bark Conversation for an example of using BarkDialogueUI to run a
+non-interactive conversation using Bark UIs.
 */
