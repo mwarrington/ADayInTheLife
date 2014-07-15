@@ -27,7 +27,6 @@ public class DatabaseManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if(Input.GetKeyDown(KeyCode.G))
-		Debug.Log (GameObject.Find("Dialogue Manager").GetComponent<DialogueSystemController>().MasterDatabase.items[6].fields[13].value);
+
 	}
 }
