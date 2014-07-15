@@ -5,9 +5,8 @@ using PixelCrushers.DialogueSystem;
 public class GameManager : MonoBehaviour
 {
 	static float Timer = 360;
+	static int DayCount = 0;
 	public bool GameTimerActive;
-
-	public bool Test = false;
 
 	void Start ()
 	{
@@ -16,7 +15,6 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
-		Debug.Log (Timer);
 		if(GameTimerActive)
 		{
 			Timer -= Time.deltaTime;
@@ -24,6 +22,7 @@ public class GameManager : MonoBehaviour
 		if(Timer <= 0)
 		{
 			Application.LoadLevel("DreamSpiral");
+			DayCount++;
 			Timer = 360;
 		}
 	}
