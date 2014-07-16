@@ -14,13 +14,6 @@ public class MainMenu : MonoBehaviour
     };
     private MenuState State;
 
-    public enum CharacterChoice
-    {
-        SARYLYN,
-        SANOME
-    };
-    public static CharacterChoice SelectedCharacter;
-
     private RaycastHit _hit;
     private Material _startCloudActive,
                     _startCloudInactive,
@@ -178,7 +171,7 @@ public class MainMenu : MonoBehaviour
 
                             if (Input.GetMouseButtonDown(0))
                             {
-                                SelectedCharacter = CharacterChoice.SARYLYN;
+                                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SelectPlayer(true);
                                 Application.LoadLevel("DreamSpiral");
                             }
                             break;
@@ -193,8 +186,8 @@ public class MainMenu : MonoBehaviour
                             _sanomeTilt.Update();
 
                             if (Input.GetMouseButtonDown(0))
-                            {
-                                SelectedCharacter = CharacterChoice.SANOME;
+							{
+								GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().SelectPlayer(false);
                                 Application.LoadLevel("DreamSpiral");
                             }
                             break;

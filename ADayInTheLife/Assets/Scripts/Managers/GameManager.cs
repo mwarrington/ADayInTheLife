@@ -6,6 +6,18 @@ public class GameManager : MonoBehaviour
 {
 	static float Timer = 360;
 	static int DayCount = 0;
+	public static bool IsSarylyn = true;
+	public bool isSarylyn
+	{
+		get
+		{
+			return IsSarylyn;
+		}
+		set
+		{
+			Debug.Log("You shouldn't be trying to set this property.");
+		}
+	}
 	public bool GameTimerActive;
 
 	void Start ()
@@ -25,5 +37,10 @@ public class GameManager : MonoBehaviour
 			DayCount++;
 			Timer = 360;
 		}
+	}
+
+	public void SelectPlayer(bool value)
+	{
+		IsSarylyn = value;
 	}
 }

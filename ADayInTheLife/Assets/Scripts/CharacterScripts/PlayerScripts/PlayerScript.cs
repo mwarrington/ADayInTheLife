@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -41,6 +42,19 @@ public class PlayerScript : MonoBehaviour
 	}
 	private Scenes _currentScene;
 
+	protected bool isSarylyn
+	{
+		get
+		{
+			_isSarylyn = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().isSarylyn;
+			return _isSarylyn;
+		}
+
+	}
+	private bool _isSarylyn = true;
+
+	public SpriteRenderer SarylynSprite,
+						  SanomeSprite;
 	public float PlayerVelocity,
 				 BobbingSpeed,
 				 BobbingAmount;
@@ -48,6 +62,16 @@ public class PlayerScript : MonoBehaviour
 	void Start()
 	{
 		_midpoint = this.gameObject.transform.position.y;
+		if(isSarylyn)
+		{
+			SarylynSprite.enabled = true;
+			SanomeSprite.enabled = false;
+		}
+		else
+		{
+			SanomeSprite.enabled = true;
+			SarylynSprite.enabled = false;
+		}
 	}
 
 	void Update ()
@@ -231,5 +255,25 @@ public class PlayerScript : MonoBehaviour
 		_hitWallBack = false;
 		_hitWallLeft = false;
 		_hitWallRight = false;
+	}
+
+	void OnConversationStart(Transform actor)
+	{
+		SarylynSprite.enabled = false;
+		SanomeSprite.enabled = false;
+	}
+
+	void OnConversationEnd(Transform actor)
+	{
+		if(isSarylyn)
+		{
+			SarylynSprite.enabled = true;
+			SanomeSprite.enabled = false;
+		}
+		else
+		{
+			SanomeSprite.enabled = true;
+			SarylynSprite.enabled = false;
+		}
 	}
 }
