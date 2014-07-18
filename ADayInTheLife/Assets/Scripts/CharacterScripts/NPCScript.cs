@@ -18,11 +18,6 @@ public class NPCScript : MonoBehaviour
 	private GameObject _player;
 	private Vector3 _orriginalRotation;
 
-	void Awake()
-	{
-		DialogueManager.AddDatabase(MyDatabase);
-	}
-
 	void Start ()
 	{
 		MyConTrigger.conversation = DialogString;
@@ -52,7 +47,7 @@ public class NPCScript : MonoBehaviour
 		}
 	}
 
-	void OnConversationLine(Subtitle line)
+	/*void OnConversationLine(Subtitle line)
 	{
 		for(int i = 0; i < MyThoughts.PlayerDialogueLines.Length; i++)
 		{
@@ -64,7 +59,7 @@ public class NPCScript : MonoBehaviour
 				Invoke("RemoveThoughtCloud", 3);
 			}
 		}
-	}
+	}*/
 
 	private void RemoveThoughtCloud()
 	{

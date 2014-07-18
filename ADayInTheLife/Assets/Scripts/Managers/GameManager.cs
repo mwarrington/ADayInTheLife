@@ -19,10 +19,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	public bool GameTimerActive;
+	static bool databasesLoadedForHallway = false;
 
 	void Start ()
 	{
-
+		if(Application.loadedLevelName == "Hallway" && !databasesLoadedForHallway)
+		{
+			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
+			{
+				DialogueManager.AddDatabase(n.MyDatabase);
+			}
+			databasesLoadedForHallway = true;
+			Debug.Log ("Sup");
+		}
 	}
 
 	void Update ()
