@@ -14,7 +14,8 @@ public class PlayerScript : MonoBehaviour
 				 _hitWallRight = false;
 	private float _bobTimer,
 				  _waveslice,
-				  _midpoint;
+				  _midpoint,
+				  _gameTimer;
 	private Vector3 _newPos;
 
 	protected Scenes currentScene
@@ -51,8 +52,10 @@ public class PlayerScript : MonoBehaviour
 		}
 
 	}
-	private bool _isSarylyn = true;
+	private bool _isSarylyn = true,
+				 _showingGameTimer = false;
 
+	public GameObject TimerCloud;
 	public SpriteRenderer SarylynSprite,
 						  SanomeSprite;
 	public float PlayerVelocity,
@@ -72,20 +75,16 @@ public class PlayerScript : MonoBehaviour
 			SanomeSprite.enabled = true;
 			SarylynSprite.enabled = false;
 		}
+		ShowGameTimer();
 	}
 
 	void Update ()
 	{
 		InputBasedMovement();
 		Headbob();
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			Application.LoadLevel("Test");
-		}
-		if(Input.GetKeyDown(KeyCode.B))
-		{
-			Application.LoadLevel("Hallway");
-		}
+
+		if(_showingGameTimer)
+			GameTimer();
 	}
 
 	private void InputBasedMovement()
@@ -221,6 +220,32 @@ public class PlayerScript : MonoBehaviour
 			findMidpoint.y = _midpoint;
 			transform.position = findMidpoint;
 		}
+	}
+
+	private void ShowGameTimer()
+	{
+		if(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer > 30)
+		{
+			Invoke ("HideGameTimer", 5);
+		}
+		
+		_showingGameTimer = true;
+		TimerCloud.SetActive(true);
+	}
+
+	private void GameTimer()
+	{
+		_gameTimer = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer;
+		int displaySeconds = Mathf.CeilToInt(_gameTimer) % 60;
+		int displayMinutes = Mathf.CeilToInt(_gameTimer) / 60;
+		TimerCloud.GetComponentInChildren<GUIText> ().text = string.Format ("{0:00}:{1:00}", displayMinutes, displaySeconds);
+	}
+
+	private void HideGameTimer()
+	{
+		_showingGameTimer = false;
+		TimerCloud.SetActive(false);
+		Invoke ("ShowGameTimer", 25);
 	}
 
 	void OnCollisionEnter(Collision col)

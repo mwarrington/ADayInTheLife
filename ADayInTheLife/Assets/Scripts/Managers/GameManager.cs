@@ -4,7 +4,18 @@ using PixelCrushers.DialogueSystem;
 
 public class GameManager : MonoBehaviour
 {
-	static float Timer = 360;
+	static float timer = 360;
+	public float Timer
+	{
+		get
+		{
+			return timer;
+		}
+		set
+		{
+			Debug.Log ("Who told you that you could set this property!?");
+		}
+	}
 	static int DayCount = 0;
 	public static bool IsSarylyn = true;
 	public bool isSarylyn
@@ -30,7 +41,6 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(n.MyDatabase);
 			}
 			databasesLoadedForHallway = true;
-			Debug.Log ("Sup");
 		}
 	}
 
@@ -38,13 +48,13 @@ public class GameManager : MonoBehaviour
 	{
 		if(GameTimerActive)
 		{
-			Timer -= Time.deltaTime;
+			timer -= Time.deltaTime;
 		}
-		if(Timer <= 0)
+		if(timer <= 0)
 		{
 			Application.LoadLevel("DreamSpiral");
 			DayCount++;
-			Timer = 360;
+			timer = 360;
 		}
 	}
 
