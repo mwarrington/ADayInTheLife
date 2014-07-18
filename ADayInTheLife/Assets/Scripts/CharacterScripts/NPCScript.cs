@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 
 public class NPCScript : MonoBehaviour
@@ -7,6 +8,9 @@ public class NPCScript : MonoBehaviour
 	public Camera CloseUpCamera;
 	public DialogueDatabase MyDatabase;
 	public ConversationTrigger MyConTrigger;
+	public GameObject MyThoughtCloud;
+	public SpriteRenderer CurrentThoughtImage;
+	public Thoughts MyThoughts;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables;
 	public string DialogString;
@@ -46,6 +50,26 @@ public class NPCScript : MonoBehaviour
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<SharedVariables>().SyncVariables(DialogString);
 		}
+	}
+
+	void OnConversationLine(Subtitle line)
+	{
+		for(int i = 0; i < MyThoughts.PlayerDialogueLines.Length; i++)
+		{
+			if(MyThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
+			{
+				MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = true;
+				CurrentThoughtImage.sprite = MyThoughts.ThoughtImages[i];
+				CurrentThoughtImage.enabled = true;
+				Invoke("RemoveThoughtCloud", 3);
+			}
+		}
+	}
+
+	private void RemoveThoughtCloud()
+	{
+		MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = false;
+		CurrentThoughtImage.enabled = false;
 	}
 
 	private void RotateTowardPlayer()
