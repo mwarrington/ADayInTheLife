@@ -7,3 +7,10 @@ public enum Scenes
 	Labrary,
 	Classroom
 };
+
+public enum Days
+{
+	day1,
+	day2,
+	day3
+};

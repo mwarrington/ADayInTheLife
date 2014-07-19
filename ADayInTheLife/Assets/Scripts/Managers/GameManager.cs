@@ -32,6 +32,18 @@ public class GameManager : MonoBehaviour
 	public bool GameTimerActive;
 	static bool databasesLoadedForHallway = false;
 	static bool databasesLoadedForLabrary = false;
+	static Days currentDay;
+	public Days CurrentDay
+	{
+		get
+		{
+			return currentDay;
+		}
+		set
+		{
+			currentDay = value;
+		}
+	}
 
 	void Start ()
 	{
