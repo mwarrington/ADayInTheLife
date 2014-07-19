@@ -47,7 +47,7 @@ public class NPCScript : MonoBehaviour
 		}
 	}
 
-	/*void OnConversationLine(Subtitle line)
+	void OnConversationLine(Subtitle line)
 	{
 		for(int i = 0; i < MyThoughts.PlayerDialogueLines.Length; i++)
 		{
@@ -56,10 +56,11 @@ public class NPCScript : MonoBehaviour
 				MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = true;
 				CurrentThoughtImage.sprite = MyThoughts.ThoughtImages[i];
 				CurrentThoughtImage.enabled = true;
+				CancelInvoke("RemoveThoughtCloud");
 				Invoke("RemoveThoughtCloud", 3);
 			}
 		}
-	}*/
+	}
 
 	private void RemoveThoughtCloud()
 	{

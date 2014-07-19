@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 				  _midpoint,
 				  _gameTimer;
 	private Vector3 _newPos;
+	private GameObject _visualTimer;
 
 	protected Scenes currentScene
 	{
@@ -75,6 +76,7 @@ public class PlayerScript : MonoBehaviour
 			SanomeSprite.enabled = true;
 			SarylynSprite.enabled = false;
 		}
+		_visualTimer = GameObject.FindGameObjectWithTag("VisualTimer");
 		ShowGameTimer();
 	}
 
@@ -228,7 +230,8 @@ public class PlayerScript : MonoBehaviour
 		{
 			Invoke ("HideGameTimer", 5);
 		}
-		
+
+		_visualTimer.SetActive(true);
 		_showingGameTimer = true;
 		TimerCloud.SetActive(true);
 	}
@@ -238,11 +241,12 @@ public class PlayerScript : MonoBehaviour
 		_gameTimer = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer;
 		int displaySeconds = Mathf.CeilToInt(_gameTimer) % 60;
 		int displayMinutes = Mathf.CeilToInt(_gameTimer) / 60;
-		TimerCloud.GetComponentInChildren<GUIText> ().text = string.Format ("{0:00}:{1:00}", displayMinutes, displaySeconds);
+		_visualTimer.GetComponent<GUIText>().text = string.Format ("{0:00}:{1:00}", displayMinutes, displaySeconds);
 	}
 
 	private void HideGameTimer()
 	{
+		_visualTimer.SetActive(false);
 		_showingGameTimer = false;
 		TimerCloud.SetActive(false);
 		Invoke ("ShowGameTimer", 25);

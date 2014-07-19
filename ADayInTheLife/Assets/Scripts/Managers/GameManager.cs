@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 	}
 	public bool GameTimerActive;
 	static bool databasesLoadedForHallway = false;
+	static bool databasesLoadedForLabrary = false;
 
 	void Start ()
 	{
@@ -41,6 +42,14 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(n.MyDatabase);
 			}
 			databasesLoadedForHallway = true;
+		}
+		else if(Application.loadedLevelName == "Labrary" && !databasesLoadedForHallway)
+		{
+			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
+			{
+				DialogueManager.AddDatabase(n.MyDatabase);
+			}
+			databasesLoadedForLabrary = true;
 		}
 	}
 
