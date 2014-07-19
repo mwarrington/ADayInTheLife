@@ -12,7 +12,9 @@ public class NPCScript : MonoBehaviour
 	public SpriteRenderer CurrentThoughtImage;
 	public Thoughts MyThoughts;
 	public bool AlwaysFacePlayer,
-				HasSharedVariables;
+				HasSharedVariables,
+				HasThoughts,
+				CanTalk;
 	public string DialogString;
 
 	private GameObject _player;
@@ -20,9 +22,9 @@ public class NPCScript : MonoBehaviour
 
 	void Start ()
 	{
-		MyConTrigger.conversation = DialogString;
-
-		_player = GameObject.Find("Player");
+		if(CanTalk)
+			MyConTrigger.conversation = DialogString;
+		_player = GameObject.FindGameObjectWithTag("Player");
 		_orriginalRotation = this.transform.rotation.eulerAngles;
 	}
 	
@@ -49,15 +51,18 @@ public class NPCScript : MonoBehaviour
 
 	void OnConversationLine(Subtitle line)
 	{
-		for(int i = 0; i < MyThoughts.PlayerDialogueLines.Length; i++)
+		if (HasThoughts)
 		{
-			if(MyThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
+			for(int i = 0; i < MyThoughts.PlayerDialogueLines.Length; i++)
 			{
-				MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = true;
-				CurrentThoughtImage.sprite = MyThoughts.ThoughtImages[i];
-				CurrentThoughtImage.enabled = true;
-				CancelInvoke("RemoveThoughtCloud");
-				Invoke("RemoveThoughtCloud", 3);
+				if(MyThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
+				{
+					MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = true;
+					CurrentThoughtImage.sprite = MyThoughts.ThoughtImages[i];
+					CurrentThoughtImage.enabled = true;
+					CancelInvoke("RemoveThoughtCloud");
+					Invoke("RemoveThoughtCloud", 3);
+				}
 			}
 		}
 	}
@@ -71,10 +76,9 @@ public class NPCScript : MonoBehaviour
 	private void RotateTowardPlayer()
 	{
 		this.transform.LookAt(_player.transform);
-		Debug.Log (this.transform.rotation.eulerAngles.y + _orriginalRotation.y);
 		this.transform.rotation = Quaternion.Euler(new Vector3(0 + _orriginalRotation.x, this.transform.rotation.eulerAngles.y + _orriginalRotation.y, 0 + _orriginalRotation.z));
 
 		//This will maintain rotation with the player
-		//this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _player.transform.rotation, 100);
+		this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _player.transform.rotation, 100);
 	}
 }
