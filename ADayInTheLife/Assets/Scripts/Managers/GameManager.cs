@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 			}
 			databasesLoadedForHallway = true;
 		}
-		else if(Application.loadedLevelName == "Labrary" && !databasesLoadedForHallway)
+		else if(Application.loadedLevelName == "Labrary" && !databasesLoadedForLabrary)
 		{
 			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
 			{
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 		}
 		if(timer <= 0)
 		{
+			DialogueManager.StopConversation();
 			Application.LoadLevel("DreamSpiral");
 			DayCount++;
 			timer = 360;

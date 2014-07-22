@@ -13,7 +13,8 @@ public class PlayerScript : MonoBehaviour
 				 _hitWallForward = false,
 				 _hitWallBack = false,
 				 _hitWallLeft = false,
-				 _hitWallRight = false;
+				 _hitWallRight = false,
+				 _playingFootSound = false;
 	private float _bobTimer,
 				  _waveslice,
 				  _midpoint,
@@ -61,7 +62,8 @@ public class PlayerScript : MonoBehaviour
 	private bool _isSarylyn = true,
 				 _showingGameTimer = false;
 
-	public GameObject TimerCloud;
+	public GameObject TimerCloud,
+					  FootSound;
 	public SpriteRenderer SarylynSprite,
 						  SanomeSprite;
 	public float PlayerVelocity,
@@ -100,19 +102,19 @@ public class PlayerScript : MonoBehaviour
 		{
 			case Scenes.Hallway:
 				//When the player presses an arrow key
-				if(Input.GetKeyDown(KeyCode.UpArrow))
+			if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
 				{
 					_isWalkingForward = true;
 				}
-				if(Input.GetKeyDown(KeyCode.DownArrow))
+				if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
 				{
 					_isWalkingBack = true;
 				}
-				if(Input.GetKeyDown(KeyCode.LeftArrow))
+				if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 				{
 					_isWalkingLeft = true;
 				}
-				if(Input.GetKeyDown(KeyCode.RightArrow))
+				if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 				{
 					_isWalkingRight = true;
 				}
@@ -136,30 +138,30 @@ public class PlayerScript : MonoBehaviour
 				}
 
 				//When the player lets go of an arrow key
-				if(Input.GetKeyUp(KeyCode.UpArrow))
+				if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
 				{
 					_isWalkingForward = false;
 				}
-				if(Input.GetKeyUp(KeyCode.DownArrow))
+				if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
 				{
 					_isWalkingBack = false;
 				}
-				if(Input.GetKeyUp(KeyCode.LeftArrow))
+				if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
 				{
 					_isWalkingLeft = false;
 				}
-				if(Input.GetKeyUp(KeyCode.RightArrow))
+				if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
 				{
 					_isWalkingRight = false;
 				}
 				break;
 			case Scenes.Labrary:
 				//When the player presses an arrow key
-				if(Input.GetKeyDown(KeyCode.LeftArrow))
+				if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 				{
 					_isWalkingLeft = true;
 				}
-				if(Input.GetKeyDown(KeyCode.RightArrow))
+				if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 				{
 					_isWalkingRight = true;
 				}
@@ -175,30 +177,30 @@ public class PlayerScript : MonoBehaviour
 				}
 				
 				//When the player lets go of an arrow key
-				if(Input.GetKeyUp(KeyCode.LeftArrow))
+				if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
 				{
 					_isWalkingLeft = false;
 				}
-				if(Input.GetKeyUp(KeyCode.RightArrow))
+				if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
 				{
 					_isWalkingRight = false;
 				}
 				break;
 			case Scenes.Classroom:
 				//When the player presses an arrow key
-				if(Input.GetKeyDown(KeyCode.UpArrow))
+				if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
 				{
 					_isWalkingForward = true;
 				}
-				if(Input.GetKeyDown(KeyCode.DownArrow))
+				if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
 				{
 					_isWalkingBack = true;
 				}
-				if(Input.GetKeyDown(KeyCode.LeftArrow))
+				if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 				{
 					_isRotatingLeft = true;
 				}
-				if(Input.GetKeyDown(KeyCode.RightArrow))
+				if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 				{
 					_isRotatingRight = true;
 				}
@@ -222,19 +224,19 @@ public class PlayerScript : MonoBehaviour
 				}
 				
 				//When the player lets go of an arrow key
-				if(Input.GetKeyUp(KeyCode.UpArrow))
+				if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
 				{
 					_isWalkingForward = false;
 				}
-				if(Input.GetKeyUp(KeyCode.DownArrow))
+				if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
 				{
 					_isWalkingBack = false;
 				}
-				if(Input.GetKeyUp(KeyCode.LeftArrow))
+				if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
 				{
 					_isRotatingLeft = false;
 				}
-				if(Input.GetKeyUp(KeyCode.RightArrow))
+				if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
 				{
 					_isRotatingRight = false;
 				}
@@ -275,6 +277,11 @@ public class PlayerScript : MonoBehaviour
 			_newPos = transform.position;
 			_newPos.y = _midpoint + translateChange;
 			transform.position = _newPos;
+			if(_newPos.y < _midpoint-(BobbingAmount*0.9f) && !FootSound.audio.isPlaying)
+			{
+				_playingFootSound = true;
+				FootSound.audio.Play();
+			}
 		}
 		else
 		{
