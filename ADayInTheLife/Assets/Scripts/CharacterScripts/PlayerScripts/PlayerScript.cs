@@ -272,15 +272,12 @@ public class PlayerScript : MonoBehaviour
 			transform.position = _newPos;
 			if(_newPos.y < _midpoint-(BobbingAmount*0.4f) && !_playingFootSound)
 			{
-				Debug.Log ("Kill");
 				_playingFootSound = true;
 				FootSound.audio.Play();
 			}
 			if(_newPos.y > _midpoint+(BobbingAmount*0.4f) && _playingFootSound)
-			{
-				Debug.Log ("Everyone");
 				_playingFootSound = false;
-			}
+
 		}
 		else
 		{
