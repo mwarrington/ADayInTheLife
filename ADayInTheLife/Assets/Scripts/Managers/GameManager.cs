@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	public AudioSource Countdown30, Countdown10;
+
 	void Start ()
 	{
 		if(Application.loadedLevelName == "Hallway" && !databasesLoadedForHallway)
@@ -70,6 +73,21 @@ public class GameManager : MonoBehaviour
 		if(GameTimerActive)
 		{
 			timer -= Time.deltaTime;
+		}
+		if (timer <= 30 && !this.Countdown30.isPlaying)
+		{
+			GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+        		foreach(GameObject _locker in _lockerSearch)
+        		{
+        			_locker.collider.enabled = true;
+					_locker.rigidbody.AddForce(30, 30, 30);
+        		}
+			
+			this.Countdown30.Play();
+		}
+		if (timer <= 10 && !this.Countdown10.isPlaying)
+		{
+			this.Countdown10.Play();
 		}
 		if(timer <= 0)
 		{

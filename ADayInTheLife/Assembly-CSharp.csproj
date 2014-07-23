@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
+     <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\SharedVariables.cs" />
      <Compile Include="Assets\Scripts\Utilities\Thoughts.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Door.cs" />
