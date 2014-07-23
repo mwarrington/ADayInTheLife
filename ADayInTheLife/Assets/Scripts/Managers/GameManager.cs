@@ -78,6 +78,10 @@ public class GameManager : MonoBehaviour
 			DayCount++;
 			timer = 360;
 		}
+		if(Input.GetKeyDown(KeyCode.F))
+		{
+			Screen.fullScreen = !Screen.fullScreen;
+		}
 	}
 
 	public void SelectPlayer(bool value)
