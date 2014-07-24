@@ -12,12 +12,11 @@ public class NPCScript : MonoBehaviour
 	public GameManager MyGameManager;
 	public SpriteRenderer CurrentThoughtImage;
 	public Thoughts MyThoughts;
+	public NPCType MyType;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
 				HasThoughts,
-				CanTalk,
-				PlayerSpacificDialog,
-				ACharacter;
+				PlayerSpacificDialog;
 	public string DialogString;
 	public int DialogIndex;
 
@@ -26,19 +25,8 @@ public class NPCScript : MonoBehaviour
 
 	void Start ()
 	{
-		if(ACharacter)
-		{
-			DialogString = DialogIndex.ToString();
-		}
-		else if(CanTalk)
-		{
-			if(PlayerSpacificDialog && MyGameManager.isSarylyn)
-				DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sarylyn";
-			else if(PlayerSpacificDialog && !MyGameManager.isSarylyn)
-				DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sanome";
-			else
-				DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString();
-		}
+		DialogSetup();
+
 		MyConTrigger.conversation = DialogString;
 		_player = GameObject.FindGameObjectWithTag("Player");
 		_orriginalRotation = this.transform.rotation.eulerAngles;
@@ -53,14 +41,26 @@ public class NPCScript : MonoBehaviour
 
 	void OnConversationStart(Transform actor)
 	{
-		if(!ACharacter)
+		if(MyType != NPCType.ACharacter)
+		{
 			CloseUpCamera.enabled = true;
+		}
 	}
 
 	void OnConversationEnd(Transform actor)
 	{
-		if(!ACharacter)
+		if(MyType != NPCType.ACharacter)
 			CloseUpCamera.enabled = false;
+		if(MyType == NPCType.HallMonitor)
+		{
+			if(MyConTrigger.trigger == DialogueTriggerEvent.OnStart)
+			{
+				MyConTrigger.trigger = DialogueTriggerEvent.OnUse;
+				MyGameManager.GameTimerActive = true;
+			}
+			DialogString = "Hall_Monitor_" + Random.Range(1,MyDatabase.conversations.Count+1).ToString();
+			MyConTrigger.conversation = DialogString;
+		}
 		if(HasSharedVariables)
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<SharedVariables>().SyncVariables(DialogString);
@@ -98,5 +98,32 @@ public class NPCScript : MonoBehaviour
 
 		//This will maintain rotation with the player
 		this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _player.transform.rotation, 100);
+	}
+
+	//This method sets up what conversation the NPC will speak.
+	private void DialogSetup()
+	{
+		switch (MyType)
+		{
+			case NPCType.ACharacter:
+				DialogString = DialogIndex.ToString();
+				break;
+			case NPCType.BCCharacter:
+				if(PlayerSpacificDialog && MyGameManager.isSarylyn)
+					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sarylyn";
+				else if(PlayerSpacificDialog && !MyGameManager.isSarylyn)
+					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sanome";
+				else
+					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString();
+				break;
+			case NPCType.HallMonitor:
+				DialogString = "Hall_Monitor_Intro";
+				Debug.Log(DialogueLua.GetVariable("TalkedToMonitorOnce").AsBool);
+				Debug.Log(DialogueLua.GetVariable("TalkedToMonitorTwice").AsBool);
+				break;
+			default:
+				Debug.Log ("That NPC type doesn't exist...");
+				break;
+		}
 	}
 }

@@ -14,3 +14,10 @@ public enum Days
 	day2,
 	day3
 };
+
+public enum NPCType
+{
+	ACharacter,
+	BCCharacter,
+	HallMonitor
+};

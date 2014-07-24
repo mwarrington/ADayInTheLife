@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class VisualTimer : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class VisualTimer : MonoBehaviour
 	
 	void OnGUI()
 	{
-		if(_showingGameTimer)
+		if(_showingGameTimer && !DialogueManager.IsConversationActive)
 			GameTimer();
 	}
 
