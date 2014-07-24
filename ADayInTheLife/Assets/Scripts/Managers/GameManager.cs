@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 		}
 		set
 		{
-			Debug.Log("You shouldn't be trying to set this property.");
+			IsSarylyn = value;
 		}
 	}
 	public bool GameTimerActive;
@@ -74,20 +74,40 @@ public class GameManager : MonoBehaviour
 		{
 			timer -= Time.deltaTime;
 		}
-		if (timer <= 30 && !this.Countdown30.isPlaying)
+
+		DayEnd();
+
+		if(Input.GetKeyDown(KeyCode.F))
 		{
-			GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
-        		foreach(GameObject _locker in _lockerSearch)
-        		{
-        			_locker.collider.enabled = true;
-					_locker.rigidbody.AddForce(30, 30, 30);
-        		}
-			
-			this.Countdown30.Play();
+			Screen.fullScreen = !Screen.fullScreen;
 		}
-		if (timer <= 10 && !this.Countdown10.isPlaying)
+	}
+
+	//This method handles the strange things that happen at the end of a day.
+	private void DayEnd()
+	{
+		switch(Application.loadedLevelName)
 		{
-			this.Countdown10.Play();
+			case "Hallway":
+				if (timer <= 30 && !this.Countdown30.isPlaying)
+				{
+					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+					foreach(GameObject _locker in _lockerSearch)
+					{
+						_locker.collider.enabled = true;
+						_locker.rigidbody.AddForce(30, 30, 30);
+					}
+					
+					this.Countdown30.Play();
+				}
+				if (timer <= 10 && !this.Countdown10.isPlaying)
+				{
+					this.Countdown10.Play();
+				}
+				break;
+			default:
+				Debug.Log("That level doesn't exist...");
+				break;
 		}
 		if(timer <= 0)
 		{
@@ -96,14 +116,5 @@ public class GameManager : MonoBehaviour
 			DayCount++;
 			timer = 360;
 		}
-		if(Input.GetKeyDown(KeyCode.F))
-		{
-			Screen.fullScreen = !Screen.fullScreen;
-		}
-	}
-
-	public void SelectPlayer(bool value)
-	{
-		IsSarylyn = value;
 	}
 }
