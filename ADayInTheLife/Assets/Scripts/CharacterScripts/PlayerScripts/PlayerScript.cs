@@ -81,6 +81,11 @@ public class PlayerScript : MonoBehaviour
 			SanomeSprite.enabled = true;
 			SarylynSprite.enabled = false;
 		}
+
+		//Sets the player's appropriate postion then
+		//Declares current scene as the LastLevelLoaded
+		SetPlayerPosition();
+		GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().LastLevelLoaded = Application.loadedLevelName;
 	}
 
 	void Update ()
@@ -239,10 +244,10 @@ public class PlayerScript : MonoBehaviour
 				break;
 		}
 	}
-
+	
+	//This method handles the Headbobbing
 	private void Headbob()
 	{
-		//Headbobbing script
 		float horizontal = Input.GetAxis("Horizontal");
 		float vertical = Input.GetAxis("Vertical");
 		
@@ -284,6 +289,29 @@ public class PlayerScript : MonoBehaviour
 			Vector3 findMidpoint = transform.position;
 			findMidpoint.y = _midpoint;
 			transform.position = findMidpoint;
+		}
+	}
+
+	//This method sets the player position depending on which scene the player was in last.
+	private void SetPlayerPosition()
+	{
+		if(Application.loadedLevelName == "Hallway")
+		{
+			switch(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().LastLevelLoaded)
+			{
+				case "DreamSpiral":
+					this.gameObject.transform.position = new Vector3(-1.582302f, 4.500048f, -54.55913f);
+					break;
+				case "Labrary":
+					this.gameObject.transform.position = new Vector3(-1.582302f, 4.500048f, -54.55913f);
+					break;
+				case "Classroom":
+					this.gameObject.transform.position = new Vector3(3.037517f, 4.500048f, -25.66859f);
+					break;
+				default:
+					Debug.Log ("That Scene scene either doesn't exist or you should be coming from there.");
+					break;
+			}
 		}
 	}
 

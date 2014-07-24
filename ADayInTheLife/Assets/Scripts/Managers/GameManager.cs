@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+	//Static fields with properties that have get and set accessors
 	static float timer = 360;
 	public float Timer
 	{
@@ -17,8 +18,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Who told you that you could set this property!?");
 		}
 	}
-	static int DayCount = 0;
-	public static bool IsSarylyn = true;
+	static bool IsSarylyn = true;
 	public bool isSarylyn
 	{
 		get
@@ -30,9 +30,6 @@ public class GameManager : MonoBehaviour
 			IsSarylyn = value;
 		}
 	}
-	public bool GameTimerActive;
-	static bool databasesLoadedForHallway = false;
-	static bool databasesLoadedForLabrary = false;
 	static Days currentDay;
 	public Days CurrentDay
 	{
@@ -45,8 +42,28 @@ public class GameManager : MonoBehaviour
 			currentDay = value;
 		}
 	}
+	static string lastLevelLoaded = "DreamSpiral";
+	public string LastLevelLoaded
+	{
+		get
+		{
+			return lastLevelLoaded;
+		}
+		set
+		{
+			lastLevelLoaded = value;
+		}
+	}
 
-	public AudioSource Countdown30, Countdown10;
+	//Simple Static fields
+	static int DayCount = 0;
+	static bool databasesLoadedForHallway = false;
+	static bool databasesLoadedForLabrary = false;
+
+	//Public fields
+	public bool GameTimerActive;
+	public AudioSource Countdown30,
+					   Countdown10;
 
 	void Start ()
 	{
