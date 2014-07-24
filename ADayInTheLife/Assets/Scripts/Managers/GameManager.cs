@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+	static float timer = 40;
 	public float Timer
 	{
 		get
@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
 	static bool databasesLoadedForHallway = false;
 	static bool databasesLoadedForLabrary = false;
 
+	//Private fields
+	private AudioSource _levelBGM;
+
 	//Public fields
 	public bool GameTimerActive;
 	public AudioSource Countdown30,
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour
 			}
 			databasesLoadedForLabrary = true;
 		}
+		_levelBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 	}
 
 	void Update ()
@@ -108,6 +112,7 @@ public class GameManager : MonoBehaviour
 			case "Hallway":
 				if (timer <= 30 && !this.Countdown30.isPlaying)
 				{
+					_levelBGM.enabled = false;
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
