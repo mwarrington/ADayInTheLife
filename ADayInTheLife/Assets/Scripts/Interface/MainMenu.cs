@@ -171,7 +171,7 @@ public class MainMenu : MonoBehaviour
 
                             if (Input.GetMouseButtonDown(0))
                             {
-                                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().isSarylyn = true;
+                                GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn = true;
                                 Application.LoadLevel("DreamSpiral");
                             }
                             break;
@@ -187,7 +187,7 @@ public class MainMenu : MonoBehaviour
 
                             if (Input.GetMouseButtonDown(0))
 							{
-								GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().isSarylyn = false;
+								GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn = false;
                                 Application.LoadLevel("DreamSpiral");
                             }
                             break;

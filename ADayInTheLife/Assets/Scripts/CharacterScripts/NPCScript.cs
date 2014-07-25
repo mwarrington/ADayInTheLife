@@ -22,6 +22,7 @@ public class NPCScript : MonoBehaviour
 
 	private GameObject _player;
 	private Vector3 _orriginalRotation;
+	private AudioSource _myVoice;
 
 	void Start ()
 	{
@@ -30,6 +31,7 @@ public class NPCScript : MonoBehaviour
 		MyConTrigger.conversation = DialogString;
 		_player = GameObject.FindGameObjectWithTag("Player");
 		_orriginalRotation = this.transform.rotation.eulerAngles;
+		_myVoice = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -44,6 +46,9 @@ public class NPCScript : MonoBehaviour
 		if(MyType != NPCType.ACharacter)
 		{
 			CloseUpCamera.enabled = true;
+
+			if(_myVoice != null)
+				_myVoice.Play();
 		}
 	}
 
@@ -109,17 +114,15 @@ public class NPCScript : MonoBehaviour
 				DialogString = DialogIndex.ToString();
 				break;
 			case NPCType.BCCharacter:
-				if(PlayerSpacificDialog && MyGameManager.isSarylyn)
+				if(PlayerSpacificDialog && MyGameManager.IsSarylyn)
 					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sarylyn";
-				else if(PlayerSpacificDialog && !MyGameManager.isSarylyn)
+				else if(PlayerSpacificDialog && !MyGameManager.IsSarylyn)
 					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString() + "_Sanome";
 				else
 					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString();
 				break;
 			case NPCType.HallMonitor:
 				DialogString = "Hall_Monitor_Intro";
-				Debug.Log(DialogueLua.GetVariable("TalkedToMonitorOnce").AsBool);
-				Debug.Log(DialogueLua.GetVariable("TalkedToMonitorTwice").AsBool);
 				break;
 			default:
 				Debug.Log ("That NPC type doesn't exist...");

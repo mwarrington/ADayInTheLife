@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: db4ee6cf4d85141e6b5e915d86e11bad
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Countdown30: {fileID: 8300000, guid: c1d2fd96a4a564e24b614f6fec82d092, type: 3}
+  - Countdown10: {fileID: 8300000, guid: 0c09d7a74126446cdab46d1d79d4837b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -18,16 +18,16 @@ public class GameManager : MonoBehaviour
 			Debug.Log ("Who told you that you could set this property!?");
 		}
 	}
-	static bool IsSarylyn = true;
-	public bool isSarylyn
+	static bool isSarylyn = true;
+	public bool IsSarylyn
 	{
 		get
 		{
-			return IsSarylyn;
+			return isSarylyn;
 		}
 		set
 		{
-			IsSarylyn = value;
+			isSarylyn = value;
 		}
 	}
 	static Days currentDay;

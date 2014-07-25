@@ -54,7 +54,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		get
 		{
-			_isSarylyn = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().isSarylyn;
+			_isSarylyn = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn;
 			return _isSarylyn;
 		}
 
@@ -94,6 +94,7 @@ public class PlayerScript : MonoBehaviour
 		Headbob();
 	}
 
+	#region InputBasedMovement
 	private void InputBasedMovement()
 	{
 		switch(currentScene)
@@ -244,6 +245,7 @@ public class PlayerScript : MonoBehaviour
 				break;
 		}
 	}
+	#endregion
 	
 	//This method handles the Headbobbing
 	private void Headbob()
@@ -353,6 +355,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		SarylynSprite.enabled = false;
 		SanomeSprite.enabled = false;
+		TimerCloud.GetComponent<SpriteRenderer> ().enabled = false;
 	}
 
 	void OnConversationEnd(Transform actor)
@@ -367,5 +370,6 @@ public class PlayerScript : MonoBehaviour
 			SanomeSprite.enabled = true;
 			SarylynSprite.enabled = false;
 		}
+		TimerCloud.GetComponent<SpriteRenderer> ().enabled = true;
 	}
 }

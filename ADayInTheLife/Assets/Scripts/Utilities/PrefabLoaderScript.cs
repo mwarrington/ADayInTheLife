@@ -1,27 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PrefabLoaderScript : MonoBehaviour {
-
+public class PrefabLoaderScript : MonoBehaviour
+{
 	public static PrefabLoaderScript instance;
 
-	public AudioClip
-	Countdown60;
+	public AudioClip Countdown30,
+					 Countdown10;
 
 	void Awake()
 	{
 		PrefabLoaderScript.instance = this;
-	}
-
-	// Use this for initialization
-	void Start () {
-
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	
 	}
 }
