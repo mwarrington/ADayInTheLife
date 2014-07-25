@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+	static float timer = 5;
 	public float Timer
 	{
 		get
@@ -61,10 +61,13 @@ public class GameManager : MonoBehaviour
 	static bool databasesLoadedForLabrary = false;
 
 	//Private fields
-	private AudioSource _levelBGM;
+	private AudioSource _mainBGM;
+	private float _alpha = 0;
+	private SpriteRenderer _fadeMask;
 
 	//Public fields
-	public bool GameTimerActive;
+	public bool GameTimerActive,
+				FadingAway;
 	public AudioSource Countdown30,
 					   Countdown10;
 
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
 			}
 			databasesLoadedForLabrary = true;
 		}
-		_levelBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
+		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 	}
 
 	void Update ()
@@ -97,6 +100,9 @@ public class GameManager : MonoBehaviour
 		}
 
 		DayEnd();
+
+		if(FadingAway)
+			Fade();
 
 		if(Input.GetKeyDown(KeyCode.F))
 		{
@@ -112,7 +118,8 @@ public class GameManager : MonoBehaviour
 			case "Hallway":
 				if (timer <= 30 && !this.Countdown30.isPlaying)
 				{
-					_levelBGM.enabled = false;
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.4f;
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
@@ -124,6 +131,8 @@ public class GameManager : MonoBehaviour
 				}
 				if (timer <= 10 && !this.Countdown10.isPlaying)
 				{
+					_mainBGM.pitch = 0.5f;
+					_mainBGM.volume = 0.25f;
 					this.Countdown10.Play();
 				}
 				break;
@@ -132,12 +141,29 @@ public class GameManager : MonoBehaviour
 				//Debug.Log("That level doesn't exist...");
 				break;
 		}
-		if(timer <= 0)
+		if(timer <= 3)
 		{
-			DialogueManager.StopConversation();
-			Application.LoadLevel("DreamSpiral");
-			DayCount++;
-			timer = 360;
+			Invoke("LoadNextLevel", 3);
+			if(!FadingAway)
+				_fadeMask = Camera.current.GetComponentInChildren<SpriteRenderer>();
+			FadingAway = true;
 		}
+	}
+
+	private void Fade()
+	{
+		_alpha += Time.deltaTime * 0.35f;
+		_mainBGM.volume -= Time.deltaTime * 0.15f;
+		_fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
+
+	}
+
+	private void LoadNextLevel()
+	{
+		FadingAway = false;
+		DialogueManager.StopConversation();
+		Application.LoadLevel("DreamSpiral");
+		DayCount++;
+		timer = 360;
 	}
 }
