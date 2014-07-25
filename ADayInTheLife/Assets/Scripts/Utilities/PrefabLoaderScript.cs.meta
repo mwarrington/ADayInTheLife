@@ -5,6 +5,12 @@ MonoImporter:
   defaultReferences:
   - Countdown30: {fileID: 8300000, guid: c1d2fd96a4a564e24b614f6fec82d092, type: 3}
   - Countdown10: {fileID: 8300000, guid: 0c09d7a74126446cdab46d1d79d4837b, type: 3}
+  - CloudHover: {fileID: 8300000, guid: 5c494e8f8457a6e4c89ca2974fa078c1, type: 3}
+  - CloudClick: {fileID: 8300000, guid: 8350f41748b844947aa07b1fd13ba9c2, type: 3}
+  - PlayerSelect1: {fileID: 8300000, guid: 0d466f3430ac8944f93031ac48b3784c, type: 3}
+  - PlayerSelect2: {fileID: 8300000, guid: 10088ef6914b5b849a12ec0523ff1065, type: 3}
+  - SpiralHover: {fileID: 8300000, guid: ddc3a8e0ddec39442875cfd6a9ff334e, type: 3}
+  - SpiralTurn: {fileID: 8300000, guid: c487d5f83043f5f40a1f4fea4e819e8a, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

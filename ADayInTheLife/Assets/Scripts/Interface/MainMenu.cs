@@ -41,9 +41,15 @@ public class MainMenu : MonoBehaviour
 
     private Vector3 _topArrowOrgPos,
                     _bottomArrowOrgPos;
-    private bool _bounce;
+    private bool _bounce,
+				 _startFade = false;
+	private float _alpha = 0;
     private CharacterTilt _sanomeTilt,
                           _sarylynTilt;
+	private AudioSource _currentAudioSource,
+						_secondSFX,
+						_mainBGM;
+	private SpriteRenderer _fadeMask;
 
     void Awake()
     {
@@ -56,6 +62,9 @@ public class MainMenu : MonoBehaviour
         _bottomArrowOrgPos = _bottomArrow.transform.position;
         _sarylynTilt = new CharacterTilt(_sarylynPortrait, false);
         _sanomeTilt = new CharacterTilt(_sanomePortrait, true);
+		_secondSFX = GameObject.FindGameObjectWithTag("SecondSFX").GetComponent<AudioSource>();
+		_fadeMask = GameObject.FindGameObjectWithTag("FadeMask").GetComponent<SpriteRenderer>();
+		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
     }
 
     void LoadResources()
@@ -89,7 +98,9 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         ArrowBounce();
-        Menu();    
+        Menu();
+		if(_startFade)
+			Fade();
     }
 
     void Menu()
@@ -125,9 +136,15 @@ public class MainMenu : MonoBehaviour
                             _bottomArrow.renderer.enabled = false;
                             _topArrow.renderer.enabled = true;
                             _mouse.renderer.material = _mouseClick;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
 
                             if (Input.GetMouseButtonDown(0))
                             {
+								_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+								_secondSFX.Play();
                                 State = MenuState.NEWGAME;
                             }
                             break;
@@ -138,6 +155,10 @@ public class MainMenu : MonoBehaviour
                             _bottomArrow.renderer.enabled = true;
                             _topArrow.renderer.enabled = false;
                             _mouse.renderer.material = _mouseClick;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
 
                             if (Input.GetMouseButtonDown(0))
                             {
@@ -146,6 +167,8 @@ public class MainMenu : MonoBehaviour
                                 _topArrow.renderer.enabled = false;
                                 _topCloud.renderer.enabled = false;
                                 _mouse.renderer.enabled = false;
+								_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+								_secondSFX.Play();
 
                                 State = MenuState.CREDITS;
                             }
@@ -166,13 +189,22 @@ public class MainMenu : MonoBehaviour
                             _bottomArrow.renderer.enabled = false;
                             _topArrow.renderer.enabled = true;
                             _mouse.renderer.material = _mouseClick;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
 
                             _sarylynTilt.Update();
 
                             if (Input.GetMouseButtonDown(0))
                             {
                                 GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn = true;
-                                Application.LoadLevel("DreamSpiral");
+								_secondSFX.clip = PrefabLoaderScript.instance.PlayerSelect1;
+								_secondSFX.Play();
+								_startFade = true;
+								Invoke("ProceedToGame",3);
+								_currentAudioSource.Stop();
+								State = MenuState.EXIT;
                             }
                             break;
 
@@ -182,22 +214,38 @@ public class MainMenu : MonoBehaviour
                             _bottomArrow.renderer.enabled = true;
                             _topArrow.renderer.enabled = false;
                             _mouse.renderer.material = _mouseClick;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
 
                             _sanomeTilt.Update();
 
                             if (Input.GetMouseButtonDown(0))
 							{
 								GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn = false;
-                                Application.LoadLevel("DreamSpiral");
+								_secondSFX.clip = PrefabLoaderScript.instance.PlayerSelect2;
+								_secondSFX.Play();
+								_startFade = true;
+								Invoke("ProceedToGame",3);
+								_currentAudioSource.Stop();
+								State = MenuState.EXIT;
                             }
                             break;
 
                         case "BackButton":
                             _backCloud.renderer.material = _backCloudActive;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
+
                             if (Input.GetMouseButtonDown(0))
                             {
                                 _topCloud.renderer.material = _startCloudInactive;
                                 _bottomCloud.renderer.material = _creditsCloudInactive;
+								_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+								_secondSFX.Play();
                                 State = MenuState.MAIN;
                             }
                             break;
@@ -213,6 +261,10 @@ public class MainMenu : MonoBehaviour
                     if (_hit.collider.name == "BackButton")
                     {
                         _backCloud.renderer.material = _backCloudActive;
+							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+							if(!_currentAudioSource.isPlaying)
+								_currentAudioSource.Play();
 
                         if (Input.GetMouseButtonDown(0))
                         {
@@ -222,6 +274,8 @@ public class MainMenu : MonoBehaviour
                             _topArrow.renderer.enabled = true;
                             _topCloud.renderer.enabled = true;
                             _mouse.renderer.enabled = true;
+							_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+							_secondSFX.Play();
                             State = MenuState.MAIN;
                         }
                     }
@@ -238,6 +292,9 @@ public class MainMenu : MonoBehaviour
         {
             _mouse.renderer.material = _mouseHover;
             _spiralLogo.transform.Rotate(new Vector3(0, 1, 0));
+			if(_currentAudioSource != null)
+				if(_currentAudioSource.clip == PrefabLoaderScript.instance.CloudHover)
+					_currentAudioSource.Stop();
 
             switch (State)
             {
@@ -281,7 +338,7 @@ public class MainMenu : MonoBehaviour
                     _bottomCloud.renderer.material = _creditsCloudInactive;
                     _topArrow.renderer.enabled = true;
                     _bottomArrow.renderer.enabled = true;
-                    _mouse.renderer.material = _mouseHover;
+					_mouse.renderer.material = _mouseHover;
                     break;
                 case MenuState.NEWGAME:
                     _topCloud.renderer.material = _sarylynInactive;
@@ -339,4 +396,16 @@ public class MainMenu : MonoBehaviour
             }
         }
     }
+
+	private void Fade()
+	{
+		_alpha += Time.deltaTime * 0.35f;
+		_mainBGM.volume -= Time.deltaTime * 0.1f;
+		_fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
+	}
+
+	private void ProceedToGame()
+	{
+		Application.LoadLevel("DreamSpiral");
+	}
 }

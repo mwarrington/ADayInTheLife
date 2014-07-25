@@ -128,7 +128,8 @@ public class GameManager : MonoBehaviour
 				}
 				break;
 			default:
-				Debug.Log("That level doesn't exist...");
+				//Nothing should happen here
+				//Debug.Log("That level doesn't exist...");
 				break;
 		}
 		if(timer <= 0)
