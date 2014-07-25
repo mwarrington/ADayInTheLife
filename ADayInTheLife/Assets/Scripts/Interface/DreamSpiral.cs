@@ -7,6 +7,9 @@ public class DreamSpiral : MonoBehaviour
     private GameObject _dreamSpiral,
                    _startCloud,
                    _textCloud;
+	private AudioSource _currentAudioSource,
+					  _secondSFX,
+					  _mainBGM;
     private Material[] _textMatertials = new Material[6];
     private Material _startCloudActive,
                      _startCloudInactive;
@@ -54,11 +57,17 @@ public class DreamSpiral : MonoBehaviour
                 case "StartCloud":
                     _canMove = true;
                     _startCloud.renderer.material = _startCloudActive;
+					_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+					_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+					if(!_currentAudioSource.isPlaying)
+						_currentAudioSource.Play();
 
                     if (Input.GetMouseButtonDown(0))
                     {
                         startTimerOnce = false;
                         Application.LoadLevel("hallway");
+						_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+						_secondSFX.Play();
                     }
                     break;
 
@@ -71,6 +80,9 @@ public class DreamSpiral : MonoBehaviour
         {
             _canMove = true;
             _startCloud.renderer.material = _startCloudInactive;
+			if(_currentAudioSource != null)
+				if(_currentAudioSource.clip == PrefabLoaderScript.instance.CloudHover)
+					_currentAudioSource.Stop();
         }
     }
 
