@@ -10,20 +10,15 @@ public class VisualTimer : MonoBehaviour
 	public GUIStyle Font;
 	public GameObject TimerCloud;
 
-	void Start()
-	{
-		ShowGameTimer();
-	}
-	
 	void OnGUI()
 	{
 		if(_showingGameTimer && !DialogueManager.IsConversationActive)
 			GameTimer();
 	}
 
-	private void ShowGameTimer()
+	public void ShowGameTimer()
 	{
-		if(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer > 60)
+		if(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer > 61)
 		{
 			Invoke ("HideGameTimer", 5);
 		}

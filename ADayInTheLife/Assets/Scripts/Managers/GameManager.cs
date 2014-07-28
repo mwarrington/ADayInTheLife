@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 5;
+	static float timer = 360;
 	public float Timer
 	{
 		get
@@ -55,6 +55,22 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	//Static fields with properties that have get and set accessors
+	private bool _gameTimerActive;
+	public bool GameTimerActive
+	{
+		get
+		{
+			return _gameTimerActive;
+		}
+		set
+		{
+			if(value)
+				FindObjectOfType<VisualTimer>().ShowGameTimer();
+			_gameTimerActive = value;
+		}
+	}
+
 	//Simple Static fields
 	static int DayCount = 0;
 	static bool databasesLoadedForHallway = false;
@@ -66,8 +82,7 @@ public class GameManager : MonoBehaviour
 	private SpriteRenderer _fadeMask;
 
 	//Public fields
-	public bool GameTimerActive,
-				FadingAway;
+	public bool	FadingAway;
 	public AudioSource Countdown30,
 					   Countdown10;
 
