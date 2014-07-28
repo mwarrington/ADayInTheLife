@@ -36,8 +36,9 @@ public class DreamSpiral : MonoBehaviour
     void Start()
     {
         _startCloud.renderer.material = _startCloudInactive;
-        _textCloud.renderer.material = _textMatertials[Random.Range(0, 5)];
-
+		_textCloud.renderer.material = _textMatertials[Random.Range(0, 5)];
+		_secondSFX = GameObject.FindGameObjectWithTag("SecondSFX").GetComponent<AudioSource>();
+		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
