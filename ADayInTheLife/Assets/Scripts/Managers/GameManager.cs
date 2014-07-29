@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+	static float timer = 40;
 	public float Timer
 	{
 		get
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	//Static fields with properties that have get and set accessors
+	//private fields with properties that have get and set accessors
 	private bool _gameTimerActive;
 	public bool GameTimerActive
 	{
@@ -140,6 +140,47 @@ public class GameManager : MonoBehaviour
 					{
 						_locker.collider.enabled = true;
 						_locker.rigidbody.AddForce(30, 30, 30);
+					}
+					
+					this.Countdown30.Play();
+				}
+				if (timer <= 10 && !this.Countdown10.isPlaying)
+				{
+					_mainBGM.pitch = 0.5f;
+					_mainBGM.volume = 0.25f;
+					this.Countdown10.Play();
+				}
+				break;
+			case "Labrary":
+				if (timer <= 30 && !this.Countdown30.isPlaying)
+				{
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.4f;
+					GameObject[]_computerSearch = GameObject.FindGameObjectsWithTag("computer60");    
+					foreach(GameObject _computer in _computerSearch)
+					{
+						_computer.GetComponent<Animation>().Play();
+					}
+					
+					this.Countdown30.Play();
+				}
+				if (timer <= 10 && !this.Countdown10.isPlaying)
+				{
+					_mainBGM.pitch = 0.5f;
+					_mainBGM.volume = 0.25f;
+					this.Countdown10.Play();
+				}
+				break;
+			case "Classroom":
+				if (timer <= 30 && !this.Countdown30.isPlaying)
+				{
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.4f;
+					GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
+					foreach(GameObject _desk in _deskSearch)
+					{
+						_desk.rigidbody.useGravity = true;
+						_desk.rigidbody.isKinematic = false;
 					}
 					
 					this.Countdown30.Play();
