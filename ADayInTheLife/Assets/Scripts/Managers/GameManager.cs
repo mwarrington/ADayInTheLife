@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 35;
+	static float timer = 360;
 	public float Timer
 	{
 		get
