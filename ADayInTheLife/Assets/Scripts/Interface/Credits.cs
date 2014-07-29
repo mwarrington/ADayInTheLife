@@ -4,24 +4,19 @@ using System.Collections;
 public class Credits : MonoBehaviour
 {
     private Transform[] _credits;
-    private int _current = 1;
+    private int _current = 1,
+				_last = 99;
 
     void Awake()
     {
         _credits = GetComponentsInChildren<Transform>();
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
-        if (_credits[_current].position.y < -13f)
+        if (_credits[_current].position.y < -7)
         {
-            _credits[_current].position = new Vector3(_credits[_current].position.x, 14, _credits[_current].position.z);
-
+			_last = _current;
             _current++;
 
             if (_current >= _credits.Length)
@@ -31,13 +26,24 @@ public class Credits : MonoBehaviour
         }
         else
         {
-            _credits[_current].position -= new Vector3(0, .025f, 0);
+            _credits[_current].position -= new Vector3(0, 0.05f, 0);
         }
+
+		if(_last != 99 &&_credits[_last].position.y < -13)
+		{
+			_credits[_last].position = new Vector3(_credits[_last].position.x, 14, _credits[_last].position.z);
+			_last = 99;
+		}
+		else
+		{
+			_credits[_last].position -= new Vector3(0, 0.05f, 0);
+		}
     }
     
     void OnEnable()
     {
         _current = 1;
+		_last = 99;
     }
 
     void OnDisable()

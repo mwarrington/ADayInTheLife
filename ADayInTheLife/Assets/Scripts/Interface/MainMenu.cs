@@ -261,10 +261,10 @@ public class MainMenu : MonoBehaviour
                     if (_hit.collider.name == "BackButton")
                     {
                         _backCloud.renderer.material = _backCloudActive;
-							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
-							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
-							if(!_currentAudioSource.isPlaying)
-								_currentAudioSource.Play();
+						_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
+						_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
+						if(!_currentAudioSource.isPlaying)
+							_currentAudioSource.Play();
 
                         if (Input.GetMouseButtonDown(0))
                         {
