@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 40;
+	static float timer = 35;
 	public float Timer
 	{
 		get
@@ -131,18 +131,40 @@ public class GameManager : MonoBehaviour
 		switch(Application.loadedLevelName)
 		{
 			case "Hallway":
-				if (timer <= 30 && !this.Countdown30.isPlaying)
+				if(timer <= 60 && _mainBGM.pitch > 0.9f)
 				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.4f;
+					_mainBGM.pitch = 0.9f;
+				}
+				if(timer <= 50 && !this.Countdown30.isPlaying)
+				{
+					_mainBGM.pitch = 0.85f;
+					_mainBGM.volume = 0.7f;
+					Countdown30.Play();
+					Countdown30.volume = 0.3f;
+				}
+				if(timer <= 40 && _mainBGM.pitch > 0.8f)
+				{
+					_mainBGM.pitch = 0.8f;
+					_mainBGM.volume = 0.65f;
+					Countdown30.volume = 0.5f;
+				}
+				if (timer <= 30 && _mainBGM.pitch > 0.75f)
+				{
+					_mainBGM.pitch = 0.75f;
+					_mainBGM.volume = 0.5f;
+					Countdown30.volume = 0.6f;
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
 						_locker.collider.enabled = true;
-						_locker.rigidbody.AddForce(30, 30, 30);
+						_locker.rigidbody.AddForce(10f, 10f, 10f);
 					}
-					
-					this.Countdown30.Play();
+				}
+				if(timer <= 20 && _mainBGM.pitch > 0.7f)
+				{
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.3f;
+					Countdown30.volume = 0.75f;
 				}
 				if (timer <= 10 && !this.Countdown10.isPlaying)
 				{
@@ -152,17 +174,39 @@ public class GameManager : MonoBehaviour
 				}
 				break;
 			case "Labrary":
+				if(timer <= 60 && _mainBGM.pitch > 0.9f)
+				{
+					_mainBGM.pitch = 0.9f;
+				}
+				if(timer <= 50 && !this.Countdown30.isPlaying)
+				{
+					_mainBGM.pitch = 0.85f;
+					_mainBGM.volume = 0.7f;
+					Countdown30.Play();
+					Countdown30.volume = 0.3f;
+				}
+				if(timer <= 40 && _mainBGM.pitch > 0.8f)
+				{
+					_mainBGM.pitch = 0.8f;
+					_mainBGM.volume = 0.65f;
+					Countdown30.volume = 0.5f;
+				}
 				if (timer <= 30 && !this.Countdown30.isPlaying)
 				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.4f;
+					_mainBGM.pitch = 0.75f;
+					_mainBGM.volume = 0.5f;
+					Countdown30.volume = 0.6f;
 					GameObject[]_computerSearch = GameObject.FindGameObjectsWithTag("computer60");    
 					foreach(GameObject _computer in _computerSearch)
 					{
 						_computer.GetComponent<Animation>().Play();
 					}
-					
-					this.Countdown30.Play();
+				}
+				if(timer <= 20 && _mainBGM.pitch > 0.7f)
+				{
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.3f;
+					Countdown30.volume = 0.75f;
 				}
 				if (timer <= 10 && !this.Countdown10.isPlaying)
 				{
@@ -172,18 +216,40 @@ public class GameManager : MonoBehaviour
 				}
 				break;
 			case "Classroom":
+				if(timer <= 60 && _mainBGM.pitch > 0.9f)
+				{
+					_mainBGM.pitch = 0.9f;
+				}
+				if(timer <= 50 && !this.Countdown30.isPlaying)
+				{
+					_mainBGM.pitch = 0.85f;
+					_mainBGM.volume = 0.7f;
+					Countdown30.Play();
+					Countdown30.volume = 0.3f;
+				}
+				if(timer <= 40 && _mainBGM.pitch > 0.8f)
+				{
+					_mainBGM.pitch = 0.8f;
+					_mainBGM.volume = 0.65f;
+					Countdown30.volume = 0.5f;
+				}
 				if (timer <= 30 && !this.Countdown30.isPlaying)
 				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.4f;
+					_mainBGM.pitch = 0.75f;
+					_mainBGM.volume = 0.5f;
+					Countdown30.volume = 0.6f;
 					GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
 					foreach(GameObject _desk in _deskSearch)
 					{
 						_desk.rigidbody.useGravity = true;
 						_desk.rigidbody.isKinematic = false;
 					}
-					
-					this.Countdown30.Play();
+				}
+				if(timer <= 20 && _mainBGM.pitch > 0.7f)
+				{
+					_mainBGM.pitch = 0.7f;
+					_mainBGM.volume = 0.3f;
+					Countdown30.volume = 0.75f;
 				}
 				if (timer <= 10 && !this.Countdown10.isPlaying)
 				{
