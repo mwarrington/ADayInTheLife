@@ -54,6 +54,18 @@ public class GameManager : MonoBehaviour
 			lastLevelLoaded = value;
 		}
 	}
+	static bool hasBeenIntroduced = false;
+	public bool HasBeenIntroduced
+	{
+		get
+		{
+			return hasBeenIntroduced;
+		}
+		set
+		{
+			hasBeenIntroduced = value;
+		}
+	}
 
 	//private fields with properties that have get and set accessors
 	private bool _gameTimerActive;
@@ -191,7 +203,7 @@ public class GameManager : MonoBehaviour
 					_mainBGM.volume = 0.65f;
 					Countdown30.volume = 0.5f;
 				}
-				if (timer <= 30 && !this.Countdown30.isPlaying)
+				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
@@ -233,7 +245,7 @@ public class GameManager : MonoBehaviour
 					_mainBGM.volume = 0.65f;
 					Countdown30.volume = 0.5f;
 				}
-				if (timer <= 30 && !this.Countdown30.isPlaying)
+				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
@@ -257,7 +269,50 @@ public class GameManager : MonoBehaviour
 					_mainBGM.volume = 0.25f;
 					this.Countdown10.Play();
 				}
-				break;
+			break;
+		case "Roomclass":
+			if(timer <= 60 && _mainBGM.pitch > 0.9f)
+			{
+				_mainBGM.pitch = 0.9f;
+			}
+			if(timer <= 50 && !this.Countdown30.isPlaying)
+			{
+				_mainBGM.pitch = 0.85f;
+				_mainBGM.volume = 0.7f;
+				Countdown30.Play();
+				Countdown30.volume = 0.3f;
+			}
+			if(timer <= 40 && _mainBGM.pitch > 0.8f)
+			{
+				_mainBGM.pitch = 0.8f;
+				_mainBGM.volume = 0.65f;
+				Countdown30.volume = 0.5f;
+			}
+			if (timer <= 30 && _mainBGM.pitch > 0.75f)
+			{
+				_mainBGM.pitch = 0.75f;
+				_mainBGM.volume = 0.5f;
+				Countdown30.volume = 0.6f;
+				GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
+				foreach(GameObject _desk in _deskSearch)
+				{
+					_desk.rigidbody.isKinematic = false;
+					_desk.rigidbody.AddForce(0,100,0);
+				}
+			}
+			if(timer <= 20 && _mainBGM.pitch > 0.7f)
+			{
+				_mainBGM.pitch = 0.7f;
+				_mainBGM.volume = 0.3f;
+				Countdown30.volume = 0.75f;
+			}
+			if (timer <= 10 && !this.Countdown10.isPlaying)
+			{
+				_mainBGM.pitch = 0.5f;
+				_mainBGM.volume = 0.25f;
+				this.Countdown10.Play();
+			}
+			break;
 			default:
 				//Nothing should happen here
 				//Debug.Log("That level doesn't exist...");
@@ -287,5 +342,6 @@ public class GameManager : MonoBehaviour
 		Application.LoadLevel("DreamSpiral");
 		DayCount++;
 		timer = 360;
+		hasBeenIntroduced = false;
 	}
 }

@@ -12,7 +12,7 @@ public class VisualTimer : MonoBehaviour
 
 	void Start()
 	{
-		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom")
+		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
 	}
 
@@ -44,10 +44,8 @@ public class VisualTimer : MonoBehaviour
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Labrary")
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
-		else if (Application.loadedLevelName == "Classroom")
-		{
+		else if (Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GUI.Box(new Rect(Screen.width * 0.07f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
-		}
 	}
 	
 	private void HideGameTimer()

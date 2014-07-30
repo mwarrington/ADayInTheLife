@@ -5,7 +5,8 @@ public enum Scenes
 {
 	Hallway,
 	Labrary,
-	Classroom
+	Classroom,
+	Roomclass
 };
 
 public enum Days

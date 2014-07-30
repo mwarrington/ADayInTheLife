@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
 
 	void OnTriggerStay(Collider col)
 	{
-		if(col.gameObject.name == "Player")
+		if(col.gameObject.tag == "Player")
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
 				Application.LoadLevel(SceneToLoad);

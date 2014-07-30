@@ -37,6 +37,9 @@ public class PlayerScript : MonoBehaviour
 				case "Classroom":
 					_currentScene = Scenes.Classroom;
 					break;
+				case "Roomclass":
+					_currentScene = Scenes.Roomclass;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -154,6 +157,7 @@ public class PlayerScript : MonoBehaviour
 					_isWalkingRight = false;
 				}
 				break;
+
 			case Scenes.Labrary:
 				//When the player presses an arrow key
 				if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
@@ -185,6 +189,7 @@ public class PlayerScript : MonoBehaviour
 					_isWalkingRight = false;
 				}
 				break;
+
 			case Scenes.Classroom:
 				//When the player presses an arrow key
 				if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -240,6 +245,63 @@ public class PlayerScript : MonoBehaviour
 					_isRotatingRight = false;
 				}
 				break;
+
+			case Scenes.Roomclass:
+				//When the player presses an arrow key
+				if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+				{
+					_isWalkingForward = true;
+				}
+				if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+				{
+					_isWalkingBack = true;
+				}
+				if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+				{
+					_isRotatingLeft = true;
+				}
+				if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+				{
+					_isRotatingRight = true;
+				}
+				
+				//Once the player has pressed an arrow key but hasn't let go of an arrow key
+				if(_isWalkingForward && !_hitWallForward)
+				{
+					this.transform.Translate(Vector3.forward * PlayerVelocity);
+				}
+				if(_isWalkingBack && !_hitWallBack)
+				{
+					this.transform.Translate(Vector3.back * PlayerVelocity);
+				}
+				if(_isRotatingLeft)
+				{
+					this.transform.Rotate(Vector3.down);
+				}
+				if(_isRotatingRight)
+				{
+					this.transform.Rotate(Vector3.up);
+				}
+				
+				//When the player lets go of an arrow key
+				if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
+				{
+					_isWalkingForward = false;
+				}
+				if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
+				{
+					_isWalkingBack = false;
+				}
+				if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
+				{
+					_isRotatingLeft = false;
+				}
+				if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+				{
+					_isRotatingRight = false;
+				}
+				break;
+
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
 				break;

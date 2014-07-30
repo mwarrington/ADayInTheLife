@@ -98,8 +98,9 @@ public class NPCScript : MonoBehaviour
 
 	private void RotateTowardPlayer()
 	{
-		this.transform.LookAt(_player.transform);
-		this.transform.rotation = Quaternion.Euler(new Vector3(0 + _orriginalRotation.x, this.transform.rotation.eulerAngles.y + _orriginalRotation.y, 0 + _orriginalRotation.z));
+		//This will make sprites turn to look at the player
+		//this.transform.LookAt(_player.transform);
+		//this.transform.rotation = Quaternion.Euler(new Vector3(0 + _orriginalRotation.x, this.transform.rotation.eulerAngles.y + _orriginalRotation.y, 0 + _orriginalRotation.z));
 
 		//This will maintain rotation with the player
 		this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, _player.transform.rotation, 100);
@@ -122,7 +123,13 @@ public class NPCScript : MonoBehaviour
 					DialogString = this.name.ToString() + "_" + MyGameManager.CurrentDay.ToString();
 				break;
 			case NPCType.HallMonitor:
-				DialogString = "Hall_Monitor_Intro";
+				if(!MyGameManager.HasBeenIntroduced)
+				{
+					DialogString = "Hall_Monitor_Intro";
+					MyGameManager.HasBeenIntroduced = true;
+				}
+				else
+					MyConTrigger.trigger = DialogueTriggerEvent.OnUse;
 				break;
 			default:
 				Debug.Log ("That NPC type doesn't exist...");
