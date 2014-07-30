@@ -170,6 +170,13 @@ public class GameManager : MonoBehaviour
 					{
 						_locker.transform.parent.GetComponent<Animation>().Play();
 					}
+					
+					//GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+					//foreach(GameObject _locker in _lockerSearch)
+					//{
+					//	_locker.collider.enabled = true;
+					//	_locker.rigidbody.AddForce(10f, 10f, 10f);
+					//}
 				}
 				if(timer <= 20 && _mainBGM.pitch > 0.7f)
 				{
