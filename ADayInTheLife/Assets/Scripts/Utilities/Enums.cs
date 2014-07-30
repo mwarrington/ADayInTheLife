@@ -22,3 +22,9 @@ public enum NPCType
 	BCCharacter,
 	HallMonitor
 };
+
+public enum ItemType
+{
+	Computer,
+	Book
+}

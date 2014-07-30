@@ -12,6 +12,8 @@ public class VisualTimer : MonoBehaviour
 
 	void Start()
 	{
+		//For testing scenes out of order.
+		//Comment the next two lines out before making a build.
 		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
 	}

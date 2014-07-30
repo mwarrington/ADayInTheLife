@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+	static float timer = 35;
 	public float Timer
 	{
 		get
@@ -168,8 +168,7 @@ public class GameManager : MonoBehaviour
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
-						_locker.collider.enabled = true;
-						_locker.rigidbody.AddForce(10f, 10f, 10f);
+						_locker.transform.parent.GetComponent<Animation>().Play();
 					}
 				}
 				if(timer <= 20 && _mainBGM.pitch > 0.7f)
