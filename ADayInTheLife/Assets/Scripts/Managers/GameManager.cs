@@ -140,26 +140,38 @@ public class GameManager : MonoBehaviour
 	//This method handles the strange things that happen at the end of a day.
 	private void DayEnd()
 	{
+		if(timer <= 60 && _mainBGM.pitch > 0.9f)
+		{
+			_mainBGM.pitch = 0.9f;
+		}
+		if(timer <= 50 && !this.Countdown30.isPlaying)
+		{
+			_mainBGM.pitch = 0.85f;
+			_mainBGM.volume = 0.7f;
+			Countdown30.Play();
+			Countdown30.volume = 0.3f;
+		}
+		if(timer <= 40 && _mainBGM.pitch > 0.8f)
+		{
+			_mainBGM.pitch = 0.8f;
+			_mainBGM.volume = 0.65f;
+			Countdown30.volume = 0.5f;
+		}
+		if(timer <= 20 && _mainBGM.pitch > 0.7f)
+		{
+			_mainBGM.pitch = 0.7f;
+			_mainBGM.volume = 0.3f;
+			Countdown30.volume = 0.75f;
+		}
+		if (timer <= 10 && !this.Countdown10.isPlaying)
+		{
+			_mainBGM.pitch = 0.5f;
+			_mainBGM.volume = 0.25f;
+			this.Countdown10.Play();
+		}
 		switch(Application.loadedLevelName)
 		{
 			case "Hallway":
-				if(timer <= 60 && _mainBGM.pitch > 0.9f)
-				{
-					_mainBGM.pitch = 0.9f;
-				}
-				if(timer <= 50 && !this.Countdown30.isPlaying)
-				{
-					_mainBGM.pitch = 0.85f;
-					_mainBGM.volume = 0.7f;
-					Countdown30.Play();
-					Countdown30.volume = 0.3f;
-				}
-				if(timer <= 40 && _mainBGM.pitch > 0.8f)
-				{
-					_mainBGM.pitch = 0.8f;
-					_mainBGM.volume = 0.65f;
-					Countdown30.volume = 0.5f;
-				}
 				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
 					_mainBGM.pitch = 0.75f;
@@ -168,7 +180,7 @@ public class GameManager : MonoBehaviour
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
-						_locker.transform.parent.GetComponent<Animation>().Play();
+						StartCoroutine(StaggeredAnimationPlay(_locker.transform.parent.GetComponent<Animation>()));
 					}
 					
 					//GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
@@ -178,37 +190,8 @@ public class GameManager : MonoBehaviour
 					//	_locker.rigidbody.AddForce(10f, 10f, 10f);
 					//}
 				}
-				if(timer <= 20 && _mainBGM.pitch > 0.7f)
-				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.3f;
-					Countdown30.volume = 0.75f;
-				}
-				if (timer <= 10 && !this.Countdown10.isPlaying)
-				{
-					_mainBGM.pitch = 0.5f;
-					_mainBGM.volume = 0.25f;
-					this.Countdown10.Play();
-				}
 				break;
 			case "Labrary":
-				if(timer <= 60 && _mainBGM.pitch > 0.9f)
-				{
-					_mainBGM.pitch = 0.9f;
-				}
-				if(timer <= 50 && !this.Countdown30.isPlaying)
-				{
-					_mainBGM.pitch = 0.85f;
-					_mainBGM.volume = 0.7f;
-					Countdown30.Play();
-					Countdown30.volume = 0.3f;
-				}
-				if(timer <= 40 && _mainBGM.pitch > 0.8f)
-				{
-					_mainBGM.pitch = 0.8f;
-					_mainBGM.volume = 0.65f;
-					Countdown30.volume = 0.5f;
-				}
 				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
 					_mainBGM.pitch = 0.75f;
@@ -220,37 +203,8 @@ public class GameManager : MonoBehaviour
 						_computer.GetComponent<Animation>().Play();
 					}
 				}
-				if(timer <= 20 && _mainBGM.pitch > 0.7f)
-				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.3f;
-					Countdown30.volume = 0.75f;
-				}
-				if (timer <= 10 && !this.Countdown10.isPlaying)
-				{
-					_mainBGM.pitch = 0.5f;
-					_mainBGM.volume = 0.25f;
-					this.Countdown10.Play();
-				}
 				break;
 			case "Classroom":
-				if(timer <= 60 && _mainBGM.pitch > 0.9f)
-				{
-					_mainBGM.pitch = 0.9f;
-				}
-				if(timer <= 50 && !this.Countdown30.isPlaying)
-				{
-					_mainBGM.pitch = 0.85f;
-					_mainBGM.volume = 0.7f;
-					Countdown30.Play();
-					Countdown30.volume = 0.3f;
-				}
-				if(timer <= 40 && _mainBGM.pitch > 0.8f)
-				{
-					_mainBGM.pitch = 0.8f;
-					_mainBGM.volume = 0.65f;
-					Countdown30.volume = 0.5f;
-				}
 				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
 					_mainBGM.pitch = 0.75f;
@@ -263,62 +217,21 @@ public class GameManager : MonoBehaviour
 						_desk.rigidbody.isKinematic = false;
 					}
 				}
-				if(timer <= 20 && _mainBGM.pitch > 0.7f)
+				break;
+			case "Roomclass":
+				if (timer <= 30 && _mainBGM.pitch > 0.75f)
 				{
-					_mainBGM.pitch = 0.7f;
-					_mainBGM.volume = 0.3f;
-					Countdown30.volume = 0.75f;
+					_mainBGM.pitch = 0.75f;
+					_mainBGM.volume = 0.5f;
+					Countdown30.volume = 0.6f;
+					GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
+					foreach(GameObject _desk in _deskSearch)
+					{
+						_desk.rigidbody.isKinematic = false;
+						_desk.rigidbody.AddForce(0,100,0);
+					}
 				}
-				if (timer <= 10 && !this.Countdown10.isPlaying)
-				{
-					_mainBGM.pitch = 0.5f;
-					_mainBGM.volume = 0.25f;
-					this.Countdown10.Play();
-				}
-			break;
-		case "Roomclass":
-			if(timer <= 60 && _mainBGM.pitch > 0.9f)
-			{
-				_mainBGM.pitch = 0.9f;
-			}
-			if(timer <= 50 && !this.Countdown30.isPlaying)
-			{
-				_mainBGM.pitch = 0.85f;
-				_mainBGM.volume = 0.7f;
-				Countdown30.Play();
-				Countdown30.volume = 0.3f;
-			}
-			if(timer <= 40 && _mainBGM.pitch > 0.8f)
-			{
-				_mainBGM.pitch = 0.8f;
-				_mainBGM.volume = 0.65f;
-				Countdown30.volume = 0.5f;
-			}
-			if (timer <= 30 && _mainBGM.pitch > 0.75f)
-			{
-				_mainBGM.pitch = 0.75f;
-				_mainBGM.volume = 0.5f;
-				Countdown30.volume = 0.6f;
-				GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
-				foreach(GameObject _desk in _deskSearch)
-				{
-					_desk.rigidbody.isKinematic = false;
-					_desk.rigidbody.AddForce(0,100,0);
-				}
-			}
-			if(timer <= 20 && _mainBGM.pitch > 0.7f)
-			{
-				_mainBGM.pitch = 0.7f;
-				_mainBGM.volume = 0.3f;
-				Countdown30.volume = 0.75f;
-			}
-			if (timer <= 10 && !this.Countdown10.isPlaying)
-			{
-				_mainBGM.pitch = 0.5f;
-				_mainBGM.volume = 0.25f;
-				this.Countdown10.Play();
-			}
-			break;
+				break;
 			default:
 				//Nothing should happen here
 				//Debug.Log("That level doesn't exist...");
@@ -339,6 +252,13 @@ public class GameManager : MonoBehaviour
 		_mainBGM.volume -= Time.deltaTime * 0.15f;
 		_fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
 
+	}
+
+	private IEnumerator StaggeredAnimationPlay(Animation animation)
+	{
+		float randFloat = Random.Range(0, 0.7f);
+		yield return new WaitForSeconds(randFloat);
+		animation.Play();
 	}
 
 	private void LoadNextLevel()
