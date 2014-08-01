@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 35;
+	static float timer = 360;
 	public float Timer
 	{
 		get
@@ -68,18 +68,18 @@ public class GameManager : MonoBehaviour
 	}
 
 	//private fields with properties that have get and set accessors
-	private bool _gameTimerActive;
+	static bool gameTimerActive;
 	public bool GameTimerActive
 	{
 		get
 		{
-			return _gameTimerActive;
+			return gameTimerActive;
 		}
 		set
 		{
 			if(value)
 				FindObjectOfType<VisualTimer>().ShowGameTimer();
-			_gameTimerActive = value;
+			gameTimerActive = value;
 		}
 	}
 
@@ -121,6 +121,8 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
+		Debug.Log (timer);
+
 		if(GameTimerActive)
 		{
 			timer -= Time.deltaTime;
@@ -267,6 +269,7 @@ public class GameManager : MonoBehaviour
 		DialogueManager.StopConversation();
 		Application.LoadLevel("DreamSpiral");
 		DayCount++;
+		gameTimerActive = false;
 		timer = 360;
 		hasBeenIntroduced = false;
 	}

@@ -12,16 +12,35 @@ public class VisualTimer : MonoBehaviour
 
 	void Start()
 	{
-		//For testing scenes out of order.
-		//Comment the next two lines out before making a build.
-		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
-			GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
+		//This handles turning off the the Timer Cloud renderers
+		if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 > 1)
+		{
+			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+			{
+				sr.enabled = false;
+			}
+		}
 	}
 
 	void OnGUI()
 	{
 		if(_showingGameTimer && !DialogueManager.IsConversationActive)
 			GameTimer();
+	}
+
+	void Update()
+	{
+		//This handles when to turn on the Timer Cloud renderers
+		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
+		{
+			if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 < 1 && !_showingGameTimer)
+				GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
+		}
+		else
+		{
+			if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 < 1 && !_showingGameTimer && GameObject.Find("GameManager").GetComponent<GameManager>().HasBeenIntroduced == true)
+				GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
+		}
 	}
 
 	public void ShowGameTimer()
@@ -32,7 +51,12 @@ public class VisualTimer : MonoBehaviour
 		}
 		
 		_showingGameTimer = true;
-		TimerCloud.SetActive(true);
+		{
+			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+			{
+				sr.enabled = true;
+			}
+		}
 	}
 	
 	private void GameTimer()
@@ -53,7 +77,12 @@ public class VisualTimer : MonoBehaviour
 	private void HideGameTimer()
 	{
 		_showingGameTimer = false;
-		TimerCloud.SetActive(false);
+		{
+			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+			{
+				sr.enabled = false;
+			}
+		}
 		Invoke ("ShowGameTimer", 25);
 	}
 }

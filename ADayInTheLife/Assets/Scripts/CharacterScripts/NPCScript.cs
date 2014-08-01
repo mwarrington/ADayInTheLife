@@ -62,6 +62,7 @@ public class NPCScript : MonoBehaviour
 			{
 				MyConTrigger.trigger = DialogueTriggerEvent.OnUse;
 				MyGameManager.GameTimerActive = true;
+				MyGameManager.HasBeenIntroduced = true;
 			}
 			DialogString = "Hall_Monitor_" + Random.Range(1,MyDatabase.conversations.Count+1).ToString();
 			MyConTrigger.conversation = DialogString;
@@ -126,7 +127,6 @@ public class NPCScript : MonoBehaviour
 				if(!MyGameManager.HasBeenIntroduced)
 				{
 					DialogString = "Hall_Monitor_Intro";
-					MyGameManager.HasBeenIntroduced = true;
 				}
 				else
 					MyConTrigger.trigger = DialogueTriggerEvent.OnUse;
