@@ -25,7 +25,20 @@ public class VisualTimer : MonoBehaviour
 	void OnGUI()
 	{
 		if(_showingGameTimer && !DialogueManager.IsConversationActive)
+		{
 			GameTimer();
+			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+			{
+				sr.enabled = true;
+			}
+		}
+		else
+		{
+			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+			{
+				sr.enabled = false;
+			}
+		}
 	}
 
 	void Update()
@@ -51,12 +64,6 @@ public class VisualTimer : MonoBehaviour
 		}
 		
 		_showingGameTimer = true;
-		{
-			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
-			{
-				sr.enabled = true;
-			}
-		}
 	}
 	
 	private void GameTimer()
@@ -77,12 +84,5 @@ public class VisualTimer : MonoBehaviour
 	private void HideGameTimer()
 	{
 		_showingGameTimer = false;
-		{
-			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
-			{
-				sr.enabled = false;
-			}
-		}
-		Invoke ("ShowGameTimer", 25);
 	}
 }

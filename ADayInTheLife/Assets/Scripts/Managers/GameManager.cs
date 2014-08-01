@@ -121,8 +121,6 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
-		Debug.Log (timer);
-
 		if(GameTimerActive)
 		{
 			timer -= Time.deltaTime;
