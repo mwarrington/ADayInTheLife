@@ -27,6 +27,15 @@ public class HallMonitor : NPCScript
 	
 	protected override void OnConversationEnd (Transform actor)
 	{
+		if(myConTrigger.trigger == DialogueTriggerEvent.OnStart)
+		{
+			myConTrigger.trigger = DialogueTriggerEvent.OnUse;
+			myGameManager.GameTimerActive = true;
+			myGameManager.HasBeenIntroduced = true;
+		}
+		dialogString = "Hall_Monitor_" + Random.Range(1,MyDatabase.conversations.Count+1).ToString();
+		myConTrigger.conversation = dialogString;
+
 		base.OnConversationEnd (actor);
 	}
 	
@@ -38,5 +47,9 @@ public class HallMonitor : NPCScript
 	protected override void DialogSetup ()
 	{
 		base.DialogSetup ();
+		if(!myGameManager.HasBeenIntroduced)
+			dialogString = "Hall_Monitor_Intro";
+		else
+			myConTrigger.trigger = DialogueTriggerEvent.OnUse;
 	}
 }

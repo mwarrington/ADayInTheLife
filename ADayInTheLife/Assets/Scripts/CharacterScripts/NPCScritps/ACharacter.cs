@@ -4,6 +4,8 @@ using PixelCrushers.DialogueSystem;
 
 public class ACharacter : NPCScript
 {
+	public int DialogIndex;
+
 	protected override void Start ()
 	{
 		base.Start ();
@@ -38,5 +40,6 @@ public class ACharacter : NPCScript
 	protected override void DialogSetup ()
 	{
 		base.DialogSetup ();
+		dialogString = DialogIndex.ToString();
 	}
 }

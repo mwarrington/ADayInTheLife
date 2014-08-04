@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\HallMonitor.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\Thoughts.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\Dialog\ConversationLogger.cs" />
      <Compile Include="Assets\Scripts\Dialog\Usable.cs" />
@@ -89,7 +90,6 @@
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\SharedVariables.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Thoughts.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Door.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ComputerControllers\SimpleComputerController.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemController.cs" />
