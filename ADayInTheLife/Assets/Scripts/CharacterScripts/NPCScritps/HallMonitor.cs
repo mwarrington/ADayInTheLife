@@ -52,4 +52,9 @@ public class HallMonitor : NPCScript
 		else
 			myConTrigger.trigger = DialogueTriggerEvent.OnUse;
 	}
+
+	private void DayEndBehavior()
+	{
+
+	}
 }

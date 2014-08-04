@@ -3,14 +3,26 @@ using System.Collections;
 
 public class ItemController : MonoBehaviour
 {
+	protected GameObject player;
+	protected Camera itemCamera;
 
-	// Use this for initialization
-	void Start () {
-	
+	protected virtual void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	protected virtual void Update()
+	{
+		TurnOff();
+	}
+
+	protected virtual void TurnOff()
+	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			Camera.main.depth = 5;
+			player.GetComponent<PlayerScript>().enabled = true;
+			Destroy(this.gameObject);
+		}
 	}
 }
