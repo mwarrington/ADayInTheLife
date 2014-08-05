@@ -77,8 +77,6 @@ public class GameManager : MonoBehaviour
 		}
 		set
 		{
-			if(value)
-				FindObjectOfType<VisualTimer>().ShowGameTimer();
 			gameTimerActive = value;
 		}
 	}

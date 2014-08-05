@@ -4,7 +4,62 @@ using PixelCrushers.DialogueSystem;
 
 public class VisualTimer : MonoBehaviour
 {
+	protected bool showingGameTimer
+	{
+		get
+		{
+			if(_showingGameTimer)
+			{
+				if(DialogueManager.IsConversationActive)
+					_showingGameTimer = false;
+				else if(isItemActive)
+					_showingGameTimer = false;
+				else
+				{
+					foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+					{
+						sr.enabled = true;
+					}
+				}
+			}
+			else
+			{
+				foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
+				{
+					sr.enabled = false;
+				}
+			}
+
+			return _showingGameTimer;
+		}
+
+		set
+		{
+			_showingGameTimer = value;
+		}
+	}
 	private bool _showingGameTimer = false;
+
+	protected bool isItemActive
+	{
+		get
+		{
+			foreach (ItemInteract ii in GameObject.FindObjectsOfType<ItemInteract>())
+			{
+				if(ii.ItemActive)
+				{
+					_isItemActive = true;
+					return _isItemActive;
+				}
+				else
+					_isItemActive = false;
+			}
+			return _isItemActive;
+		}
+	}
+	private bool _isItemActive;
+
+	private GameManager _myGameManager;
 	private int _gameTimer;
 
 	public GUIStyle Font;
@@ -12,32 +67,20 @@ public class VisualTimer : MonoBehaviour
 
 	void Start()
 	{
+		_myGameManager = GameObject.FindObjectOfType<GameManager>();
+
 		//This handles turning off the the Timer Cloud renderers
-		if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 > 1)
+		if(_myGameManager.Timer % 30 > 1)
 		{
-			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
-			{
-				sr.enabled = false;
-			}
+			showingGameTimer = false;
 		}
 	}
 
 	void OnGUI()
 	{
-		if(_showingGameTimer && !DialogueManager.IsConversationActive)
+		if(showingGameTimer)
 		{
 			GameTimer();
-			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
-			{
-				sr.enabled = true;
-			}
-		}
-		else
-		{
-			foreach (SpriteRenderer sr in TimerCloud.GetComponentsInChildren<SpriteRenderer>())
-			{
-				sr.enabled = false;
-			}
 		}
 	}
 
@@ -46,29 +89,39 @@ public class VisualTimer : MonoBehaviour
 		//This handles when to turn on the Timer Cloud renderers
 		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 		{
-			if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 < 1 && !_showingGameTimer)
-				GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
+			if(_myGameManager.Timer % 30 < 1)
+			{
+				if(!showingGameTimer)
+				{
+					_myGameManager.GameTimerActive = true;
+					showingGameTimer = true;
+				}
+			}
+			else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
+			{
+				showingGameTimer = false;
+			}
 		}
 		else
 		{
-			if(GameObject.Find("GameManager").GetComponent<GameManager>().Timer % 30 < 1 && !_showingGameTimer && GameObject.Find("GameManager").GetComponent<GameManager>().HasBeenIntroduced == true)
-				GameObject.Find("GameManager").GetComponent<GameManager>().GameTimerActive = true;
+			if(_myGameManager.Timer % 30 < 1 && _myGameManager.HasBeenIntroduced == true)
+			{
+				if(!showingGameTimer)
+				{
+					_myGameManager.GameTimerActive = true;
+					showingGameTimer = true;
+				}
+			}
+			else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
+			{
+				showingGameTimer = false;
+			}
 		}
-	}
-
-	public void ShowGameTimer()
-	{
-		if(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer > 61)
-		{
-			Invoke ("HideGameTimer", 5);
-		}
-		
-		_showingGameTimer = true;
 	}
 	
 	private void GameTimer()
 	{
-		_gameTimer = (int)GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().Timer;
+		_gameTimer = (int)_myGameManager.Timer;
 		int displaySeconds = Mathf.CeilToInt(_gameTimer) % 60;
 		int displayMinutes = Mathf.CeilToInt(_gameTimer) / 60;
 		string text = string.Format ("{0:00}:{1:00}", displayMinutes, displaySeconds);
@@ -79,10 +132,5 @@ public class VisualTimer : MonoBehaviour
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GUI.Box(new Rect(Screen.width * 0.07f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
-	}
-	
-	private void HideGameTimer()
-	{
-		_showingGameTimer = false;
 	}
 }
