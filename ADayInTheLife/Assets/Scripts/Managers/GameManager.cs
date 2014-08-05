@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 
 	//Public fields
 	public bool	FadingAway;
+	public Camera MainCamera;
 	public AudioSource Countdown30,
 					   Countdown10;
 
@@ -117,6 +118,7 @@ public class GameManager : MonoBehaviour
 			databasesLoadedForLabrary = true;
 		}
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
+		MainCamera = Camera.main;
 	}
 
 	void Update ()

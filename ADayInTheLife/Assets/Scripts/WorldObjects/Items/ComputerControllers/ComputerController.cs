@@ -37,7 +37,7 @@ public class ComputerController : ItemController
 		base.TurnOff ();
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			itemCamera.depth = -5;
+			itemCamera.enabled = false;
 		}
 	}
 }

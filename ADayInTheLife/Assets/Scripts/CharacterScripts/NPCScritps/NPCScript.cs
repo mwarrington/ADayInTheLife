@@ -42,6 +42,7 @@ public class NPCScript : MonoBehaviour
 		if(MyType != NPCType.ACharacter)
 		{
 			CloseUpCamera.enabled = true;
+			myGameManager.MainCamera.enabled = false;
 
 			if(myVoice != null)
 				myVoice.Play();
@@ -56,7 +57,10 @@ public class NPCScript : MonoBehaviour
 	protected virtual void OnConversationEnd(Transform actor)
 	{
 		if(MyType != NPCType.ACharacter)
+		{
 			CloseUpCamera.enabled = false;
+			myGameManager.MainCamera.enabled = true;
+		}
 
 		if(HasSharedVariables)
 		{
