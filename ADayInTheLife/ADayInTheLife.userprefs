@@ -1,14 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Managers\GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs">
     <Files>
       <File FileName="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\ItemController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\ComputerControllers\ComputerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Dialog\Usable.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="123" Column="3" />
-      <File FileName="Assets\Scripts\Interface\VisualTimer.cs" Line="137" Column="1" />
+      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interface\VisualTimer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WorldObjects\Items\Computers\Page.cs" Line="6" Column="25" />
+      <File FileName="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs" Line="13" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

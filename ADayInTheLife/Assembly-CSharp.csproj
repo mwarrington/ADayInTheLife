@@ -91,7 +91,8 @@
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\SharedVariables.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Door.cs" />
-     <Compile Include="Assets\Scripts\WorldObjects\Items\ComputerControllers\ComputerController.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\Page.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemController.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\LabraryTeleporter.cs" />
