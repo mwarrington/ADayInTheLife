@@ -26,7 +26,6 @@ public class NPCScript : MonoBehaviour
 		myVoice = this.GetComponent<AudioSource>();
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
-		Invoke("DialogSetup", 0.1f);
 	}
 	
 	// Update is called once per frame

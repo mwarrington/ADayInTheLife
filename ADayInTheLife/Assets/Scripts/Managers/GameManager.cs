@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 10;
+	static float timer = 90;
 	public float Timer
 	{
 		get
@@ -263,13 +263,32 @@ public class GameManager : MonoBehaviour
 
 	private void LoadNextLevel()
 	{
+		bool loadNewLevel = false;
+
+		for(int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
+		{
+			if(DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
+				loadNewLevel = true;
+		}
+
+		if(loadNewLevel)
+		{
+			Application.LoadLevel("MainMenu");
+			DayCount = 0;
+			timer = 360;
+			//Something to clear the database for new databases.
+		}
+		else
+		{
+			this.GetComponent<VariableManager>().ResetEventVars();
+			Application.LoadLevel("DreamSpiral");
+			DayCount++;
+			hasBeenIntroduced = false;
+			timer = 360;
+		}
+
 		FadingAway = false;
 		DialogueManager.StopConversation();
-		this.GetComponent<VariableManager>().ResetEventVars();
-		Application.LoadLevel("DreamSpiral");
-		DayCount++;
 		gameTimerActive = false;
-		timer = 360;
-		hasBeenIntroduced = false;
 	}
 }

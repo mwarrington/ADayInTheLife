@@ -7,6 +7,7 @@ public class HallMonitor : NPCScript
 	protected override void Start ()
 	{
 		base.Start ();
+		DialogSetup();
 	}
 	
 	protected override void Update ()

@@ -5,12 +5,10 @@ public class DreamSpiral : MonoBehaviour
 {
     private RaycastHit _hit;
     private GameObject _dreamSpiral,
-                   _startCloud,
-                   _textCloud;
+                   _startCloud;
 	private AudioSource _currentAudioSource,
 					  _secondSFX,
 					  _mainBGM;
-    private Material[] _textMatertials = new Material[6];
     private Material _startCloudActive,
                      _startCloudInactive;
     private bool _canMove = true;
@@ -18,25 +16,19 @@ public class DreamSpiral : MonoBehaviour
 
     void Awake()
     {
-		_textMatertials[0] = Resources.Load("Interface/DreamSpiral/Materials/DreamText1") as Material;
-		_textMatertials[1] = Resources.Load("Interface/DreamSpiral/Materials/DreamText2") as Material;
-		_textMatertials[2] = Resources.Load("Interface/DreamSpiral/Materials/DreamText3") as Material;
-		_textMatertials[3] = Resources.Load("Interface/DreamSpiral/Materials/DreamText4") as Material;
-		_textMatertials[4] = Resources.Load("Interface/DreamSpiral/Materials/DreamText5") as Material;
-		_textMatertials[5] = Resources.Load("Interface/DreamSpiral/Materials/DreamText6") as Material;
-        _startCloudActive = Resources.Load("Interface/MainMenu/Materials/StartCloudActive") as Material;
-        _startCloudInactive = Resources.Load("Interface/MainMenu/Materials/StartCloudInactive") as Material;
+		
+        _startCloudActive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudActive") as Material;
+		_startCloudInactive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudInactive") as Material;
 
         _dreamSpiral = GameObject.Find("DreamSpiral");
-        _startCloud = GameObject.Find("StartCloud");
-        _textCloud = GameObject.Find("TextCloud");
+        _startCloud = GameObject.Find("WakeUpCloud");
+
     }
 
     // Use this for initialization
     void Start()
     {
         _startCloud.renderer.material = _startCloudInactive;
-		_textCloud.renderer.material = _textMatertials[Random.Range(0, 6)];
 		_secondSFX = GameObject.FindGameObjectWithTag("SecondSFX").GetComponent<AudioSource>();
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
     }
@@ -55,7 +47,7 @@ public class DreamSpiral : MonoBehaviour
         {
             switch (_hit.collider.name)
             {
-                case "StartCloud":
+                case "WakeUpCloud":
                     _canMove = true;
                     _startCloud.renderer.material = _startCloudActive;
 					_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
@@ -73,6 +65,10 @@ public class DreamSpiral : MonoBehaviour
                     break;
 
                 case "DreamSpiral":
+					_startCloud.renderer.material = _startCloudInactive;
+					if(_currentAudioSource != null)
+						if(_currentAudioSource.isPlaying)
+							_currentAudioSource.Stop();
                     LogoSpiral();
                     break;
             }
@@ -89,7 +85,7 @@ public class DreamSpiral : MonoBehaviour
 
     void LogoSpiral()
     {
-        _canMove = false;
+        //_canMove = false;
 
         if (Input.GetMouseButton(0))
         {

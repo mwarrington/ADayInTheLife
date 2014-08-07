@@ -14,6 +14,7 @@ public class BCCharacter : NPCScript
 	{
 		base.Start ();
 		_myThoughts = MyThoughtCloud.GetComponent<Thoughts>();
+		Invoke("DialogSetup", 0.1f);
 	}
 	
 	protected override void Update ()
@@ -71,7 +72,7 @@ public class BCCharacter : NPCScript
 		}
 
 		//Rests the TalkedTo vars
-		if(_myProgress > DialogueLua.GetVariable(progressVarName).AsInt)
+		if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
 		{
 			DialogueLua.SetVariable ("TalkedTo" + this.name, false);
 			_myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
@@ -79,9 +80,9 @@ public class BCCharacter : NPCScript
 
 		//Sets the Conversation to load
 		if(PlayerSpacificDialog && myGameManager.IsSarylyn)
-			dialogString = this.name.ToString() + "_" + myGameManager.CurrentDay.ToString() + "_Sarylyn";
+			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
 		else if(PlayerSpacificDialog && !myGameManager.IsSarylyn)
-			dialogString = this.name.ToString() + "_" + myGameManager.CurrentDay.ToString() + "_Sanome";
+			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sanome";
 		else
 			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt;
 
