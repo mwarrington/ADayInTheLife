@@ -6,7 +6,7 @@ using PixelCrushers.DialogueSystem;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 90;
+	static float timer = 360;
 	public float Timer
 	{
 		get

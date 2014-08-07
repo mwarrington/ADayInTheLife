@@ -44,7 +44,10 @@ public class VariableManager : MonoBehaviour
 
 		for(int i = 0; i < _eventVariables.Count; i++)
 		{
-			DialogueLua.SetVariable(_eventVariables[i], false);
+			if(DialogueLua.GetVariable(_eventVariables[i]).luaValue.GetType().ToString() == "Language.Lua.LuaBoolean")
+				DialogueLua.SetVariable(_eventVariables[i], false);
+			else
+				DialogueLua.SetVariable(_eventVariables[i], 0);
 		}
 	}
 }

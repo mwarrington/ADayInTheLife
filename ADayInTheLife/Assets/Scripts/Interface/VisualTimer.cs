@@ -89,7 +89,11 @@ public class VisualTimer : MonoBehaviour
 		//This handles when to turn on the Timer Cloud renderers
 		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 		{
-			if(_myGameManager.Timer % 30 < 1)
+			if(_myGameManager.Timer < 61)
+			{
+				showingGameTimer = true;
+			}
+			else if(_myGameManager.Timer % 30 < 1)
 			{
 				if(!showingGameTimer)
 				{
@@ -104,7 +108,11 @@ public class VisualTimer : MonoBehaviour
 		}
 		else
 		{
-			if(_myGameManager.Timer % 30 < 1 && _myGameManager.HasBeenIntroduced == true)
+			if(_myGameManager.Timer < 61)
+			{
+				showingGameTimer = true;
+			}
+			else if(_myGameManager.Timer % 30 < 1 && _myGameManager.HasBeenIntroduced == true)
 			{
 				if(!showingGameTimer)
 				{
