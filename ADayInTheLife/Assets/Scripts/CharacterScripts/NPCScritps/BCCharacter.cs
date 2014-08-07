@@ -6,7 +6,9 @@ public class BCCharacter : NPCScript
 {
 	public GameObject MyThoughtCloud;
 	public SpriteRenderer CurrentThoughtImage;
+
 	private Thoughts _myThoughts;
+	private int _myProgress = 1;
 
 	protected override void Start ()
 	{
@@ -50,6 +52,7 @@ public class BCCharacter : NPCScript
 	protected override void OnConversationEnd (Transform actor)
 	{
 		base.OnConversationEnd (actor);
+		DialogSetup ();
 	}
 	
 	protected override void RotateTowardPlayer ()
@@ -59,13 +62,29 @@ public class BCCharacter : NPCScript
 	
 	protected override void DialogSetup ()
 	{
-		base.DialogSetup ();
+		//Finds the progress Var
+		string progressVarName = "";
+		for(int i = 0; i < MyDatabase.variables.Count; i++)
+		{
+			if(MyDatabase.variables[i].fields[2].value == "CharacterProgress")
+				progressVarName = MyDatabase.variables[i].fields[0].value;
+		}
 
+		//Rests the TalkedTo vars
+		if(_myProgress > DialogueLua.GetVariable(progressVarName).AsInt)
+		{
+			DialogueLua.SetVariable ("TalkedTo" + this.name, false);
+			_myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
+		}
+
+		//Sets the Conversation to load
 		if(PlayerSpacificDialog && myGameManager.IsSarylyn)
 			dialogString = this.name.ToString() + "_" + myGameManager.CurrentDay.ToString() + "_Sarylyn";
 		else if(PlayerSpacificDialog && !myGameManager.IsSarylyn)
 			dialogString = this.name.ToString() + "_" + myGameManager.CurrentDay.ToString() + "_Sanome";
 		else
-			dialogString = this.name.ToString() + "_" + myGameManager.CurrentDay.ToString();
+			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt;
+
+		base.DialogSetup ();
 	}
 }

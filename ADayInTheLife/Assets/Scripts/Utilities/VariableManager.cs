@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 
-public class SharedVariables : MonoBehaviour
+public class VariableManager : MonoBehaviour
 {
+	private List<string> _eventVariables = new List<string>();
+	private DialogueDatabase _myMasterDatabase;
+
+	void Start()
+	{
+		_myMasterDatabase = DialogueManager.MasterDatabase;
+	}
+
 	//This method will set variables in databases that share variables
 	public void SyncVariables(string CurrentConvo)
 	{
@@ -19,5 +28,23 @@ public class SharedVariables : MonoBehaviour
 				break;
 		}
 		//DialogueLua.GetVariable("Helped Gonzo").AsBool);
+	}
+
+	public void ResetEventVars()
+	{
+		_eventVariables.Clear();
+
+		for(int i = 0; i < _myMasterDatabase.variables.Count; i++)
+		{
+			if(_myMasterDatabase.variables[i].fields[2].value == "EventVar")
+			{
+				_eventVariables.Add(_myMasterDatabase.variables[i].fields[0].value);
+			}
+		}
+
+		for(int i = 0; i < _eventVariables.Count; i++)
+		{
+			DialogueLua.SetVariable(_eventVariables[i], false);
+		}
 	}
 }

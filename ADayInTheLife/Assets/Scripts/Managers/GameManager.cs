@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+	static float timer = 10;
 	public float Timer
 	{
 		get
@@ -265,6 +265,7 @@ public class GameManager : MonoBehaviour
 	{
 		FadingAway = false;
 		DialogueManager.StopConversation();
+		this.GetComponent<VariableManager>().ResetEventVars();
 		Application.LoadLevel("DreamSpiral");
 		DayCount++;
 		gameTimerActive = false;

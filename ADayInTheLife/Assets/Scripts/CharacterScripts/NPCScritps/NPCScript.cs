@@ -26,8 +26,7 @@ public class NPCScript : MonoBehaviour
 		myVoice = this.GetComponent<AudioSource>();
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
-		DialogSetup();
-		myConTrigger.conversation = dialogString;
+		Invoke("DialogSetup", 0.1f);
 	}
 	
 	// Update is called once per frame
@@ -64,7 +63,7 @@ public class NPCScript : MonoBehaviour
 
 		if(HasSharedVariables)
 		{
-			GameObject.FindGameObjectWithTag("GameManager").GetComponent<SharedVariables>().SyncVariables(dialogString);
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
 	}
 
@@ -81,6 +80,6 @@ public class NPCScript : MonoBehaviour
 	//This method sets up what conversation the NPC will speak.
 	protected virtual void DialogSetup()
 	{
-
+		myConTrigger.conversation = dialogString;
 	}
 }

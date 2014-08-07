@@ -46,11 +46,12 @@ public class HallMonitor : NPCScript
 	
 	protected override void DialogSetup ()
 	{
-		base.DialogSetup ();
 		if(!myGameManager.HasBeenIntroduced)
 			dialogString = "Hall_Monitor_Intro";
 		else
 			myConTrigger.trigger = DialogueTriggerEvent.OnUse;
+
+		base.DialogSetup ();
 	}
 
 	private void DayEndBehavior()

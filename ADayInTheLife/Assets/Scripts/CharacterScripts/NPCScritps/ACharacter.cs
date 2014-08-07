@@ -39,7 +39,8 @@ public class ACharacter : NPCScript
 
 	protected override void DialogSetup ()
 	{
-		base.DialogSetup ();
 		dialogString = DialogIndex.ToString();
+
+		base.DialogSetup ();
 	}
 }
