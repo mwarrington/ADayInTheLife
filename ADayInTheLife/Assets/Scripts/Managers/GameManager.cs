@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
 	static int DayCount = 0;
 	static bool databasesLoadedForHallway = false;
 	static bool databasesLoadedForLabrary = false;
+	static bool databasesLoadedForClassroom = false;
+	static bool databasesLoadedForRoomclass = false;
 
 	//Private fields
 	private AudioSource _mainBGM;
@@ -114,6 +116,22 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(n.MyDatabase);
 			}
 			databasesLoadedForLabrary = true;
+		}
+		else if(Application.loadedLevelName == "Classroom" && !databasesLoadedForLabrary)
+		{
+			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
+			{
+				DialogueManager.AddDatabase(n.MyDatabase);
+			}
+			databasesLoadedForClassroom = true;
+		}
+		else if(Application.loadedLevelName == "Roomclass" && !databasesLoadedForLabrary)
+		{
+			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
+			{
+				DialogueManager.AddDatabase(n.MyDatabase);
+			}
+			databasesLoadedForRoomclass = true;
 		}
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
@@ -180,7 +198,7 @@ public class GameManager : MonoBehaviour
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
-						StartCoroutine(StaggeredAnimationPlay(_locker.transform.parent.GetComponent<Animation>()));
+						StartCoroutine(StaggeredAnimationPlay(_locker.transform.GetComponent<Animation>()));
 					}
 					
 					//GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
@@ -240,8 +258,8 @@ public class GameManager : MonoBehaviour
 		if(timer <= 3)
 		{
 			Invoke("LoadNextLevel", 3);
-			if(!FadingAway)
-				_fadeMask = Camera.current.GetComponentInChildren<SpriteRenderer>();
+			DialogueManager.StopConversation();
+			_fadeMask = MainCamera.GetComponentInChildren<SpriteRenderer>();
 			FadingAway = true;
 		}
 	}
@@ -268,7 +286,10 @@ public class GameManager : MonoBehaviour
 		for(int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
 		{
 			if(DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
-				loadNewLevel = true;
+			{
+				if(DialogueManager.MasterDatabase.variables[i].fields[1].value == "true")
+					loadNewLevel = true;
+			}
 		}
 
 		if(loadNewLevel)
@@ -288,7 +309,6 @@ public class GameManager : MonoBehaviour
 		}
 
 		FadingAway = false;
-		DialogueManager.StopConversation();
 		gameTimerActive = false;
 	}
 }

@@ -5,15 +5,16 @@ using PixelCrushers.DialogueSystem;
 public class BCCharacter : NPCScript
 {
 	public GameObject MyThoughtCloud;
-	public SpriteRenderer CurrentThoughtImage;
 
 	private Thoughts _myThoughts;
+	private SpriteRenderer _thoughtRenderer;
 	private int _myProgress = 1;
 
 	protected override void Start ()
 	{
 		base.Start ();
 		_myThoughts = MyThoughtCloud.GetComponent<Thoughts>();
+		_thoughtRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
 		Invoke("DialogSetup", 0.1f);
 	}
 	
@@ -35,9 +36,8 @@ public class BCCharacter : NPCScript
 		{
 			if(_myThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
 			{
-				MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = true;
-				CurrentThoughtImage.sprite = _myThoughts.ThoughtImages[i];
-				CurrentThoughtImage.enabled = true;
+				_thoughtRenderer.sprite = _myThoughts.ThoughtImages[i];
+				_thoughtRenderer.enabled = true;
 				CancelInvoke("RemoveThoughtCloud");
 				Invoke("RemoveThoughtCloud", 3);
 			}
@@ -46,8 +46,7 @@ public class BCCharacter : NPCScript
 	
 	private void RemoveThoughtCloud()
 	{
-		MyThoughtCloud.GetComponent<SpriteRenderer>().enabled = false;
-		CurrentThoughtImage.enabled = false;
+		_thoughtRenderer.enabled = false;
 	}
 	
 	protected override void OnConversationEnd (Transform actor)

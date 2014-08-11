@@ -10,7 +10,8 @@ public class NPCScript : MonoBehaviour
 	public NPCType MyType;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
-				PlayerSpacificDialog;
+				PlayerSpacificDialog,
+				HasCloseUpCam;
 
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
@@ -37,7 +38,7 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void OnConversationStart(Transform actor)
 	{
-		if(MyType != NPCType.ACharacter)
+		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = true;
 			myGameManager.MainCamera.enabled = false;
@@ -54,7 +55,7 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void OnConversationEnd(Transform actor)
 	{
-		if(MyType != NPCType.ACharacter)
+		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = false;
 			myGameManager.MainCamera.enabled = true;

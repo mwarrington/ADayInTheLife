@@ -5,6 +5,7 @@ using PixelCrushers.DialogueSystem;
 public class ACharacter : NPCScript
 {
 	public int DialogIndex;
+	public bool IsTeamMember;
 
 	protected override void Start ()
 	{
@@ -40,7 +41,10 @@ public class ACharacter : NPCScript
 
 	protected override void DialogSetup ()
 	{
-		dialogString = DialogIndex.ToString();
+		if(IsTeamMember)
+			dialogString = this.name + "_" + "day" + DialogIndex.ToString();
+		else
+			dialogString = DialogIndex.ToString();
 
 		base.DialogSetup ();
 	}
