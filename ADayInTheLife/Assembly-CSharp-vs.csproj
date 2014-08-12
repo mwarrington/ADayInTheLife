@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\Interface\VisualTimer.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Utilities\DatabaseLoader.cs" />
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\VariableManager.cs" />

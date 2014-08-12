@@ -9,13 +9,6 @@ public enum Scenes
 	Roomclass
 };
 
-public enum Days
-{
-	day1,
-	day2,
-	day3
-};
-
 public enum NPCType
 {
 	ACharacter,

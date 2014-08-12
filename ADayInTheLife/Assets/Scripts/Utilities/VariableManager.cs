@@ -18,10 +18,15 @@ public class VariableManager : MonoBehaviour
 	{
 		switch(CurrentConvo)
 		{
-			case "Darrell_day1":
-				DialogueLua.SetVariable("darrell",DialogueLua.GetVariable("pre_darrell").AsBool);
-				DialogueLua.SetVariable("picture",DialogueLua.GetVariable("pre_picture").AsBool);
-				DialogueLua.SetVariable("glasses_exists",DialogueLua.GetVariable("pre_glasses_exists").AsBool);
+			case "Darrell_1":
+				DialogueLua.SetVariable("KnowsAboutRumor_Jack",DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
+				DialogueLua.SetVariable("KnowsAboutRumor_Glasses",DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
+				DialogueLua.SetVariable("KnowsAboutPicture_Jack",DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
+				DialogueLua.SetVariable("KnowsAboutPicture_Glasses",DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
+				break;
+			case "Jack_1":
+				DialogueLua.SetVariable("JackWantsHelp_Darrell",DialogueLua.GetVariable("JackWantsHelp").AsBool);
+				DialogueLua.SetVariable("JackWantsHelp_Glasses",DialogueLua.GetVariable("JackWantsHelp").AsBool);
 				break;
 			default:
 				Debug.Log("That isn't the correct conversation name");

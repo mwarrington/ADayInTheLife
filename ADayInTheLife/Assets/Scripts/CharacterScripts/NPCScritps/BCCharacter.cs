@@ -70,12 +70,12 @@ public class BCCharacter : NPCScript
 				progressVarName = MyDatabase.variables[i].fields[0].value;
 		}
 
-		//Rests the TalkedTo vars
-		if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
-		{
-			DialogueLua.SetVariable ("TalkedTo" + this.name, false);
-			_myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
-		}
+		//Rests the TalkedTo vars for test purposes
+		//if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
+		//{
+		//	DialogueLua.SetVariable ("TalkedTo" + this.name, false);
+		//	_myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
+		//}
 
 		//Sets the Conversation to load
 		if(PlayerSpacificDialog && myGameManager.IsSarylyn)

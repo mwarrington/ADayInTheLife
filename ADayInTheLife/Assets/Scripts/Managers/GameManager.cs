@@ -30,18 +30,6 @@ public class GameManager : MonoBehaviour
 			isSarylyn = value;
 		}
 	}
-	static Days currentDay;
-	public Days CurrentDay
-	{
-		get
-		{
-			return currentDay;
-		}
-		set
-		{
-			currentDay = value;
-		}
-	}
 	static string lastLevelLoaded = "DreamSpiral";
 	public string LastLevelLoaded
 	{
@@ -82,11 +70,9 @@ public class GameManager : MonoBehaviour
 	}
 
 	//Simple Static fields
-	static int DayCount = 0;
-	static bool databasesLoadedForHallway = false;
-	static bool databasesLoadedForLabrary = false;
-	static bool databasesLoadedForClassroom = false;
-	static bool databasesLoadedForRoomclass = false;
+	static int DayCount = 0,
+			   LevelCount = 1;
+	static bool lvl1DatabasesLoaded = false;
 
 	//Private fields
 	private AudioSource _mainBGM;
@@ -101,37 +87,15 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
 	{
-		if(Application.loadedLevelName == "Hallway" && !databasesLoadedForHallway)
+		if(LevelCount == 1 && !lvl1DatabasesLoaded)
 		{
-			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
+			DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
+
+			foreach(DialogueDatabase dd in myDatabaseLoader.Level1Databases)
 			{
-				DialogueManager.AddDatabase(n.MyDatabase);
+				DialogueManager.AddDatabase(dd);
 			}
-			databasesLoadedForHallway = true;
-		}
-		else if(Application.loadedLevelName == "Labrary" && !databasesLoadedForLabrary)
-		{
-			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
-			{
-				DialogueManager.AddDatabase(n.MyDatabase);
-			}
-			databasesLoadedForLabrary = true;
-		}
-		else if(Application.loadedLevelName == "Classroom" && !databasesLoadedForLabrary)
-		{
-			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
-			{
-				DialogueManager.AddDatabase(n.MyDatabase);
-			}
-			databasesLoadedForClassroom = true;
-		}
-		else if(Application.loadedLevelName == "Roomclass" && !databasesLoadedForLabrary)
-		{
-			foreach(NPCScript n in GameObject.FindObjectsOfType(typeof(NPCScript)))
-			{
-				DialogueManager.AddDatabase(n.MyDatabase);
-			}
-			databasesLoadedForRoomclass = true;
+			lvl1DatabasesLoaded = true;
 		}
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
