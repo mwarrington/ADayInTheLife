@@ -34,7 +34,7 @@ public class ItemInteract : MonoBehaviour
 					_myGameManager.MainCamera.enabled = false;
 					col.gameObject.GetComponent<PlayerScript>().enabled = false;
 					this.gameObject.GetComponent<Usable>().overrideName = " ";
-					this.gameObject.GetComponent<Usable>().overrideUseMessage = " ";
+					this.gameObject.GetComponent<Usable>().overrideUseMessage = "Press the Escape Key to exit";
 					ItemActive = true;
 				}
 				else

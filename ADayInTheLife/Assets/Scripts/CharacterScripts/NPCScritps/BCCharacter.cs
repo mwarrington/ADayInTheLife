@@ -32,6 +32,9 @@ public class BCCharacter : NPCScript
 	{
 		base.OnConversationLine(line);
 
+		if(line.dialogueEntry.fields [12].value != "")
+		Debug.Log (line.dialogueEntry.fields [12].value);
+
 		for(int i = 0; i < _myThoughts.PlayerDialogueLines.Length; i++)
 		{
 			if(_myThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
