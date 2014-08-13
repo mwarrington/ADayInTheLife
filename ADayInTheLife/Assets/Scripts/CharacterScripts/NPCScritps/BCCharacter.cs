@@ -6,15 +6,15 @@ public class BCCharacter : NPCScript
 {
 	public GameObject MyThoughtCloud;
 
-	private Thoughts _myThoughts;
-	private SpriteRenderer _thoughtRenderer;
+	private EmpathicEmoticons _myEmpathicEmoticons;
+	private SpriteRenderer _emoticonRenderer;
 	private int _myProgress = 1;
 
 	protected override void Start ()
 	{
 		base.Start ();
-		_myThoughts = MyThoughtCloud.GetComponent<Thoughts>();
-		_thoughtRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
+		_myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
+		_emoticonRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
 		Invoke("DialogSetup", 0.1f);
 	}
 	
@@ -32,24 +32,21 @@ public class BCCharacter : NPCScript
 	{
 		base.OnConversationLine(line);
 
-		if(line.dialogueEntry.fields [12].value != "")
-		Debug.Log (line.dialogueEntry.fields [12].value);
-
-		for(int i = 0; i < _myThoughts.PlayerDialogueLines.Length; i++)
+		if(line.dialogueEntry.fields.Count > 12)
 		{
-			if(_myThoughts.PlayerDialogueLines[i] == line.dialogueEntry.fields[6].value)
+			if(line.dialogueEntry.fields[12].value != "")
 			{
-				_thoughtRenderer.sprite = _myThoughts.ThoughtImages[i];
-				_thoughtRenderer.enabled = true;
+				_emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[12].value];
+				_emoticonRenderer.enabled = true;
 				CancelInvoke("RemoveThoughtCloud");
-				Invoke("RemoveThoughtCloud", 3);
+				Invoke("RemoveThoughtCloud", 2);
 			}
 		}
 	}
 	
 	private void RemoveThoughtCloud()
 	{
-		_thoughtRenderer.enabled = false;
+		_emoticonRenderer.enabled = false;
 	}
 	
 	protected override void OnConversationEnd (Transform actor)
@@ -74,6 +71,7 @@ public class BCCharacter : NPCScript
 		}
 
 		//Rests the TalkedTo vars for test purposes
+		//This alows you to complete a level in a single day
 		//if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
 		//{
 		//	DialogueLua.SetVariable ("TalkedTo" + this.name, false);

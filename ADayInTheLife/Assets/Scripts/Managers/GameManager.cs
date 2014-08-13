@@ -54,8 +54,6 @@ public class GameManager : MonoBehaviour
 			hasBeenIntroduced = value;
 		}
 	}
-
-	//private fields with properties that have get and set accessors
 	static bool gameTimerActive;
 	public bool GameTimerActive
 	{
@@ -68,10 +66,21 @@ public class GameManager : MonoBehaviour
 			gameTimerActive = value;
 		}
 	}
-
+	static int levelCount = 1;
+	public int LevelCount
+	{
+		get
+		{
+			return levelCount;
+		}
+		set
+		{
+			levelCount = value;
+		}
+	}
+	
 	//Simple Static fields
-	static int DayCount = 0,
-			   LevelCount = 1;
+	static int DayCount = 0;
 	static bool lvl1DatabasesLoaded = false;
 
 	//Private fields

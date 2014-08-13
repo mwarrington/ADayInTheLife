@@ -71,9 +71,9 @@
      <Compile Include="Assets\JSON Tests\CSharp\Test_CSharp.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\ACharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\EmpathicEmoticons.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\HallMonitor.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" />
-     <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\Thoughts.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\Dialog\ConversationLogger.cs" />
      <Compile Include="Assets\Scripts\Dialog\Usable.cs" />
