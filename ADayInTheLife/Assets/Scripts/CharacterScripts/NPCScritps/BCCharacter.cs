@@ -42,7 +42,7 @@ public class BCCharacter : NPCScript
 			}
 		}
 	}
-	
+
 	private void RemoveThoughtCloud()
 	{
 		_emoticonRenderer.enabled = false;

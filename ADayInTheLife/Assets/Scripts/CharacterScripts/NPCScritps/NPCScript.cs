@@ -38,6 +38,7 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void OnConversationStart(Transform actor)
 	{
+		//Debug.Log (FindObjectOfType<AbstractDialogueUI>().ResponseTimeout);//.ResponseTimeout = 600;
 		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = true;

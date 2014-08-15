@@ -133,12 +133,6 @@ public class VisualTimer : MonoBehaviour
 				showingGameTimer = false;
 			}
 		}
-
-		/*
-		else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
-		{
-			showingGameTimer = false;
-		}*/
 	}
 	
 	private void GameTimer()
