@@ -101,6 +101,10 @@ public class VisualTimer : MonoBehaviour
 					showingGameTimer = true;
 				}
 			}
+			else if(Input.GetKey(KeyCode.LeftShift))
+			{
+				showingGameTimer = true;
+			}
 			else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
 			{
 				showingGameTimer = false;
@@ -120,11 +124,21 @@ public class VisualTimer : MonoBehaviour
 					showingGameTimer = true;
 				}
 			}
+			else if(Input.GetKey(KeyCode.LeftShift))
+			{
+				showingGameTimer = true;
+			}
 			else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
 			{
 				showingGameTimer = false;
 			}
 		}
+
+		/*
+		else if(_myGameManager.Timer % 30 < 25 && showingGameTimer)
+		{
+			showingGameTimer = false;
+		}*/
 	}
 	
 	private void GameTimer()
