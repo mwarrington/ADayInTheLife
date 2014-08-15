@@ -8,7 +8,6 @@ public class BCCharacter : NPCScript
 
 	private EmpathicEmoticons _myEmpathicEmoticons;
 	private SpriteRenderer _emoticonRenderer;
-	private int _myProgress = 1;
 
 	protected override void Start ()
 	{

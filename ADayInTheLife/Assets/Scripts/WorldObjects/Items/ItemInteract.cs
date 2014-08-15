@@ -30,6 +30,7 @@ public class ItemInteract : MonoBehaviour
 				if(SimpleItem)
 				{
 					_currentItem = Instantiate(ItemPrefab, PlaceToInstantiate.position, Quaternion.identity) as GameObject;
+					_currentItem.GetComponent<ComputerController>().StartPage.IsActive = true;
 					ComputerViewCamera.enabled = true;
 					_myGameManager.MainCamera.enabled = false;
 					col.gameObject.GetComponent<PlayerScript>().enabled = false;

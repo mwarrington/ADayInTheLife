@@ -6,9 +6,9 @@ public class ItemController : MonoBehaviour
 {
 	protected GameManager myGameManager;
 	protected GameObject player;
-	protected Camera itemCamera;
 	protected GameObject worldObject;
-
+	
+	public Camera ItemCamera;
 	public string OverrideName,
 				  OverrideUseMessage;
 
