@@ -14,7 +14,22 @@ class Test_CSharp : MonoBehaviour
 	
     void Test()
     {
-        var N = JSONNode.Parse("{\"name\":\"test\", \"array\":[1,{\"data\":\"value\"}]}");
+		var N = JSONNode.Parse ("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");//\"Level\":1,\"Convoforest\":{\"Markeshia\":[1,3,5]}} \"array\":[1,{\"data\":\"value\"}]}");
+
+		//Debug.Log (N);
+		//P (N.ToString);
+
+
+		N["Player"] = "Bob";
+		N["Level1"]["Conversations"]["Markeshia_1"][0] = "26";
+		N["Level1"]["Conversations"]["Markeshia_1"][1] = "44";
+		//N["Gamestate"].Add("Level",JSONNode.Parse("1"));//.Add(JSONNode.Parse("\"Level\":"));
+		//N ["Level"] = "1";
+		//N["Gamestate"] = "{}";
+		//N["Gamestate"][0] = "Level";
+		//N["Convoforest"][0] = "Bob";
+
+
         N["array"][1]["Foo"] = "Bar";
         P("'nice formatted' string representation of the JSON tree:");
         P(N.ToString(""));

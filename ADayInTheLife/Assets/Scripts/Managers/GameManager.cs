@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
+using SimpleJSON;
 
 public class GameManager : MonoBehaviour
 {
@@ -90,6 +91,7 @@ public class GameManager : MonoBehaviour
 
 	//Public fields
 	public bool	FadingAway;
+	public JSONNode JSONOut = new JSONNode();
 	public Camera MainCamera;
 	public AudioSource Countdown30,
 					   Countdown10;
@@ -105,6 +107,19 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(dd);
 			}
 			lvl1DatabasesLoaded = true;
+
+			//JSON set up
+			JSONOut = JSONNode.Parse("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");
+			if(IsSarylyn)
+				JSONOut["Player"] = "Sarylyn";
+			else
+				JSONOut["Player"] = "Sanome";
+
+			for (int i = 0; i < DialogueManager.MasterDatabase.conversations.Count; i++)
+			{
+				string conversationString = DialogueManager.MasterDatabase.conversations[i].Title.ToString();
+				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
+			}
 		}
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
