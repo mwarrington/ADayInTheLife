@@ -1,16 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\Interface\VisualTimer.cs" Line="135" Column="4" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Dialog\ResponseTimeoutHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interface\VisualTimer.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\Computers\Page.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\Computers\Link.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Interface\MainMenu.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\ItemController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="41" Column="5" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="46" Column="3" />
       <File FileName="Assets\Scripts\Dialog\ResponseTimeoutHandler.cs" Line="10" Column="75" />
     </Files>
   </MonoDevelop.Ide.Workbench>

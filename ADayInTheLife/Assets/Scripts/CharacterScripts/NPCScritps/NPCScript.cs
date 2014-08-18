@@ -11,7 +11,8 @@ public class NPCScript : MonoBehaviour
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
 				PlayerSpacificDialog,
-				HasCloseUpCam;
+				HasCloseUpCam,
+				TimedResponse;
 
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
@@ -38,7 +39,11 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void OnConversationStart(Transform actor)
 	{
-		//Debug.Log (FindObjectOfType<AbstractDialogueUI>().ResponseTimeout);//.ResponseTimeout = 600;
+		if(TimedResponse)
+			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 30;
+		else
+			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 0;
+
 		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = true;
