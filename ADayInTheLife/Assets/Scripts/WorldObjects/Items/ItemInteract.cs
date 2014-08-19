@@ -4,24 +4,24 @@ using PixelCrushers.DialogueSystem.Examples;
 
 public class ItemInteract : MonoBehaviour
 {
-	private GameObject _currentItem;
-	private GameManager _myGameManager;
+	protected GameManager myGameManager;
+	protected GameObject currentItem;
 	
 	public GameObject ItemPrefab;
-	public Camera ComputerViewCamera;
+	public Camera ItemViewCamera;
 	public Transform PlaceToInstantiate;
 	public bool SimpleItem,
 				ItemActive;
 
-	void Start()
+	protected virtual void Start()
 	{
-		_myGameManager = GameObject.FindObjectOfType<GameManager>();
+		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		
 		this.gameObject.GetComponent<Usable>().overrideName = ItemPrefab.GetComponent<ItemController>().OverrideName;
 		this.gameObject.GetComponent<Usable>().overrideUseMessage = ItemPrefab.GetComponent<ItemController>().OverrideUseMessage;
 	}
 
-	void OnTriggerStay(Collider col)
+	protected virtual void OnTriggerStay(Collider col)
 	{
 		if(col.tag == "Player")
 		{
@@ -29,10 +29,10 @@ public class ItemInteract : MonoBehaviour
 			{
 				if(SimpleItem)
 				{
-					_currentItem = Instantiate(ItemPrefab, PlaceToInstantiate.position, Quaternion.identity) as GameObject;
-					_currentItem.GetComponent<ComputerController>().StartPage.IsActive = true;
-					ComputerViewCamera.enabled = true;
-					_myGameManager.MainCamera.enabled = false;
+					currentItem = Instantiate(ItemPrefab, PlaceToInstantiate.position, Quaternion.identity) as GameObject;
+					currentItem.GetComponent<ItemController>().StartPage.IsActive = true;
+					ItemViewCamera.enabled = true;
+					myGameManager.MainCamera.enabled = false;
 					col.gameObject.GetComponent<PlayerScript>().enabled = false;
 					this.gameObject.GetComponent<Usable>().overrideName = " ";
 					this.gameObject.GetComponent<Usable>().overrideUseMessage = "Press the Escape Key to exit";

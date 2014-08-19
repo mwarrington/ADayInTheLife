@@ -78,6 +78,7 @@ public class NPCScript : MonoBehaviour
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
+		myGameManager.FormJSON.AddField(System.DateTime.Now.ToString(), myGameManager.JSONOut.ToString());
 	}
 
 	protected virtual void RotateTowardPlayer()

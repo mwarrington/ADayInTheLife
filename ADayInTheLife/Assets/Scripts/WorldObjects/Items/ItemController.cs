@@ -1,13 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using PixelCrushers.DialogueSystem.Examples;
 
 public class ItemController : MonoBehaviour
 {
+	protected Dictionary<string, Page> Pages = new Dictionary<string, Page>();
+	
+	public Page CurrentPage
+	{
+		get
+		{
+			foreach(Page p in Pages.Values)
+			{
+				if(p.IsActive)
+					currentPage = p;
+			}
+			
+			return currentPage;
+		}
+	}
+	protected Page currentPage;
+
 	protected GameManager myGameManager;
 	protected GameObject player;
 	protected GameObject worldObject;
 	
+	public Page StartPage;
 	public Camera ItemCamera;
 	public string OverrideName,
 				  OverrideUseMessage;
@@ -24,6 +43,11 @@ public class ItemController : MonoBehaviour
 			}
 		}
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
+
+		foreach (Page p in GetComponentsInChildren<Page>())
+		{
+			Pages.Add(p.name, p);
+		}
 	}
 
 	protected virtual void Update()
@@ -34,9 +58,17 @@ public class ItemController : MonoBehaviour
 		}
 	}
 
+	public virtual void ChangePage(string nextPage)
+	{
+		currentPage.transform.localPosition = new Vector3 (currentPage.transform.localPosition.x, 0);
+		currentPage.IsActive = false;
+		Pages[nextPage].IsActive = true;
+	}
+
 	protected virtual void TurnOff()
 	{
 		myGameManager.MainCamera.enabled = true;
+		ItemCamera.enabled = false;
 		player.GetComponent<PlayerScript>().enabled = true;
 		worldObject.GetComponent<Usable>().overrideName = OverrideName;
 		worldObject.GetComponent<Usable>().overrideUseMessage = OverrideUseMessage;

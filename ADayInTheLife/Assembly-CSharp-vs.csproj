@@ -93,11 +93,16 @@
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\VariableManager.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Door.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Books\BookController.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Books\BookInteract.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Books\BookPage.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\ComputerInteract.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\ComputerPage.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\Link.cs" />
-     <Compile Include="Assets\Scripts\WorldObjects\Items\Computers\Page.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemController.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Items\Page.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\LabraryTeleporter.cs" />
      <None Include="Assets\Dialogue System\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Mobile Test\_README.txt" />

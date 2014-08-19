@@ -91,6 +91,18 @@ public class GameManager : MonoBehaviour
 			jSONOut = value;
 		}
 	}
+	static WWWForm formJSON = new WWWForm();
+	public WWWForm FormJSON
+	{
+		get
+		{
+			return formJSON;
+		}
+		set
+		{
+			formJSON = value;
+		}
+	}
 	
 	//Simple Static fields
 	static int DayCount = 0;
@@ -136,7 +148,10 @@ public class GameManager : MonoBehaviour
 				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
 			}
 			lvl1JSONInitialized = true;
-			Debug.Log (JSONOut.ToString());
+			string url = "http://localhost:3000/players/create";
+			FormJSON.AddField("JSONOut", jSONOut.ToString());
+
+			//Debug.Log (JSONOut.ToString());
 		}
 
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
