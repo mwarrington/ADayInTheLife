@@ -79,10 +79,23 @@ public class GameManager : MonoBehaviour
 			levelCount = value;
 		}
 	}
+	static JSONNode jSONOut = new JSONNode();
+	public JSONNode JSONOut
+	{
+		get
+		{
+			return jSONOut;
+		}
+		set
+		{
+			jSONOut = value;
+		}
+	}
 	
 	//Simple Static fields
 	static int DayCount = 0;
-	static bool lvl1DatabasesLoaded = false;
+	static bool lvl1DatabasesLoaded = false,
+				lvl1JSONInitialized = false;
 
 	//Private fields
 	private AudioSource _mainBGM;
@@ -91,7 +104,6 @@ public class GameManager : MonoBehaviour
 
 	//Public fields
 	public bool	FadingAway;
-	public JSONNode JSONOut = new JSONNode();
 	public Camera MainCamera;
 	public AudioSource Countdown30,
 					   Countdown10;
@@ -107,20 +119,26 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(dd);
 			}
 			lvl1DatabasesLoaded = true;
+		}
 
-			//JSON set up
+		//JSON set up
+		if(!lvl1JSONInitialized && Application.loadedLevelName == "DreamSpiral")
+		{
 			JSONOut = JSONNode.Parse("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");
 			if(IsSarylyn)
 				JSONOut["Player"] = "Sarylyn";
 			else
 				JSONOut["Player"] = "Sanome";
-
+			
 			for (int i = 0; i < DialogueManager.MasterDatabase.conversations.Count; i++)
 			{
 				string conversationString = DialogueManager.MasterDatabase.conversations[i].Title.ToString();
 				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
 			}
+			lvl1JSONInitialized = true;
+			Debug.Log (JSONOut.ToString());
 		}
+
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
 	}

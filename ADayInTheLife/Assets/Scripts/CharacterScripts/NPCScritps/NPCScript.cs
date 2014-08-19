@@ -56,7 +56,14 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void OnConversationLine(Subtitle line)
 	{
-
+		if(line.speakerInfo.IsPlayer)
+		{
+			if(myGameManager.LevelCount == 1)
+			{
+				myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()][myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()].Count] = line.dialogueEntry.id.ToString();
+				//Debug.Log (myGameManager.JSONOut.ToString());
+			}
+		}
 	}
 
 	protected virtual void OnConversationEnd(Transform actor)
