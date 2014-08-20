@@ -5,7 +5,7 @@ using PixelCrushers.DialogueSystem.Examples;
 
 public class ItemController : MonoBehaviour
 {
-	protected Dictionary<string, Page> Pages = new Dictionary<string, Page>();
+	public Dictionary<string, Page> Pages = new Dictionary<string, Page>();
 	
 	public Page CurrentPage
 	{
@@ -60,8 +60,8 @@ public class ItemController : MonoBehaviour
 
 	public virtual void ChangePage(string nextPage)
 	{
-		currentPage.transform.localPosition = new Vector3 (currentPage.transform.localPosition.x, 0);
-		currentPage.IsActive = false;
+		CurrentPage.transform.localPosition = new Vector3 (currentPage.transform.localPosition.x, 0);
+		CurrentPage.IsActive = false;
 		Pages[nextPage].IsActive = true;
 	}
 
