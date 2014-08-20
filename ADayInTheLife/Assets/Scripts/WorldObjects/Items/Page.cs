@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class Page : MonoBehaviour
 {
 	public SpriteRenderer MySprite;
 	public float PageLength;
+	public bool ImpartsInfo;
+	public string[] KnowledgeStrings;
 	public bool IsActive
 	{
 		get
@@ -14,7 +17,10 @@ public class Page : MonoBehaviour
 		set
 		{
 			if(value)
+			{
 				MySprite.enabled = true;
+				ImpartInformation();
+			}
 			else
 				MySprite.enabled = false;
 
@@ -81,6 +87,17 @@ public class Page : MonoBehaviour
 			autoScrollTimerStarted = false;
 			autoScrollTimer = 0;
 			lastScrollTime = 0;
+		}
+	}
+
+	protected virtual void ImpartInformation()
+	{
+		if(ImpartsInfo)
+		{
+			for(int i = 0; i < KnowledgeStrings.Length; i++)
+			{
+				DialogueLua.SetVariable(KnowledgeStrings[i], true);
+			}
 		}
 	}
 }
