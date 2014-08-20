@@ -1,16 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WorldObjects\Items\Page.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs">
     <Files>
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="64" Column="5" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\ACharacter.cs" Line="45" Column="34" />
       <File FileName="Assets\Scripts\Utilities\VariableManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\Books\BookPage.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\Items\Page.cs" Line="101" Column="4" />
+      <File FileName="Assets\Scripts\WorldObjects\Items\Page.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\Computers\ComputerInteract.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\Books\BookInteract.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\WorldObjects\Items\Computers\ComputerController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="63" Column="71" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="101" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

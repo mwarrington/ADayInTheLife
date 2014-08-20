@@ -42,7 +42,7 @@ public class ACharacter : NPCScript
 	protected override void DialogSetup ()
 	{
 		if(IsTeamMember)
-			dialogString = this.name + "_" + "day" + DialogIndex.ToString();
+			dialogString = this.name + "_" + DialogIndex.ToString();
 		else
 			dialogString = DialogIndex.ToString();
 
