@@ -34,7 +34,17 @@ public class HallMonitor : NPCScript
 			myGameManager.GameTimerActive = true;
 			myGameManager.HasBeenIntroduced = true;
 		}
-		dialogString = "Hall_Monitor_" + Random.Range(1,MyDatabase.conversations.Count+1).ToString();
+
+		//Randomizes dialog the Hall Monitor says making sure they don't
+		//repeat the same dialog twice in a row.
+		//Slightly hacky, this may need to be revised in the future.
+		int rand = 0;
+		do
+		{
+			rand = Random.Range(1,MyDatabase.conversations.Count);
+		}
+		while(dialogString[13].ToString() == rand.ToString());
+		dialogString = "Hall_Monitor_" + rand;
 		myConTrigger.conversation = dialogString;
 
 		base.OnConversationEnd (actor);
