@@ -228,8 +228,9 @@ public class GameManager : MonoBehaviour
 					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
+						_locker.GetComponent<Animation>().Stop ();
 						_locker.collider.enabled = true;
-						_locker.rigidbody.AddForce(15f, 5f, 5f);
+						_locker.rigidbody.AddForce(1f, 1f, 1f);
 					}
 				}
 				break;
