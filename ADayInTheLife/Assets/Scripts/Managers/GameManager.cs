@@ -221,13 +221,16 @@ public class GameManager : MonoBehaviour
 					{
 						StartCoroutine(StaggeredAnimationPlay(_locker.transform.GetComponent<Animation>()));
 					}
-					
-					//GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
-					//foreach(GameObject _locker in _lockerSearch)
-					//{
-					//	_locker.collider.enabled = true;
-					//	_locker.rigidbody.AddForce(10f, 10f, 10f);
-					//}
+				}
+				
+				if(timer <= 10 && timer > 9.9)
+				{
+					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+					foreach(GameObject _locker in _lockerSearch)
+					{
+						_locker.collider.enabled = true;
+						_locker.rigidbody.AddForce(15f, 5f, 5f);
+					}
 				}
 				break;
 			case "Labrary":
