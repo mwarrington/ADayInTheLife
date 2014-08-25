@@ -7,8 +7,7 @@ public class DreamSpiral : MonoBehaviour
     private GameObject _dreamSpiral,
                    _startCloud;
 	private AudioSource _currentAudioSource,
-					  _secondSFX,
-					  _mainBGM;
+					  _secondSFX;
     private Material _startCloudActive,
                      _startCloudInactive;
     private bool _canMove = true;
@@ -30,7 +29,6 @@ public class DreamSpiral : MonoBehaviour
     {
         _startCloud.renderer.material = _startCloudInactive;
 		_secondSFX = GameObject.FindGameObjectWithTag("SecondSFX").GetComponent<AudioSource>();
-		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

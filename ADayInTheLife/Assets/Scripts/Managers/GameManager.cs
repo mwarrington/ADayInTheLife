@@ -135,25 +135,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		//JSON set up
-		if(!lvl1JSONInitialized && Application.loadedLevelName == "DreamSpiral")
-		{
-			JSONOut = JSONNode.Parse("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");
-			if(IsSarylyn)
-				JSONOut["Player"] = "Sarylyn";
-			else
-				JSONOut["Player"] = "Sanome";
-			
-			for (int i = 0; i < DialogueManager.MasterDatabase.conversations.Count; i++)
-			{
-				string conversationString = DialogueManager.MasterDatabase.conversations[i].Title.ToString();
-				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
-			}
-			lvl1JSONInitialized = true;
-			string url = "http://localhost:3000/players/create";
-			FormJSON.AddField("JSONOut", jSONOut.ToString());
-
-			//Debug.Log (JSONOut.ToString());
-		}
+		StartCoroutine (JSONSetUp());
 
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
@@ -306,6 +288,37 @@ public class GameManager : MonoBehaviour
 		float randFloat = Random.Range(0, 0.7f);
 		yield return new WaitForSeconds(randFloat);
 		animation.Play();
+	}
+
+	private IEnumerator JSONSetUp()
+	{
+		if(!lvl1JSONInitialized && Application.loadedLevelName == "DreamSpiral")
+		{
+			JSONOut = JSONNode.Parse("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");
+			if(IsSarylyn)
+				JSONOut["Player"] = "Sarylyn";
+			else
+				JSONOut["Player"] = "Sanome";
+			
+			for (int i = 0; i < DialogueManager.MasterDatabase.conversations.Count; i++)
+			{
+				string conversationString = DialogueManager.MasterDatabase.conversations[i].Title.ToString();
+				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
+			}
+			lvl1JSONInitialized = true;
+			string url = "http://localhost:3000/players/create";
+			FormJSON.AddField("JSONOut", jSONOut.ToString());
+
+			//Debug.Log (JSONOut.ToString());
+			yield return new WWW(url, FormJSON);
+		}
+	}
+
+	public IEnumerator LogJSON()
+	{
+		string url = "http://localhost:3000/players/create";
+		FormJSON.AddField("JSONOut", jSONOut.ToString());
+		yield return new WWW(url, FormJSON);
 	}
 
 	private void LoadNextLevel()
