@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
 	private AudioSource _mainBGM;
 	private float _alpha = 0;
 	private SpriteRenderer _fadeMask;
+	private PlayerScript _player;
 
 	//Public fields
 	public bool	FadingAway;
@@ -156,6 +157,8 @@ public class GameManager : MonoBehaviour
 
 		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
+		if(FindObjectOfType<PlayerScript>() != null)
+			_player = FindObjectOfType<PlayerScript>();
 	}
 
 	void Update ()
@@ -206,6 +209,7 @@ public class GameManager : MonoBehaviour
 		{
 			_mainBGM.pitch = 0.5f;
 			_mainBGM.volume = 0.25f;
+			_player.ConfuseMovement();
 			this.Countdown10.Play();
 		}
 		switch(Application.loadedLevelName)

@@ -91,6 +91,7 @@ public class VisualTimer : MonoBehaviour
 		{
 			if(_myGameManager.Timer < 61)
 			{
+				_myGameManager.GameTimerActive = true;
 				showingGameTimer = true;
 			}
 			else if(_myGameManager.Timer % 30 < 1)
