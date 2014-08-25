@@ -361,11 +361,11 @@ public class PlayerScript : MonoBehaviour
 		}
 		if(_isRotatingLeft)
 		{
-			this.transform.Rotate(Vector3.down);
+			this.transform.Rotate(Vector3.down * 1.3f);
 		}
 		if(_isRotatingRight)
 		{
-			this.transform.Rotate(Vector3.up);
+			this.transform.Rotate(Vector3.up * 1.3f);
 		}
 		
 		//When the player lets go of an arrow key
