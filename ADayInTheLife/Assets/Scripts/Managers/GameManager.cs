@@ -155,10 +155,11 @@ public class GameManager : MonoBehaviour
 		if(FadingAway)
 			Fade();
 
-		if(Input.GetKeyDown(KeyCode.F))
-		{
-			Screen.fullScreen = !Screen.fullScreen;
-		}
+		//This will be disabled until I have a chance to work on optimization.
+		//if(Input.GetKeyDown(KeyCode.F))
+		//{
+		//	Screen.fullScreen = !Screen.fullScreen;
+		//}
 	}
 
 	//This method handles the strange things that happen at the end of a day.
@@ -202,16 +203,16 @@ public class GameManager : MonoBehaviour
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
 					Countdown30.volume = 0.6f;
-					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+					GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
-						StartCoroutine(StaggeredAnimationPlay(_locker.transform.GetComponent<Animation>()));
+						StartCoroutine(StaggeredAnimationPlay(_locker.GetComponent<Animation>(), 0.7f));
 					}
 				}
 				
 				if(timer <= 10 && timer > 9.9)
 				{
-					GameObject[]_lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
+					GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
 					foreach(GameObject _locker in _lockerSearch)
 					{
 						_locker.GetComponent<Animation>().Stop ();
@@ -226,10 +227,10 @@ public class GameManager : MonoBehaviour
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
 					Countdown30.volume = 0.6f;
-					GameObject[]_computerSearch = GameObject.FindGameObjectsWithTag("computer60");    
+					GameObject[ ] _computerSearch = GameObject.FindGameObjectsWithTag("computer60");    
 					foreach(GameObject _computer in _computerSearch)
 					{
-						_computer.GetComponent<Animation>().Play();
+						StartCoroutine(StaggeredAnimationPlay(_computer.GetComponent<Animation>(), 1f));
 					}
 				}
 				break;
@@ -239,7 +240,7 @@ public class GameManager : MonoBehaviour
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
 					Countdown30.volume = 0.6f;
-					GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
+					GameObject[] _deskSearch = GameObject.FindGameObjectsWithTag("desk");    
 					foreach(GameObject _desk in _deskSearch)
 					{
 						_desk.rigidbody.useGravity = true;
@@ -253,7 +254,7 @@ public class GameManager : MonoBehaviour
 					_mainBGM.pitch = 0.75f;
 					_mainBGM.volume = 0.5f;
 					Countdown30.volume = 0.6f;
-					GameObject[]_deskSearch = GameObject.FindGameObjectsWithTag("desk");    
+					GameObject[] _deskSearch = GameObject.FindGameObjectsWithTag("desk");    
 					foreach(GameObject _desk in _deskSearch)
 					{
 						_desk.rigidbody.isKinematic = false;
@@ -283,9 +284,9 @@ public class GameManager : MonoBehaviour
 
 	}
 
-	private IEnumerator StaggeredAnimationPlay(Animation animation)
+	private IEnumerator StaggeredAnimationPlay(Animation animation, float variance)
 	{
-		float randFloat = Random.Range(0, 0.7f);
+		float randFloat = Random.Range(0, variance);
 		yield return new WaitForSeconds(randFloat);
 		animation.Play();
 	}
@@ -338,7 +339,6 @@ public class GameManager : MonoBehaviour
 		{
 			Application.LoadLevel("MainMenu");
 			DayCount = 0;
-			timer = 360;
 			//Something to clear the database for new databases.
 		}
 		else
@@ -347,9 +347,9 @@ public class GameManager : MonoBehaviour
 			Application.LoadLevel("DreamSpiral");
 			DayCount++;
 			hasBeenIntroduced = false;
-			timer = 360;
 		}
-
+		
+		timer = 360;
 		FadingAway = false;
 		gameTimerActive = false;
 	}
