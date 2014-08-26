@@ -8,11 +8,13 @@ public class NPCScript : MonoBehaviour
 	public Camera CloseUpCamera;
 	public DialogueDatabase MyDatabase;
 	public NPCType MyType;
+	public string[] NamesToSync;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
 				PlayerSpacificDialog,
 				HasCloseUpCam,
-				TimedResponse;
+				TimedResponse,
+				HasSharedProgress;
 
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
@@ -79,6 +81,12 @@ public class NPCScript : MonoBehaviour
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
+
+		if(HasSharedProgress)
+		{
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().ProgressSync(this.name, NamesToSync);
+		}
+
 		StartCoroutine(myGameManager.LogJSON ());
 	}
 

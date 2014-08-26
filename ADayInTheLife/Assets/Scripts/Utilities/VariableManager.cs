@@ -35,6 +35,14 @@ public class VariableManager : MonoBehaviour
 		//DialogueLua.GetVariable("Helped Gonzo").AsBool);
 	}
 
+	public void ProgressSync(string myName, string[] namesToSync)
+	{
+		for(int i = 0; i < namesToSync.Length; i++)
+		{
+			DialogueLua.SetVariable(namesToSync[i] + "Progress", DialogueLua.GetVariable(myName + "Progress").AsInt);
+		}
+	}
+
 	public void ResetEventVars()
 	{
 		_eventVariables.Clear();
