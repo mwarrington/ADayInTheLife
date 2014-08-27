@@ -86,6 +86,7 @@
      <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Interface\NPCThoughtCloud.cs" />
      <Compile Include="Assets\Scripts\Interface\VisualTimer.cs" />
+     <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\DatabaseLoader.cs" />
@@ -103,7 +104,7 @@
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemController.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\ItemInteract.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\Page.cs" />
-     <Compile Include="Assets\Scripts\WorldObjects\LabraryTeleporter.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\Teleporter.cs" />
      <None Include="Assets\Dialogue System\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Mobile Test\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\Three NPCs Bark\_README.txt" />

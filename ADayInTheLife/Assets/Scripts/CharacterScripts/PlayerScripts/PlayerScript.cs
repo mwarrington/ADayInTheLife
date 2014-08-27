@@ -40,6 +40,9 @@ public class PlayerScript : MonoBehaviour
 				case "Roomclass":
 					_currentScene = Scenes.Roomclass;
 					break;
+				case "Cafeteria":
+					_currentScene = Scenes.Cafeteria;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -114,6 +117,9 @@ public class PlayerScript : MonoBehaviour
 			case Scenes.Roomclass:
 				Rotatable2DMove();
 				break;
+			case Scenes.Cafeteria:
+				Auto1DMove();
+				break;
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
 				break;
@@ -123,8 +129,10 @@ public class PlayerScript : MonoBehaviour
 	//This method handles the Headbobbing
 	private void Headbob()
 	{
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
+		float horizontal = 1;
+		float vertical = 1;
+
+		Debug.Log(_waveslice);
 		
 		if ((!_isWalkingForward && !_isWalkingBack && !_isWalkingLeft && !_isWalkingRight) || _hitWallForward || _hitWallBack || _hitWallLeft || _hitWallRight)
 		{
@@ -194,13 +202,20 @@ public class PlayerScript : MonoBehaviour
 	//Movement Types
 	private void Standard2DMove()
 	{
-		//When the player presses an arrow key
+		//When the player is pressing an arrow or WASD key
 		if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
 		{
 			if(!ConfusedMovement)
 				_isWalkingForward = true;
 			else
 				_isWalkingRight = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingForward = false;
+			else
+				_isWalkingRight = false;
 		}
 		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
 		{
@@ -209,12 +224,26 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingLeft = true;
 		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingBack = false;
+			else
+				_isWalkingLeft = false;
+		}
 		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isWalkingLeft = true;
 			else
 				_isWalkingForward = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingLeft = false;
+			else
+				_isWalkingForward = false;
 		}
 		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 		{
@@ -223,8 +252,15 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingBack = true;
 		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingRight = false;
+			else
+				_isWalkingBack = false;
+		}
 		
-		//Once the player has pressed an arrow key but hasn't let go of an arrow key
+		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
 			this.transform.Translate(Vector3.forward * PlayerVelocity);
@@ -241,47 +277,24 @@ public class PlayerScript : MonoBehaviour
 		{
 			this.transform.Translate(Vector3.right * PlayerVelocity);
 		}
-		
-		//When the player lets go of an arrow key
-		if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
-		{
-			if(!ConfusedMovement)
-				_isWalkingForward = false;
-			else
-				_isWalkingRight = false;
-		}
-		if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
-		{
-			if(!ConfusedMovement)
-				_isWalkingBack = false;
-			else
-				_isWalkingLeft = false;
-		}
-		if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
-		{
-			if(!ConfusedMovement)
-				_isWalkingLeft = false;
-			else
-				_isWalkingForward = false;
-		}
-		if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
-		{
-			if(!ConfusedMovement)
-				_isWalkingRight = false;
-			else
-				_isWalkingBack = false;
-		}
 	}
 
 	private void Standard1DMove()
 	{
-		//When the player presses an arrow key
+		//When the player is pressing an arrow or WASD key
 		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isWalkingLeft = true;
 			else
 				_isWalkingRight = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingLeft = false;
+			else
+				_isWalkingRight = false;
 		}
 		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 		{
@@ -290,8 +303,15 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingLeft = true;
 		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingRight = false;
+			else
+				_isWalkingLeft = false;
+		}
 		
-		//Once the player has pressed an arrow key but hasn't let go of an arrow key
+		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingLeft && !_hitWallLeft)
 		{
 			this.transform.Translate(Vector3.left * PlayerVelocity);
@@ -300,33 +320,24 @@ public class PlayerScript : MonoBehaviour
 		{
 			this.transform.Translate(Vector3.right * PlayerVelocity);
 		}
-		
-		//When the player lets go of an arrow key
-		if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
-		{
-			if(!ConfusedMovement)
-				_isWalkingLeft = false;
-			else
-				_isWalkingRight = false;
-		}
-		if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
-		{
-			if(!ConfusedMovement)
-				_isWalkingRight = false;
-			else
-				_isWalkingLeft = false;
-		}
 	}
 
 	private void Rotatable2DMove()
 	{
-		//When the player presses an arrow key
+		//When the player is pressing an arrow or WASD key
 		if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
 		{
 			if(!ConfusedMovement)
 				_isWalkingForward = true;
 			else
 				_isRotatingRight = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingForward = false;
+			else
+				_isRotatingRight = false;
 		}
 		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
 		{
@@ -335,12 +346,26 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isRotatingLeft = true;
 		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingBack = false;
+			else
+				_isRotatingLeft = false;
+		}
 		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isRotatingLeft = true;
 			else
 				_isWalkingForward = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isRotatingLeft = false;
+			else
+				_isWalkingForward = false;
 		}
 		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 		{
@@ -349,8 +374,15 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingBack = true;
 		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isRotatingRight = false;
+			else
+				_isWalkingBack = false;
+		}
 		
-		//Once the player has pressed an arrow key but hasn't let go of an arrow key
+		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
 			this.transform.Translate(Vector3.forward * PlayerVelocity);
@@ -367,36 +399,17 @@ public class PlayerScript : MonoBehaviour
 		{
 			this.transform.Rotate(Vector3.up * 1.3f);
 		}
+	}
+
+	private void Auto1DMove()
+	{
+		//When the player is pressing an arrow or WASD key
+		if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow))
+			_isWalkingLeft = false;
 		
-		//When the player lets go of an arrow key
-		if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
-		{
-			if(!ConfusedMovement)
-				_isWalkingForward = false;
-			else
-				_isRotatingRight = false;
-		}
-		if(Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S))
-		{
-			if(!ConfusedMovement)
-				_isWalkingBack = false;
-			else
-				_isRotatingLeft = false;
-		}
-		if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
-		{
-			if(!ConfusedMovement)
-				_isRotatingLeft = false;
-			else
-				_isWalkingForward = false;
-		}
-		if(Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
-		{
-			if(!ConfusedMovement)
-				_isRotatingRight = false;
-			else
-				_isWalkingBack = false;
-		}
+		//This is how the method uses the bools set by pressing the keys
+		if(_isWalkingLeft)
+			this.transform.Translate(Vector3.left * PlayerVelocity);
 	}
 
 	public void ConfuseMovement()

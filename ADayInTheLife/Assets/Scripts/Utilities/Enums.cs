@@ -6,7 +6,8 @@ public enum Scenes
 	Hallway,
 	Labrary,
 	Classroom,
-	Roomclass
+	Roomclass,
+	Cafeteria
 };
 
 public enum NPCType
