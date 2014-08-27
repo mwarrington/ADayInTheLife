@@ -66,6 +66,20 @@ public class PlayerScript : MonoBehaviour
 
 	}
 
+	public bool IsMoving
+	{
+		get
+		{
+			if(_isWalkingForward || _isWalkingBack || _isWalkingLeft || _isWalkingRight)
+				_isMoving = true;
+			else
+				_isMoving = false;
+
+			return _isMoving;
+		}
+	}
+	private bool _isMoving;
+
 	public GameObject TimerCloud,
 					  FootSound;
 	public SpriteRenderer SarylynSprite,
@@ -131,8 +145,6 @@ public class PlayerScript : MonoBehaviour
 	{
 		float horizontal = 1;
 		float vertical = 1;
-
-		Debug.Log(_waveslice);
 		
 		if ((!_isWalkingForward && !_isWalkingBack && !_isWalkingLeft && !_isWalkingRight) || _hitWallForward || _hitWallBack || _hitWallLeft || _hitWallRight)
 		{
@@ -406,6 +418,8 @@ public class PlayerScript : MonoBehaviour
 		//When the player is pressing an arrow or WASD key
 		if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow))
 			_isWalkingLeft = false;
+		else
+			_isWalkingLeft = true;
 		
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingLeft)

@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\EmpathicEmoticons.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\HallMonitor.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\LunchLadyEyes.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\Dialog\ConversationLogger.cs" />
@@ -93,6 +94,7 @@
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\VariableManager.cs" />
+     <Compile Include="Assets\Scripts\WorldObjects\CafeteriaTray.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Door.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\Books\BookController.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\Items\Books\BookInteract.cs" />
