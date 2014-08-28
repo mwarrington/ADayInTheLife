@@ -307,19 +307,23 @@ public class GameManager : MonoBehaviour
 				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
 			}
 			lvl1JSONInitialized = true;
-			string url = "http://localhost:3000/players/create";
-			FormJSON.AddField("JSONOut", jSONOut.ToString());
+			string url = "http://localhost:3000/gamestates";
+			FormJSON.AddField("create", jSONOut.ToString());
+			Hashtable headers = new Hashtable();
+			headers.Add("Content-Type", "application/json");
 
 			//Debug.Log (JSONOut.ToString());
-			yield return new WWW(url, FormJSON);
+			yield return new WWW(url, FormJSON.data, headers);
 		}
 	}
 
 	public IEnumerator LogJSON()
 	{
-		string url = "http://localhost:3000/players/create";
-		FormJSON.AddField("JSONOut", jSONOut.ToString());
-		yield return new WWW(url, FormJSON);
+		string url = "http://localhost:3000/gamestates";
+		FormJSON.AddField("create", jSONOut.ToString());
+		Hashtable headers = new Hashtable();
+		headers.Add("Content-Type", "application/json");
+		yield return new WWW(url, FormJSON.data, headers);
 	}
 
 	private void LoadNextLevel()

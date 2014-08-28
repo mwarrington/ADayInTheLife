@@ -30,6 +30,8 @@ public class LunchLadyEyes : MonoBehaviour
 				  _endPos = -3.68f;
 	private bool _initialAnimationStart = false;
 
+	public bool QuickEyeFollow;
+
 	void Start()
 	{
 		_player = FindObjectOfType<PlayerScript>().gameObject;
@@ -38,24 +40,27 @@ public class LunchLadyEyes : MonoBehaviour
 
 	void Update()
 	{
-		//This one is the super quick scary version
-		//if(_player.transform.position.x > _endPos && _player.transform.position.x < _startPos)
-		//	this.transform.position = new Vector3(_player.transform.position.x, this.transform.position.y, this.transform.position.z);
-		if(_player.GetComponent<PlayerScript>().IsMoving && _initialAnimationStart)
+		if(QuickEyeFollow)//This one is the super quick scary version
 		{
-			Debug.Log ("Poopoo");
-			animationPlaying = true;
+			if(_player.transform.position.x > _endPos && _player.transform.position.x < _startPos)
+				this.transform.position = new Vector3(_player.transform.position.x - 0.05f, this.transform.position.y, this.transform.position.z);
 		}
-		else
+		else//This is the slower more gradual version
 		{
-			Debug.Log ("Kaka");
-			animationPlaying = false;
+			if(_player.GetComponent<PlayerScript>().IsMoving && _initialAnimationStart)
+			{
+				animationPlaying = true;
+			}
+			else
+			{
+				animationPlaying = false;
+			}
 		}
 	}
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player")
+		if(col.tag == "Player" && !QuickEyeFollow)
 		{
 			_myAnimation.Play();
 			_initialAnimationStart = true;

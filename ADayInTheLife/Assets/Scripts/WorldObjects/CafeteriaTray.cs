@@ -5,7 +5,9 @@ public class CafeteriaTray : MonoBehaviour
 {
 	private GameObject _player;
 	private float _endPos = -25;
-
+	
+	public SpriteRenderer[] FoodTraySections = new SpriteRenderer[5];
+	public Sprite[] Foods;
 	public float PlayerPosOffset;
 
 	void Start()

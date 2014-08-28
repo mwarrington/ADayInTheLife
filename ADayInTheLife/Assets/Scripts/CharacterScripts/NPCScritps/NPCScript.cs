@@ -87,7 +87,7 @@ public class NPCScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().ProgressSync(this.name, NamesToSync);
 		}
 
-		StartCoroutine(myGameManager.LogJSON ());
+		StartCoroutine(myGameManager.LogJSON());
 	}
 
 	protected virtual void RotateTowardPlayer()
