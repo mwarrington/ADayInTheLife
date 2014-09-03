@@ -27,7 +27,6 @@ public class CafeteriaTray : MonoBehaviour
 		if(this.transform.position.x > _endPos)
 			this.transform.position = new Vector3 (_player.transform.position.x + PlayerPosOffset, this.transform.position.y, this.transform.position.z);
 
-		Debug.Log (Camera.main);
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 

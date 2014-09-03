@@ -58,8 +58,9 @@ public class VisualTimer : MonoBehaviour
 		}
 	}
 	private bool _isItemActive;
-
+	
 	private GameManager _myGameManager;
+	private PlayerScript _player;
 	private int _gameTimer;
 
 	public GUIStyle Font;
@@ -68,6 +69,7 @@ public class VisualTimer : MonoBehaviour
 	void Start()
 	{
 		_myGameManager = GameObject.FindObjectOfType<GameManager>();
+		_player = GameObject.FindObjectOfType<PlayerScript>();
 
 		//This handles turning off the the Timer Cloud renderers
 		if(_myGameManager.Timer % 30 > 1)
@@ -87,7 +89,7 @@ public class VisualTimer : MonoBehaviour
 	void Update()
 	{
 		//This handles when to turn on the Timer Cloud renderers
-		if(Application.loadedLevelName == "Labrary" || Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
+		if(Application.loadedLevelName != "Hallway")
 		{
 			if(_myGameManager.Timer < 61)
 			{
@@ -102,7 +104,7 @@ public class VisualTimer : MonoBehaviour
 					showingGameTimer = true;
 				}
 			}
-			else if(Input.GetKey(KeyCode.LeftShift))
+			else if(Input.GetKey(KeyCode.LeftShift) && !DialogueManager.IsConversationActive)
 			{
 				showingGameTimer = true;
 			}
@@ -125,7 +127,7 @@ public class VisualTimer : MonoBehaviour
 					showingGameTimer = true;
 				}
 			}
-			else if(Input.GetKey(KeyCode.LeftShift))
+			else if(Input.GetKey(KeyCode.LeftShift) && !DialogueManager.IsConversationActive)
 			{
 				showingGameTimer = true;
 			}
@@ -142,12 +144,19 @@ public class VisualTimer : MonoBehaviour
 		int displaySeconds = Mathf.CeilToInt(_gameTimer) % 60;
 		int displayMinutes = Mathf.CeilToInt(_gameTimer) / 60;
 		string text = string.Format ("{0:00}:{1:00}", displayMinutes, displaySeconds);
-		
+
+
+
 		if (Application.loadedLevelName == "Hallway")
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Labrary")
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GUI.Box(new Rect(Screen.width * 0.07f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+		else if (Application.loadedLevelName == "Cafeteria")
+		{
+			Font.fontSize = 12;
+			GUI.Box(new Rect(Screen.width * 0.8f, ((Screen.height * 0.2f) * -_player.TranslateChange) + (Screen.height * 0.52f), Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+		}
 	}
 }

@@ -86,7 +86,8 @@ public class PlayerScript : MonoBehaviour
 						  SanomeSprite;
 	public float PlayerVelocity,
 				 BobbingSpeed,
-				 BobbingAmount;
+				 BobbingAmount,
+				 TranslateChange;
 	public bool ConfusedMovement;
 
 	void Start()
@@ -163,12 +164,12 @@ public class PlayerScript : MonoBehaviour
 		}
 		if (_waveslice != 0)
 		{
-			float translateChange = _waveslice * BobbingAmount;
+			TranslateChange = _waveslice * BobbingAmount;
 			float totalAxes = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
 			totalAxes = Mathf.Clamp(totalAxes, 0.0f, 1.0f);
-			translateChange = totalAxes * translateChange;
+			TranslateChange = totalAxes * TranslateChange;
 			_newPos = transform.position;
-			_newPos.y = _midpoint + translateChange;
+			_newPos.y = _midpoint + TranslateChange;
 			transform.position = _newPos;
 			if(_newPos.y < _midpoint-(BobbingAmount*0.4f) && !_playingFootSound)
 			{
