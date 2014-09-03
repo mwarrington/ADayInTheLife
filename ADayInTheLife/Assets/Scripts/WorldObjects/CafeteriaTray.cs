@@ -32,13 +32,10 @@ public class CafeteriaTray : MonoBehaviour
 
 		if (Physics.Raycast(ray, out hit))
 		{
-			if(hit.collider.tag == "CafeteriaFood")
+			if(hit.collider.tag == "CafeteriaFood" && Input.GetKeyDown(KeyCode.Mouse0) && _trayIndex < 5)
 			{
-				if(Input.GetKeyDown(KeyCode.Mouse0))
-				{
-					FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
-					_trayIndex++;
-				}
+				FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
+				_trayIndex++;
 			}
 		}
 	}
