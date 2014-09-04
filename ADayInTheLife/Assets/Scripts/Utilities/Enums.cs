@@ -7,7 +7,8 @@ public enum Scenes
 	Labrary,
 	Classroom,
 	Roomclass,
-	Cafeteria
+	Cafeteria,
+	SecCamTemp
 };
 
 public enum NPCType

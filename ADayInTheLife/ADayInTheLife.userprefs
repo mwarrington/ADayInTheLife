@@ -2,7 +2,11 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" Line="383" Column="54" />
+      <File FileName="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" Line="431" Column="152" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="95" Column="45" />
+      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="140" Column="1" />
+      <File FileName="Assets\Scripts\Managers\CameraManager.cs" Line="37" Column="27" />
+      <File FileName="Assets\Scripts\Utilities\Enums.cs" Line="11" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

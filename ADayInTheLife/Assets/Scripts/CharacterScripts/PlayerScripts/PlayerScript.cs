@@ -20,9 +20,11 @@ public class PlayerScript : MonoBehaviour
 				  _waveslice,
 				  _midpoint,
 				  _gameTimer;
-	private Vector3 _newPos;
+	private Vector3 _newPos,
+					_orriginalRotation;
+	private GameManager _myManager;
 
-	protected Scenes currentScene
+	public Scenes CurrentScene
 	{
 		get
 		{
@@ -43,6 +45,9 @@ public class PlayerScript : MonoBehaviour
 				case "Cafeteria":
 					_currentScene = Scenes.Cafeteria;
 					break;
+				case "SecurityCameraRoomTest":
+					_currentScene = Scenes.SecCamTemp;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -60,7 +65,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		get
 		{
-			_isSarylyn = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsSarylyn;
+			_isSarylyn = _myManager.IsSarylyn;
 			return _isSarylyn;
 		}
 
@@ -92,7 +97,9 @@ public class PlayerScript : MonoBehaviour
 
 	void Start()
 	{
+		_myManager = FindObjectOfType<GameManager>();
 		_midpoint = this.gameObject.transform.position.y;
+		_orriginalRotation = this.transform.rotation.eulerAngles;
 		if(isSarylyn)
 		{
 			SarylynSprite.enabled = true;
@@ -107,7 +114,7 @@ public class PlayerScript : MonoBehaviour
 		//Sets the player's appropriate postion then
 		//Declares current scene as the LastLevelLoaded
 		SetPlayerPosition();
-		GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().LastLevelLoaded = Application.loadedLevelName;
+		_myManager.LastLevelLoaded = Application.loadedLevelName;
 	}
 
 	void Update ()
@@ -118,7 +125,7 @@ public class PlayerScript : MonoBehaviour
 
 	private void InputBasedMovement()
 	{
-		switch(currentScene)
+		switch(CurrentScene)
 		{
 			case Scenes.Hallway:
 				Standard2DMove();
@@ -134,6 +141,9 @@ public class PlayerScript : MonoBehaviour
 				break;
 			case Scenes.Cafeteria:
 				Auto1DMove();
+				break;
+			case Scenes.SecCamTemp:
+				SecurityCamera2DMove();
 				break;
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
@@ -193,7 +203,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		if(Application.loadedLevelName == "Hallway")
 		{
-			switch(GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().LastLevelLoaded)
+			switch(_myManager.LastLevelLoaded)
 			{
 				case "DreamSpiral":
 					this.gameObject.transform.position = new Vector3(-1.582302f, 4.500048f, -54.55913f);
@@ -411,6 +421,89 @@ public class PlayerScript : MonoBehaviour
 		if(_isRotatingRight)
 		{
 			this.transform.Rotate(Vector3.up * 1.3f);
+		}
+	}
+
+	private void SecurityCamera2DMove()
+	{
+		//This will maintain rotation with the camera
+		this.transform.LookAt(_myManager.MainCamera.transform);
+		this.transform.rotation = Quaternion.Euler(new Vector3(0 + _orriginalRotation.x, (this.transform.rotation.eulerAngles.y + _orriginalRotation.y) + 180, 0 + _orriginalRotation.z));
+
+		//When the player is pressing an arrow or WASD key
+		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+		{
+			if(!ConfusedMovement)
+				_isWalkingForward = true;
+			else
+				_isWalkingRight = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingForward = false;
+			else
+				_isWalkingRight = false;
+		}
+		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+		{
+			if(!ConfusedMovement)
+				_isWalkingBack = true;
+			else
+				_isWalkingLeft = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingBack = false;
+			else
+				_isWalkingLeft = false;
+		}
+		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+		{
+			if(!ConfusedMovement)
+				_isWalkingLeft = true;
+			else
+				_isWalkingForward = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingLeft = false;
+			else
+				_isWalkingForward = false;
+		}
+		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+		{
+			if(!ConfusedMovement)
+				_isWalkingRight = true;
+			else
+				_isWalkingBack = true;
+		}
+		else
+		{
+			if(!ConfusedMovement)
+				_isWalkingRight = false;
+			else
+				_isWalkingBack = false;
+		}
+		
+		//This is how the method uses the bools set by pressing the keys
+		if(_isWalkingForward && !_hitWallForward)
+		{
+			this.transform.Translate(Vector3.forward * PlayerVelocity);
+		}
+		if(_isWalkingBack && !_hitWallBack)
+		{
+			this.transform.Translate(Vector3.back * PlayerVelocity);
+		}
+		if(_isWalkingLeft && !_hitWallLeft)
+		{
+			this.transform.Translate(Vector3.left * PlayerVelocity);
+		}
+		if(_isWalkingRight && !_hitWallRight)
+		{
+			this.transform.Translate(Vector3.right * PlayerVelocity);
 		}
 	}
 
