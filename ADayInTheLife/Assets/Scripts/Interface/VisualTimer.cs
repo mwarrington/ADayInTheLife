@@ -152,7 +152,7 @@ public class VisualTimer : MonoBehaviour
 		else if (Application.loadedLevelName == "Labrary")
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
-			GUI.Box(new Rect(Screen.width * 0.07f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+			GUI.Box(new Rect(Screen.width * 0.265f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Cafeteria")
 		{
 			Font.fontSize = 12;

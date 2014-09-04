@@ -216,7 +216,7 @@ public class PlayerScript : MonoBehaviour
 	private void Standard2DMove()
 	{
 		//When the player is pressing an arrow or WASD key
-		if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			if(!ConfusedMovement)
 				_isWalkingForward = true;
@@ -230,7 +230,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingRight = false;
 		}
-		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 		{
 			if(!ConfusedMovement)
 				_isWalkingBack = true;
@@ -244,7 +244,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingLeft = false;
 		}
-		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isWalkingLeft = true;
@@ -258,7 +258,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingForward = false;
 		}
-		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 		{
 			if(!ConfusedMovement)
 				_isWalkingRight = true;
@@ -295,7 +295,7 @@ public class PlayerScript : MonoBehaviour
 	private void Standard1DMove()
 	{
 		//When the player is pressing an arrow or WASD key
-		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isWalkingLeft = true;
@@ -309,7 +309,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingRight = false;
 		}
-		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 		{
 			if(!ConfusedMovement)
 				_isWalkingRight = true;
@@ -338,7 +338,7 @@ public class PlayerScript : MonoBehaviour
 	private void Rotatable2DMove()
 	{
 		//When the player is pressing an arrow or WASD key
-		if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			if(!ConfusedMovement)
 				_isWalkingForward = true;
@@ -352,7 +352,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isRotatingRight = false;
 		}
-		if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 		{
 			if(!ConfusedMovement)
 				_isWalkingBack = true;
@@ -366,7 +366,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isRotatingLeft = false;
 		}
-		if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
 			if(!ConfusedMovement)
 				_isRotatingLeft = true;
@@ -380,7 +380,7 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingForward = false;
 		}
-		if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 		{
 			if(!ConfusedMovement)
 				_isRotatingRight = true;
