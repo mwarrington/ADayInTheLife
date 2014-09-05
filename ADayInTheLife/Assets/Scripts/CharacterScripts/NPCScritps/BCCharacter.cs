@@ -5,11 +5,12 @@ using PixelCrushers.DialogueSystem;
 
 public class BCCharacter : NPCScript
 {
-	public GameObject MyThoughtCloud,
-					  MySpotLight;
+	public GameObject MyThoughtCloud;
+	public Transform MySpotLightTransform;
 	public bool CCharacter;
 
-	private GameObject _dLights;
+	private GameObject _dLights,
+					   _mySpotLight;
 	private EmpathicEmoticons _myEmpathicEmoticons;
 	private SpriteRenderer _emoticonRenderer;
 	private Subtitle _currentLine;
@@ -24,6 +25,7 @@ public class BCCharacter : NPCScript
 		_myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
 		_emoticonRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
 		_dLights = GameObject.FindGameObjectWithTag("D-Lights");
+		_mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
 		Invoke("DialogSetup", 0.1f);
 	}
 	
@@ -41,7 +43,7 @@ public class BCCharacter : NPCScript
 		_conversationActive = true;
 
 		if(CCharacter)
-			ToggleSpotLight();
+			ToggleSpotLight(true);
 	}
 
 	protected override void OnConversationLine (Subtitle line)
@@ -75,7 +77,7 @@ public class BCCharacter : NPCScript
 		RemoveThoughtCloud();
 
 		if(CCharacter)
-			ToggleSpotLight();
+			ToggleSpotLight(false);
 	}
 	
 	protected override void RotateTowardPlayer ()
@@ -112,10 +114,11 @@ public class BCCharacter : NPCScript
 		base.DialogSetup ();
 	}
 
-	private void ToggleSpotLight()
+	private void ToggleSpotLight(bool val)
 	{
-		_dLights.SetActive(!_dLights.activeSelf);
-		MySpotLight.SetActive(!MySpotLight.activeSelf);
+		_dLights.SetActive(!val);
+		_mySpotLight.transform.position = MySpotLightTransform.position;
+		_mySpotLight.SetActive(val);
 	}
 
 	private void LineTimer()

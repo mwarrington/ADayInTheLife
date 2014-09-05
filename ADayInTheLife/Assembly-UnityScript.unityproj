@@ -49,6 +49,7 @@
      <Compile Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Necromancer\Necromancer GUI\GUITestScript.js" />
      <None Include="Assets\Dialogue System\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Mobile Test\_README.txt" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\Three NPCs Bark\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\iOS\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Computer\Bitwise Font\!license.txt" />
@@ -69,6 +70,7 @@
      <None Include="Assets\Dialogue System\Examples\Quick Start\Quick Start.xml" />
      <None Include="Assets\Dialogue System\Examples\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Sequence Example\_README.txt" />
+     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Text Input Example\_README.txt" />
      <None Include="Assets\Dialogue System\Prefabs\Unity Dialogue UIs\Necromancer\Necromancer GUI\Kingthings.txt" />
      <None Include="Assets\Dialogue System\Examples\Art\_README.txt" />
