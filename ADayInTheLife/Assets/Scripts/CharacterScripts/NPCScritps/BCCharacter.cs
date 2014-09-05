@@ -5,8 +5,11 @@ using PixelCrushers.DialogueSystem;
 
 public class BCCharacter : NPCScript
 {
-	public GameObject MyThoughtCloud;
+	public GameObject MyThoughtCloud,
+					  MySpotLight;
+	public bool CCharacter;
 
+	private GameObject _dLights;
 	private EmpathicEmoticons _myEmpathicEmoticons;
 	private SpriteRenderer _emoticonRenderer;
 	private Subtitle _currentLine;
@@ -20,6 +23,7 @@ public class BCCharacter : NPCScript
 		base.Start ();
 		_myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
 		_emoticonRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
+		_dLights = GameObject.FindGameObjectWithTag("D-Lights");
 		Invoke("DialogSetup", 0.1f);
 	}
 	
@@ -35,6 +39,9 @@ public class BCCharacter : NPCScript
 	{
 		base.OnConversationStart (actor);
 		_conversationActive = true;
+
+		if(CCharacter)
+			ToggleSpotLight();
 	}
 
 	protected override void OnConversationLine (Subtitle line)
@@ -65,6 +72,10 @@ public class BCCharacter : NPCScript
 		base.OnConversationEnd (actor);
 		_conversationActive = false;
 		DialogSetup ();
+		RemoveThoughtCloud();
+
+		if(CCharacter)
+			ToggleSpotLight();
 	}
 	
 	protected override void RotateTowardPlayer ()
@@ -101,11 +112,16 @@ public class BCCharacter : NPCScript
 		base.DialogSetup ();
 	}
 
+	private void ToggleSpotLight()
+	{
+		_dLights.SetActive(!_dLights.activeSelf);
+		MySpotLight.SetActive(!MySpotLight.activeSelf);
+	}
+
 	private void LineTimer()
 	{
 		_timeSpentOnLine += Time.deltaTime;
 		DialogueLua.SetVariable (this.name + "Timer", (int)_timeSpentOnLine);
-		Debug.Log (DialogueLua.GetVariable(this.name + "Timer").AsInt);
 	}
 
 	private void LineManager(Subtitle myLine)

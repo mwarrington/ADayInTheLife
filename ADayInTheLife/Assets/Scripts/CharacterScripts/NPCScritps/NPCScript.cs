@@ -63,7 +63,7 @@ public class NPCScript : MonoBehaviour
 			if(myGameManager.LevelCount == 1)
 			{
 				//This next line may need to be commented out in editor to avoid a null ref
-				myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()][myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()].Count] = line.dialogueEntry.id.ToString();
+				//myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()][myGameManager.JSONOut["Level1"]["Conversations"][DialogueManager.LastConversationStarted.ToString()].Count] = line.dialogueEntry.id.ToString();
 				//Debug.Log (myGameManager.JSONOut.ToString());
 			}
 		}
