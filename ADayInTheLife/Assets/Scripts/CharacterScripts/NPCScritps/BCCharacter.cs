@@ -11,6 +11,7 @@ public class BCCharacter : NPCScript
 
 	private GameObject _dLights,
 					   _mySpotLight;
+	private GameObject[] _roomPieces;
 	private EmpathicEmoticons _myEmpathicEmoticons;
 	private SpriteRenderer _emoticonRenderer;
 	private Subtitle _currentLine;
@@ -26,6 +27,7 @@ public class BCCharacter : NPCScript
 		_emoticonRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
 		_dLights = GameObject.FindGameObjectWithTag("D-Lights");
 		_mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
+		_roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
 		Invoke("DialogSetup", 0.1f);
 	}
 	
@@ -116,6 +118,18 @@ public class BCCharacter : NPCScript
 
 	private void ToggleSpotLight(bool val)
 	{
+		for(int i = 0; i < _roomPieces.Length; i++)
+		{
+			Renderer renderer = _roomPieces[i].GetComponent<Renderer>();
+
+			if(renderer.material != null)
+			{
+				if(val == true)
+					renderer.material.color = new Color(renderer.material.color.r / 3, renderer.material.color.g / 3, renderer.material.color.b / 3);
+				else
+					renderer.material.color = new Color(renderer.material.color.r * 3, renderer.material.color.g * 3, renderer.material.color.b * 3);
+			}
+		}
 		_dLights.SetActive(!val);
 		_mySpotLight.transform.position = MySpotLightTransform.position;
 		_mySpotLight.SetActive(val);
