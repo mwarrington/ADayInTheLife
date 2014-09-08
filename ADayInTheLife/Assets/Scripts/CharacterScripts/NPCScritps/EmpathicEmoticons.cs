@@ -6,7 +6,7 @@ public class EmpathicEmoticons : MonoBehaviour
 {
 	public Dictionary<string, Sprite> SpriteDictionary = new Dictionary<string, Sprite>();
 	//Replace with a Resource Load thing
-	public string[] _emoticons = new string[16];
+	private string[] _emoticons = new string[16];
 
 	void Start()
 	{
@@ -32,19 +32,19 @@ public class EmpathicEmoticons : MonoBehaviour
 			case 1:
 				for(int i = 0; i < 16; i++)
 				{
-					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Level1/" + _emoticons[i]));
+					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle1/" + _emoticons[i]));
 				}
 				break;
 			case 2:
 				for(int i = 0; i < 16; i++)
 				{
-					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Level2/" + _emoticons[i]));
+					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
 				}
 				break;
 			case 3:
 				for(int i = 0; i < 16; i++)
 				{
-					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Level3/" + _emoticons[i]));
+					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle3/" + _emoticons[i]));
 				}
 				break;
 			default:

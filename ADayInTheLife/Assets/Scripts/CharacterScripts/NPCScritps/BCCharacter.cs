@@ -53,16 +53,22 @@ public class BCCharacter : NPCScript
 		base.OnConversationLine(line);
 
 		LineManager (line);
-
-		if(line.dialogueEntry.fields.Count > 12)
+		int moodIndex = 0;
+		for(int i = 0; i < line.dialogueEntry.fields.Count; i++)
 		{
-			if(line.dialogueEntry.fields[12].value != "")
+			if(line.dialogueEntry.fields[i].title == "Mood")
 			{
-				_emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[12].value];
-				_emoticonRenderer.enabled = true;
-				CancelInvoke("RemoveThoughtCloud");
-				Invoke("RemoveThoughtCloud", 2);
+				moodIndex = i;
+				break;
 			}
+		}
+
+		if(moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
+		{
+			_emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[12].value];
+			_emoticonRenderer.enabled = true;
+			CancelInvoke("RemoveThoughtCloud");
+			Invoke("RemoveThoughtCloud", 2);
 		}
 	}
 
