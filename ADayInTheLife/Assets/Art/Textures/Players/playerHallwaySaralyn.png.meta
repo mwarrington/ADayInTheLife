@@ -45,9 +45,9 @@ TextureImporter:
     - name: playerHallwaySaralyn_0
       rect:
         serializedVersion: 2
-        x: 29
-        y: 2
-        width: 187
+        x: 14
+        y: 0
+        width: 185
         height: 274
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -55,9 +55,9 @@ TextureImporter:
     - name: playerHallwaySaralyn_1
       rect:
         serializedVersion: 2
-        x: 251
+        x: 232
         y: 0
-        width: 187
+        width: 185
         height: 274
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -65,9 +65,9 @@ TextureImporter:
     - name: playerHallwaySaralyn_2
       rect:
         serializedVersion: 2
-        x: 470
-        y: 2
-        width: 187
+        x: 457
+        y: 0
+        width: 185
         height: 274
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -75,9 +75,9 @@ TextureImporter:
     - name: playerHallwaySaralyn_3
       rect:
         serializedVersion: 2
-        x: 691
+        x: 683
         y: 0
-        width: 187
+        width: 185
         height: 274
       alignment: 0
       pivot: {x: .5, y: .5}
