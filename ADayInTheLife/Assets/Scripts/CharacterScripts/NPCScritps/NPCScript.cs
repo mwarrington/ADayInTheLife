@@ -8,20 +8,20 @@ public class NPCScript : MonoBehaviour
 	public Camera CloseUpCamera;
 	public DialogueDatabase MyDatabase;
 	public NPCType MyType;
-	public string[] NamesToSync;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
 				PlayerSpacificDialog,
 				HasCloseUpCam,
-				TimedResponse,
-				HasSharedProgress;
+				TimedResponse;
 
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
 	protected AudioSource myVoice;
 	protected GameManager myGameManager;
 	protected ConversationTrigger myConTrigger;
+	protected List<string> namesToSync = new List<string>();
 	protected string dialogString;
+	protected bool hasSharedProgress = false;
 
 	protected virtual void Start ()
 	{
@@ -54,6 +54,38 @@ public class NPCScript : MonoBehaviour
 			if(myVoice != null)
 				myVoice.Play();
 		}
+
+		Conversation currentConvo = DialogueManager.MasterDatabase.GetConversation(DialogueManager.LastConversationStarted);
+
+		for (int i = 0; i < currentConvo.fields.Count; i++)
+		{
+			if(currentConvo.fields[i].title == "Description" && currentConvo.fields[i].value != "")
+			{
+				string title = "";
+				for(int j = 0; j < 14; j++)
+				{
+					title = title + currentConvo.fields[i].value[j];
+				}
+				if(title == "SharedProgress")
+				{
+					string name = "";
+					for (int j = 15; j < (currentConvo.fields[i].value.Length); j++)
+					{
+						if(currentConvo.fields[i].value[j] != ' ')
+						{
+							name = name + currentConvo.fields[i].value[j];
+						}
+						else
+						{
+							namesToSync.Add(name);
+							name = "";
+						}
+					}
+					hasSharedProgress = true;
+					break;
+				}
+			}
+		}
 	}
 
 	protected virtual void OnConversationLine(Subtitle line)
@@ -82,9 +114,10 @@ public class NPCScript : MonoBehaviour
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
 
-		if(HasSharedProgress)
+		if(hasSharedProgress)
 		{
-			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().ProgressSync(this.name, NamesToSync);
+			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().ProgressSync(this.name, namesToSync);
+			hasSharedProgress = false;
 		}
 
 		StartCoroutine(myGameManager.LogJSON());
