@@ -48,6 +48,9 @@ public class PlayerScript : MonoBehaviour
 				case "SecurityCameraRoomTest":
 					_currentScene = Scenes.SecCamTemp;
 					break;
+				case "ConsularOffice":
+					_currentScene = Scenes.ConsularOffice;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -144,6 +147,8 @@ public class PlayerScript : MonoBehaviour
 			case Scenes.SecCamTemp:
 				SecurityCamera2DMove();
 				break;
+		case Scenes.ConsularOffice:
+
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
 				break;
@@ -517,6 +522,11 @@ public class PlayerScript : MonoBehaviour
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingLeft)
 			this.transform.Translate(Vector3.left * PlayerVelocity);
+	}
+
+	private void ZeroDMove()
+	{
+		//Nothing so far
 	}
 
 	public void ConfuseMovement()

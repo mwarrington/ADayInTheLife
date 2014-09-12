@@ -8,7 +8,8 @@ public enum Scenes
 	Classroom,
 	Roomclass,
 	Cafeteria,
-	SecCamTemp
+	SecCamTemp,
+	ConsularOffice
 };
 
 public enum NPCType
