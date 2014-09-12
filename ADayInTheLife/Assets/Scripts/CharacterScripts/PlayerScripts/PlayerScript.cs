@@ -68,7 +68,6 @@ public class PlayerScript : MonoBehaviour
 			_isSarylyn = _myManager.IsSarylyn;
 			return _isSarylyn;
 		}
-
 	}
 
 	public bool IsMoving

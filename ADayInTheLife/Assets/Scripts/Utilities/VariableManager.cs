@@ -11,6 +11,7 @@ public class VariableManager : MonoBehaviour
 	void Start()
 	{
 		_myMasterDatabase = DialogueManager.MasterDatabase;
+		SetWorldVarToLuaVar();
 	}
 
 	//This method will set variables in databases that share variables
@@ -61,6 +62,17 @@ public class VariableManager : MonoBehaviour
 				DialogueLua.SetVariable(_eventVariables[i], false);
 			else
 				DialogueLua.SetVariable(_eventVariables[i], 0);
+		}
+	}
+
+	public void SetWorldVarToLuaVar()
+	{
+		if (Application.loadedLevelName == "Classroom")
+		{
+			if(DialogueLua.GetVariable("ShawnProgress").AsInt == 4)
+			{
+				DialogueLua.SetVariable("CompletedFavor", true);
+			}
 		}
 	}
 }

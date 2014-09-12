@@ -18,6 +18,7 @@ public class BCCharacter : NPCScript
 	private List<Subtitle> _viewedLines = new List<Subtitle>();
 	private string _currentTopic;
 	private float _timeSpentOnLine;
+	private int _myProgress;
 	private bool _conversationActive;
 
 	protected override void Start ()
@@ -29,6 +30,9 @@ public class BCCharacter : NPCScript
 		_mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
 		_roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
 		Invoke("DialogSetup", 0.1f);
+
+		//HACK: Resets the TalkedToVars to allow for single cycle completion
+		//_myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
 	}
 	
 	protected override void Update ()
@@ -103,6 +107,7 @@ public class BCCharacter : NPCScript
 				progressVarName = MyDatabase.variables[i].fields[0].value;
 		}
 
+		//HACK:
 		//Resets the TalkedTo vars for test purposes
 		//This alows you to complete a level in a single day
 		//if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
