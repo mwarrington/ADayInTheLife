@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
@@ -307,23 +308,23 @@ public class GameManager : MonoBehaviour
 				JSONOut["Level1"]["Conversations"][conversationString][0] = "";
 			}
 			lvl1JSONInitialized = true;
-			string url = "http://localhost:3000/gamestates";
-			FormJSON.AddField("create", jSONOut.ToString());
+			string url = "http://localhost:3000/gamestates/create";
+			FormJSON.AddField("gamestate", WWW.EscapeURL(jSONOut.ToString()));
 			Hashtable headers = new Hashtable();
 			headers.Add("Content-Type", "application/json");
 
 			//Debug.Log (JSONOut.ToString());
-			yield return new WWW(url, FormJSON.data, headers);
+			yield return new WWW(url, Encoding.Default.GetBytes(FormJSON.data.ToString()), headers);
 		}
 	}
 
 	public IEnumerator LogJSON()
 	{
-		string url = "http://localhost:3000/gamestates";
-		FormJSON.AddField("create", jSONOut.ToString());
+		string url = "http://localhost:3000/gamestates/create";
+		FormJSON.AddField("gamestate", jSONOut.ToString());
 		Hashtable headers = new Hashtable();
 		headers.Add("Content-Type", "application/json");
-		yield return new WWW(url, FormJSON.data, headers);
+		yield return new WWW(url, Encoding.Default.GetBytes(FormJSON.data.ToString()), headers);
 	}
 
 	private void LoadNextLevel()

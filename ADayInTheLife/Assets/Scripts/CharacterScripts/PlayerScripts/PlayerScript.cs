@@ -147,8 +147,9 @@ public class PlayerScript : MonoBehaviour
 			case Scenes.SecCamTemp:
 				SecurityCamera2DMove();
 				break;
-		case Scenes.ConsularOffice:
-
+			case Scenes.ConsularOffice:
+				ZeroDMove();
+				break;
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
 				break;
@@ -527,6 +528,10 @@ public class PlayerScript : MonoBehaviour
 	private void ZeroDMove()
 	{
 		//Nothing so far
+		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			Application.LoadLevel("Hallway");
+		}
 	}
 
 	public void ConfuseMovement()

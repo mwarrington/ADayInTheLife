@@ -16,11 +16,19 @@ public enum NPCType
 {
 	ACharacter,
 	BCCharacter,
-	HallMonitor
+	HallMonitor,
+	Consular
 };
 
 public enum ItemType
 {
 	Computer,
 	Book
+};
+
+public enum EmpathyTypes
+{
+	Self,
+	Comunity,
+	Another
 }
