@@ -138,10 +138,11 @@ public class GameManager : MonoBehaviour
 		//JSON set up
 		StartCoroutine (JSONSetUp());
 
-		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 		MainCamera = Camera.main;
 		if(FindObjectOfType<PlayerScript>() != null)
 			_player = FindObjectOfType<PlayerScript>();
+
+		_mainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
 	}
 
 	void Update ()
