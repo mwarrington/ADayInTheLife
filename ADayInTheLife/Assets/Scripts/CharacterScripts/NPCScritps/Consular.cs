@@ -4,6 +4,8 @@ using PixelCrushers.DialogueSystem;
 
 public class Consular : NPCScript
 {
+	private string _convoModifier = "Intro";
+
 	protected EmpathyTypes currentEmpathyType
 	{
 		get
@@ -15,7 +17,7 @@ public class Consular : NPCScript
 					
 					if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
 					{
-						_currentEmpathyType = EmpathyTypes.Comunity;
+						_currentEmpathyType = EmpathyTypes.Community;
 					}
 					else if(DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
 					{
@@ -62,24 +64,26 @@ public class Consular : NPCScript
 
 		switch(currentEmpathyType)
 		{
-			case EmpathyTypes.Comunity:
-				Debug.Log ("");
+			case EmpathyTypes.Community:
+				_convoModifier = "Community";
 				break;
 			case EmpathyTypes.Self:
-				Debug.Log ("");
+				_convoModifier = "Self";
 				break;
 			case EmpathyTypes.Another:
-				Debug.Log ("");
+				_convoModifier = "Another";
 				break;
 			default:
 				Debug.Log ("Listen pal, there are only three types of empathy that we're exploring in this game. How did you even end up here?");
 				break;
 		}
+
+		DialogSetup();
 	}
 
 	protected override void DialogSetup ()
 	{
-		dialogString = "Sam_" + myGameManager.LevelCount;
+		dialogString = "Sam_" + myGameManager.LevelCount + "_" + _convoModifier;
 
 		base.DialogSetup ();
 	}

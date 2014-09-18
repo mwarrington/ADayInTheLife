@@ -29,6 +29,6 @@ public enum ItemType
 public enum EmpathyTypes
 {
 	Self,
-	Comunity,
+	Community,
 	Another
 }
