@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using PixelCrushers.DialogueSystem;
+using PixelCrushers.DialogueSystem.Examples;
 
 public class HintManager : MonoBehaviour
 {
@@ -22,15 +23,15 @@ public class HintManager : MonoBehaviour
 	private bool _colliderActive;
 
 	private CameraManager _myCameraManager;
-	private BoxCollider _samBoxCollider;
+	private ProximitySelector _playerProxSelector;
 	private PlayerScript _player;
 
 	void Start()
 	{
 		_myCameraManager = FindObjectOfType<CameraManager>();
-		_samBoxCollider = this.GetComponent<BoxCollider>();
 		_player = FindObjectOfType<PlayerScript>();
-		_samBoxCollider.enabled = false;
+		_playerProxSelector = _player.GetComponent<ProximitySelector>();
+		_playerProxSelector.enabled = false;
 	}
 
 	void Update()
@@ -38,11 +39,11 @@ public class HintManager : MonoBehaviour
 		if(colliderActive)
 		{
 			_player.transform.position = new Vector3(_player.transform.position.x + 1, _player.transform.position.y, _player.transform.position.z);
-			_samBoxCollider.enabled = true;
+			_playerProxSelector.enabled = true;
 			_player.transform.position = new Vector3(_player.transform.position.x - 1, _player.transform.position.y, _player.transform.position.z);
 		}
 		else
-			_samBoxCollider.enabled = false;
+			_playerProxSelector.enabled = false;
 
 		if(!_myCameraManager.ZoomingIn)
 		{
