@@ -51,6 +51,9 @@ public class PlayerScript : MonoBehaviour
 				case "ConsularOffice":
 					_currentScene = Scenes.ConsularOffice;
 					break;
+				case "ChorusRoom":
+					_currentScene = Scenes.ChorusRoom;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -95,7 +98,8 @@ public class PlayerScript : MonoBehaviour
 				 BobbingSpeed,
 				 BobbingAmount,
 				 TranslateChange;
-	public bool ConfusedMovement;
+	public bool ConfusedMovement,
+				DontHideSprite;
 
 	void Start()
 	{
@@ -148,6 +152,9 @@ public class PlayerScript : MonoBehaviour
 				SecurityCamera2DMove();
 				break;
 			case Scenes.ConsularOffice:
+				ZeroDMove();
+				break;
+			case Scenes.ChorusRoom:
 				ZeroDMove();
 				break;
 			default:
@@ -582,8 +589,12 @@ public class PlayerScript : MonoBehaviour
 
 	void OnConversationStart(Transform actor)
 	{
-		SarylynSprite.enabled = false;
-		SanomeSprite.enabled = false;
+		if(DontHideSprite)
+		{
+			SarylynSprite.enabled = false;
+			SanomeSprite.enabled = false;
+		}
+
 		TimerCloud.GetComponent<SpriteRenderer> ().enabled = false;
 	}
 

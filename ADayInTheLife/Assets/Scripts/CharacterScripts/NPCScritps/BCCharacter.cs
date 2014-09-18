@@ -29,7 +29,6 @@ public class BCCharacter : NPCScript
 		_dLights = GameObject.FindGameObjectWithTag("D-Lights");
 		_mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
 		_roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
-		Invoke("DialogSetup", 0.1f);
 
 		//HACK: Resets the TalkedToVars to allow for single cycle completion
 		//_myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
@@ -117,6 +116,7 @@ public class BCCharacter : NPCScript
 		//}
 
 		//Sets the Conversation to load
+		Debug.Log (DialogueLua.GetVariable (progressVarName).AsInt);
 		if(PlayerSpacificDialog && myGameManager.IsSarylyn)
 			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
 		else if(PlayerSpacificDialog && !myGameManager.IsSarylyn)
