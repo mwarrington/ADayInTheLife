@@ -595,7 +595,7 @@ public class PlayerScript : MonoBehaviour
 
 	void OnConversationStart(Transform actor)
 	{
-		if(DontHideSprite)
+		if(!DontHideSprite)
 		{
 			SarylynSprite.enabled = false;
 			SanomeSprite.enabled = false;

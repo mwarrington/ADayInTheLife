@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 			gameTimerActive = value;
 		}
 	}
-	static int levelCount = 1;
+	static int levelCount = 2;
 	public int LevelCount
 	{
 		get
@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
 	//Simple Static fields
 	static int DayCount = 0;
 	static bool lvl1DatabasesLoaded = false,
+				lvl2DatabasesLoaded = false,
 				lvl1JSONInitialized = false;
 
 	//Private fields
@@ -133,6 +134,16 @@ public class GameManager : MonoBehaviour
 				DialogueManager.AddDatabase(dd);
 			}
 			lvl1DatabasesLoaded = true;
+		}
+		else if(LevelCount == 2 && !lvl2DatabasesLoaded)
+		{
+			DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
+			
+			foreach(DialogueDatabase dd in myDatabaseLoader.Level2Databases)
+			{
+				DialogueManager.AddDatabase(dd);
+			}
+			lvl2DatabasesLoaded = true;
 		}
 
 		//JSON set up

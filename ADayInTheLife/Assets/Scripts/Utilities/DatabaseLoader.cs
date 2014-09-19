@@ -5,5 +5,7 @@ using PixelCrushers.DialogueSystem;
 
 public class DatabaseLoader : MonoBehaviour
 {
-	public List<DialogueDatabase> Level1Databases = new List<DialogueDatabase>();
+	public List<DialogueDatabase> Level1Databases = new List<DialogueDatabase>(),
+								  Level2Databases = new List<DialogueDatabase>(),
+								  Level3Databases = new List<DialogueDatabase>();
 }

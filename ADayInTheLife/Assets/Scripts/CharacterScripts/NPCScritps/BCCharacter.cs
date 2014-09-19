@@ -116,7 +116,7 @@ public class BCCharacter : NPCScript
 		//}
 
 		//Sets the Conversation to load
-		Debug.Log (DialogueLua.GetVariable (progressVarName).AsInt);
+		Debug.Log (this.name + "_" + DialogueLua.GetVariable (progressVarName).AsInt);
 		if(PlayerSpacificDialog && myGameManager.IsSarylyn)
 			dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
 		else if(PlayerSpacificDialog && !myGameManager.IsSarylyn)
