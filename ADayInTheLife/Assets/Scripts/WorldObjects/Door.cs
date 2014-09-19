@@ -10,7 +10,9 @@ public class Door : MonoBehaviour
 		if(col.gameObject.tag == "Player")
 		{
 			if(Input.GetKeyDown(KeyCode.Space))
+			{
 				Application.LoadLevel(SceneToLoad);
+			}
 		}
 	}
 }

@@ -10,7 +10,8 @@ public enum Scenes
 	Cafeteria,
 	SecCamTemp,
 	ConsularOffice,
-	ChorusRoom
+	ChorusRoom,
+	Lobby
 };
 
 public enum NPCType

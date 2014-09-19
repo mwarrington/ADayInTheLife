@@ -54,6 +54,9 @@ public class PlayerScript : MonoBehaviour
 				case "ChorusRoom":
 					_currentScene = Scenes.ChorusRoom;
 					break;
+				case "Lobby":
+					_currentScene = Scenes.Lobby;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -156,6 +159,9 @@ public class PlayerScript : MonoBehaviour
 				break;
 			case Scenes.ChorusRoom:
 				ZeroDMove();
+				break;
+			case Scenes.Lobby:
+				Standard2DMove();
 				break;
 			default:
 				Debug.Log("That Scene Doesn't Exist!!!");
@@ -537,7 +543,7 @@ public class PlayerScript : MonoBehaviour
 		//Nothing so far
 		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
 		{
-			Application.LoadLevel("Hallway");
+			Application.LoadLevel("Lobby");
 		}
 	}
 
