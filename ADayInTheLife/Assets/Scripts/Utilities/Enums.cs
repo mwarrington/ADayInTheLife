@@ -11,7 +11,8 @@ public enum Scenes
 	SecCamTemp,
 	ConsularOffice,
 	ChorusRoom,
-	Lobby
+	Lobby,
+	GreenWorld
 };
 
 public enum NPCType

@@ -8,6 +8,7 @@ using SimpleJSON;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
+	public bool ITestThereforeIAm;
 	static float timer = 360;
 	public float Timer
 	{
@@ -158,6 +159,18 @@ public class GameManager : MonoBehaviour
 
 	void Update ()
 	{
+		if (ITestThereforeIAm)
+		{
+			if(Input.GetKey(KeyCode.N) && Input.GetKey(KeyCode.O) && Input.GetKey(KeyCode.T))
+			{
+				Application.LoadLevel("Lobby");
+			}
+			if(Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.E))
+			{
+				Application.LoadLevel("Hallway");
+			}
+
+		}
 		if(GameTimerActive)
 		{
 			timer -= Time.deltaTime;

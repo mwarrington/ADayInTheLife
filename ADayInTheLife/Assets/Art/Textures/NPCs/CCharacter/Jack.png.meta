@@ -1,6 +1,9 @@
 fileFormatVersion: 2
 guid: 20dddaf25b550cd44b07d1a57010a84f
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: Jack_0
+    21300002: Jack_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

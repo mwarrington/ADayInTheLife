@@ -147,9 +147,10 @@ public class VisualTimer : MonoBehaviour
 
 
 
-		if (Application.loadedLevelName == "Hallway")
-			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
-		else if (Application.loadedLevelName == "Labrary")
+		//if (Application.loadedLevelName == "Hallway")
+		//	GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+		//else 
+		if (Application.loadedLevelName == "Labrary")
 			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		else if (Application.loadedLevelName == "Classroom" || Application.loadedLevelName == "Roomclass")
 			GUI.Box(new Rect(Screen.width * 0.265f, Screen.height * 0.367f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
@@ -158,5 +159,17 @@ public class VisualTimer : MonoBehaviour
 			Font.fontSize = 12;
 			GUI.Box(new Rect(Screen.width * 0.8f, ((Screen.height * 0.2f) * -_player.TranslateChange) + (Screen.height * 0.52f), Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 		}
+		else if(Application.loadedLevelName == "ConsularOffice")
+		{
+			Font.fontSize = 12;
+			GUI.Box(new Rect(Screen.width * 0.13f, Screen.height * 0.15f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+		}
+		else if(Application.loadedLevelName == "ChorusRoom")
+		{
+			Font.fontSize = 11;
+			GUI.Box(new Rect(Screen.width * 0.37f, Screen.height * 0.25f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
+		}
+		else
+			GUI.Box(new Rect(Screen.width * 0.14f, Screen.height * 0.4f, Screen.width * 0.15f, Screen.height * 0.15f), text, Font);
 	}
 }

@@ -1,16 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs">
     <Files>
-      <File FileName="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" Line="598" Column="7" />
-      <File FileName="Assets\Scripts\Managers\CameraManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="142" Column="58" />
-      <File FileName="Assets\Scripts\Managers\HintManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\ACharacter.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\NPCScript.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Utilities\Enums.cs" Line="14" Column="7" />
-      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" Line="119" Column="28" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs" Line="35" Column="28" />
+      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interface\VisualTimer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interface\DreamSpiral.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs" Line="90" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

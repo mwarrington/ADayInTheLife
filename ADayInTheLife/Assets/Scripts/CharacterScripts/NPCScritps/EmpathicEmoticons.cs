@@ -38,7 +38,7 @@ public class EmpathicEmoticons : MonoBehaviour
 			case 2:
 				for(int i = 0; i < 16; i++)
 				{
-					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
+					//SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
 				}
 				break;
 			case 3:

@@ -29,10 +29,10 @@ public class Consular : NPCScript
 					}
 					break;
 				case 2:
-					Debug.Log ("Poop");
+					Debug.Log ("NothingYet");
 					break;
 				case 3:
-					Debug.Log ("Poop");
+					Debug.Log ("NothingYet");
 					break;
 				default:
 					Debug.Log ("That level doesn't even exist...");
@@ -83,7 +83,7 @@ public class Consular : NPCScript
 
 	protected override void DialogSetup ()
 	{
-		dialogString = "Sam_" + myGameManager.LevelCount + "_" + _convoModifier;
+		dialogString = "Sam" + "_" + _convoModifier;
 
 		base.DialogSetup ();
 	}

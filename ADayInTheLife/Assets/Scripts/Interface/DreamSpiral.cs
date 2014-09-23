@@ -10,12 +10,13 @@ public class DreamSpiral : MonoBehaviour
 					  _secondSFX;
     private Material _startCloudActive,
                      _startCloudInactive;
+	private GameManager _myGameManager;
     private bool _canMove = true;
     public static bool startTimerOnce = false;
 
     void Awake()
     {
-		
+		_myGameManager = FindObjectOfType<GameManager>();
         _startCloudActive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudActive") as Material;
 		_startCloudInactive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudInactive") as Material;
 
@@ -56,7 +57,7 @@ public class DreamSpiral : MonoBehaviour
                     if (Input.GetMouseButtonDown(0))
                     {
                         startTimerOnce = false;
-                        Application.LoadLevel("hallway");
+						Invoke("LoadLevel", 0.1f);
 						_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
 						_secondSFX.Play();
                     }
@@ -95,4 +96,23 @@ public class DreamSpiral : MonoBehaviour
             _hit.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
         }
     }
+
+	private void LoadLevel()
+	{
+		switch(_myGameManager.LevelCount)
+		{
+		case 1:
+			Application.LoadLevel("Hallway");
+			break;
+		case 2:
+			Application.LoadLevel("Lobby");
+			break;
+		case 3:
+			Debug.Log("sdf");
+			break;
+		default:
+			Debug.Log ("There are only three levels so why are you on " + _myGameManager.LevelCount + "?");
+			break;
+		}
+	}
 }

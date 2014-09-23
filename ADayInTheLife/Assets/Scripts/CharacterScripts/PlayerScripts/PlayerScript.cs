@@ -57,6 +57,9 @@ public class PlayerScript : MonoBehaviour
 				case "Lobby":
 					_currentScene = Scenes.Lobby;
 					break;
+				case "GreenWorld":
+					_currentScene = Scenes.GreenWorld;
+					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
 					break;
@@ -104,6 +107,8 @@ public class PlayerScript : MonoBehaviour
 	public bool ConfusedMovement,
 				DontHideSprite;
 
+	public GameObject SlowBGM, FastBGM;
+
 	void Start()
 	{
 		_myManager = FindObjectOfType<GameManager>();
@@ -130,6 +135,20 @@ public class PlayerScript : MonoBehaviour
 	{
 		InputBasedMovement();
 		Headbob();
+		if (Application.loadedLevelName == "GreenWorld")
+		{
+			if (IsMoving)
+			{
+				SlowBGM.audio.volume = 0;
+				FastBGM.audio.volume = 1.0f;
+
+			}
+			else
+			{
+				SlowBGM.audio.volume = 1.0f;
+				FastBGM.audio.volume = 0;	
+			}
+		}
 	}
 
 	private void InputBasedMovement()
@@ -161,6 +180,9 @@ public class PlayerScript : MonoBehaviour
 				ZeroDMove();
 				break;
 			case Scenes.Lobby:
+				Standard2DMove();
+				break;
+			case Scenes.GreenWorld:
 				Standard2DMove();
 				break;
 			default:
@@ -301,6 +323,11 @@ public class PlayerScript : MonoBehaviour
 				_isWalkingBack = false;
 		}
 		
+		if (Application.loadedLevelName == "GreenWorld" && IsMoving)
+				PlayerVelocity = 0.3f;
+			else
+				PlayerVelocity = 0.1f;
+
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
@@ -541,10 +568,11 @@ public class PlayerScript : MonoBehaviour
 	private void ZeroDMove()
 	{
 		//Nothing so far
-		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Escape))
 		{
 			Application.LoadLevel("Lobby");
 		}
+		
 	}
 
 	public void ConfuseMovement()

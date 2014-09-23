@@ -1,6 +1,11 @@
 fileFormatVersion: 2
 guid: a6d8b1d0d65bc5b41a1423a51b367d24
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: playerHallwaySanome_0
+    21300002: playerHallwaySanome_1
+    21300004: playerHallwaySanome_2
+    21300006: playerHallwaySanome_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

@@ -1,6 +1,11 @@
 fileFormatVersion: 2
 guid: 81665bc8fd25ca940a1ae280687a337c
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: playerHallwaySaralyn_0
+    21300002: playerHallwaySaralyn_1
+    21300004: playerHallwaySaralyn_2
+    21300006: playerHallwaySaralyn_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
