@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
+//using PixelCrushers.DialogueSystem.UnityGUI;
 
 public class NPCScript : MonoBehaviour
 {
 	public Camera CloseUpCamera;
 	public DialogueDatabase MyDatabase;
+    public DialogueVisualUI MyDialogGui;
 	public NPCType MyType;
 	public bool AlwaysFacePlayer,
 				HasSharedVariables,
@@ -31,6 +33,8 @@ public class NPCScript : MonoBehaviour
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
 		Invoke("DialogSetup", 0.1f);
+        if (MyDialogGui != null)
+            DialogueManager.DialogueUI = MyDialogGui;
 	}
 	
 	// Update is called once per frame
