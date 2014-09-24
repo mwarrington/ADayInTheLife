@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\RareMetalsScript.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\PlayerScripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\Dialog\ConversationLogger.cs" />
+     <Compile Include="Assets\Scripts\Dialog\DialogUINameHandler.cs" />
      <Compile Include="Assets\Scripts\Dialog\ResponseTimeoutHandler.cs" />
      <Compile Include="Assets\Scripts\Dialog\Usable.cs" />
      <Compile Include="Assets\Scripts\Interface\CharacterTilt.cs" />
