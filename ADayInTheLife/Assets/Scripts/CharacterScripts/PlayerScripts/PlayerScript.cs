@@ -570,7 +570,10 @@ public class PlayerScript : MonoBehaviour
 		//Nothing so far
 		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Escape))
 		{
-			Application.LoadLevel("Lobby");
+            if (_myManager.LevelCount == 1)
+                Application.LoadLevel("Hallway");
+            else if (_myManager.LevelCount == 2)
+                Application.LoadLevel("Lobby");
 		}
 		
 	}
