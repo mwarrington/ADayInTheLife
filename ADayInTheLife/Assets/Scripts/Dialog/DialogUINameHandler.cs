@@ -4,5 +4,5 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 
 public class DialogUINameHandler : MonoBehaviour
 {
-    public GUILabel DisplayName;
+    public GUILabel[] DisplayNames = new GUILabel[2];
 }

@@ -57,10 +57,16 @@ public class BCCharacter : NPCScript
     {
         base.OnConversationLine(line);
 
-        if (line.dialogueEntry.fields[1].value != "")
+        for (int i = 0; i < line.dialogueEntry.fields.Count; i++)
         {
-            _currentConversant = line.dialogueEntry.fields[1].value;
-            Invoke("ChangeNames", 0.001f);
+            if (line.dialogueEntry.fields[i].title == "Description")
+            {
+                if (line.dialogueEntry.fields[i].value != "")
+                {
+                    _currentConversant = line.dialogueEntry.fields[1].value;
+                    Invoke("ChangeNames", 0.001f);
+                }
+            }
         }
 
         LineManager(line);
@@ -117,11 +123,11 @@ public class BCCharacter : NPCScript
         //HACK:
         //Resets the TalkedTo vars for test purposes
         //This alows you to complete a level in a single day
-        //if(_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
-        //{
-        //	DialogueLua.SetVariable ("TalkedTo" + this.name, false);
-        //	_myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
-        //}
+        if (_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
+        {
+            DialogueLua.SetVariable("TalkedTo" + this.name, false);
+            _myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
+        }
 
         //Sets the Conversation to load
         if (PlayerSpacificDialog && myGameManager.IsSarylyn)
@@ -201,6 +207,9 @@ public class BCCharacter : NPCScript
 
     private void ChangeNames()
     {
-        FindObjectOfType<DialogUINameHandler>().DisplayName.text = _currentConversant;
+        for (int i = 0; i < FindObjectOfType<DialogUINameHandler>().DisplayNames.Length; i++)
+        {
+            FindObjectOfType<DialogUINameHandler>().DisplayNames[i].text = _currentConversant;
+        }
     }
 }
