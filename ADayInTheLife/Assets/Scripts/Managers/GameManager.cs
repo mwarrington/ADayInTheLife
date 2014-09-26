@@ -8,7 +8,6 @@ using SimpleJSON;
 public class GameManager : MonoBehaviour
 {
 	//Static fields with properties that have get and set accessors
-	public bool ITestThereforeIAm;
 	static float timer = 360;
 	public float Timer
 	{
@@ -119,7 +118,8 @@ public class GameManager : MonoBehaviour
 	private PlayerScript _player;
 
 	//Public fields
-	public bool	FadingAway;
+	public bool	FadingAway,
+                ITestThereforeIAm; //HACK: for testing purposes (iTestTherforeIHack{not an interface})
 	public Camera MainCamera;
 	public AudioSource Countdown30,
 					   Countdown10;
