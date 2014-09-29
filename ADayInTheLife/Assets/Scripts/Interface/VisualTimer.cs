@@ -27,7 +27,6 @@ public class VisualTimer : MonoBehaviour
                 foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
                 {
                     r.enabled = false;
-                    Debug.Log(r.name);
                 }
             }
 
@@ -91,7 +90,6 @@ public class VisualTimer : MonoBehaviour
         //This handles when to turn on the Timer Cloud renderers
         if (Application.loadedLevelName != "Hallway")
         {
-            Debug.Log(_myGameManager.Timer);
             if (_myGameManager.Timer < 61)
             {
                 _myGameManager.GameTimerActive = true;

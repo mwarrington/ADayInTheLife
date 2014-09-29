@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\HintManager.cs" />
+     <Compile Include="Assets\Scripts\TestScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\DatabaseLoader.cs" />
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
