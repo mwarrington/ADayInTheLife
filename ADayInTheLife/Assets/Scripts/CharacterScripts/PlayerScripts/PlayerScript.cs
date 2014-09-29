@@ -15,7 +15,8 @@ public class PlayerScript : MonoBehaviour
 				 _hitWallLeft = false,
 				 _hitWallRight = false,
 				 _playingFootSound = false,
-				 _isSarylyn = true;
+				 _isSarylyn = true,
+                 _hasSpeedControls = false;
 	private float _bobTimer,
 				  _waveslice,
 				  _midpoint,
@@ -33,33 +34,43 @@ public class PlayerScript : MonoBehaviour
 			{
 				case "Hallway":
 					_currentScene = Scenes.Hallway;
+                    _hasSpeedControls = true;
 					break;
 				case "Labrary":
 					_currentScene = Scenes.Labrary;
+                    _hasSpeedControls = true;
 					break;
 				case "Classroom":
 					_currentScene = Scenes.Classroom;
+                    _hasSpeedControls = true;
 					break;
 				case "Roomclass":
 					_currentScene = Scenes.Roomclass;
+                    _hasSpeedControls = true;
 					break;
 				case "Cafeteria":
 					_currentScene = Scenes.Cafeteria;
+                    _hasSpeedControls = true;
 					break;
 				case "SecurityCameraRoomTest":
 					_currentScene = Scenes.SecCamTemp;
+                    _hasSpeedControls = true;
 					break;
 				case "ConsularOffice":
 					_currentScene = Scenes.ConsularOffice;
+                    _hasSpeedControls = false;
 					break;
 				case "ChorusRoom":
 					_currentScene = Scenes.ChorusRoom;
+                    _hasSpeedControls = false;
 					break;
 				case "Lobby":
 					_currentScene = Scenes.Lobby;
+                    _hasSpeedControls = true;
 					break;
 				case "GreenWorld":
 					_currentScene = Scenes.GreenWorld;
+                    _hasSpeedControls = true;
 					break;
 				default:
 					Debug.Log("That Scene Doesn't Exist!!!");
@@ -142,7 +153,8 @@ public class PlayerScript : MonoBehaviour
 	void Update ()
 	{
 		InputBasedMovement();
-        WalkSpeedHandler();
+        if (_hasSpeedControls)
+            WalkSpeedHandler();
 		Headbob();
 		if (Application.loadedLevelName == "GreenWorld")
 		{
