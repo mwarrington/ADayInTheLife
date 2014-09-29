@@ -12,7 +12,12 @@ public class PrefabLoaderScript : MonoBehaviour
 					 PlayerSelect1,
 					 PlayerSelect2,
 					 SpiralHover,
-					 SpiralTurn;
+					 SpiralTurn,
+                     Boing,
+                     Pop,
+                     Werp,
+                     Wheee,
+                     Xylophone;
 
 	void Awake()
 	{

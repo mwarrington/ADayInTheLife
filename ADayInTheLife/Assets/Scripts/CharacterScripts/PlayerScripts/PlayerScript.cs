@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
 	private Vector3 _newPos,
 					_orriginalRotation;
 	private GameManager _myManager;
+    private AudioClip[] _mySpeedClips = new AudioClip[5];
 
 	public Scenes CurrentScene
 	{
@@ -94,12 +95,14 @@ public class PlayerScript : MonoBehaviour
 			return _isMoving;
 		}
 	}
-	private bool _isMoving;
+	private bool _isMoving,
+                 _spedUp = false;
 
 	public GameObject TimerCloud,
 					  FootSound;
 	public SpriteRenderer SarylynSprite,
 						  SanomeSprite;
+    public AudioSource SpeedSFX;
 	public float PlayerVelocity,
 				 BobbingSpeed,
 				 BobbingAmount,
@@ -129,11 +132,17 @@ public class PlayerScript : MonoBehaviour
 		//Declares current scene as the LastLevelLoaded
 		SetPlayerPosition();
 		_myManager.LastLevelLoaded = Application.loadedLevelName;
+        _mySpeedClips[0] = PrefabLoaderScript.instance.Boing;
+        _mySpeedClips[1] = PrefabLoaderScript.instance.Pop;
+        _mySpeedClips[2] = PrefabLoaderScript.instance.Werp;
+        _mySpeedClips[3] = PrefabLoaderScript.instance.Wheee;
+        _mySpeedClips[4] = PrefabLoaderScript.instance.Xylophone;
 	}
 
 	void Update ()
 	{
 		InputBasedMovement();
+        WalkSpeedHandler();
 		Headbob();
 		if (Application.loadedLevelName == "GreenWorld")
 		{
@@ -322,11 +331,6 @@ public class PlayerScript : MonoBehaviour
 			else
 				_isWalkingBack = false;
 		}
-		
-		if (Application.loadedLevelName == "GreenWorld" && IsMoving)
-				PlayerVelocity = 0.3f;
-			else
-				PlayerVelocity = 0.1f;
 
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
@@ -588,6 +592,41 @@ public class PlayerScript : MonoBehaviour
 		_isRotatingRight = false;
 		_isRotatingLeft = false;
 	}
+
+    private void WalkSpeedHandler()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            PlayerVelocity = 0.25f;
+            BobbingSpeed = 0.25f;
+            _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 1;
+            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
+            if (!SpeedSFX.isPlaying && !_spedUp)
+            {
+                SpeedSFX.clip = _mySpeedClips[Random.Range(0, 5)];
+                SpeedSFX.Play();
+                _spedUp = true;
+            }
+        }
+        else if(Input.GetKey(KeyCode.RightShift))
+        {
+            PlayerVelocity = 0.04f;
+            BobbingSpeed = 0.07f;
+            _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 5;
+            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
+            if (_myManager.Timer > 60)
+                _myManager.MainBGM.pitch = 0.7f;
+        }
+        else
+        {
+            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = false;
+            PlayerVelocity = 0.1f;
+            BobbingSpeed = 0.15f;
+            if (_myManager.Timer > 60)
+                _myManager.MainBGM.pitch = 1f;
+            _spedUp = false;
+        }
+    }
 	#endregion
 
 	void OnCollisionEnter(Collision col)
