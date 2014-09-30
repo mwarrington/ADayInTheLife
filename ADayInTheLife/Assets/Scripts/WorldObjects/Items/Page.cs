@@ -7,7 +7,7 @@ public class Page : MonoBehaviour
 	public SpriteRenderer MySprite;
 	public float PageLength;
 	public bool ImpartsInfo;
-	public string[] KnowledgeStrings;
+	public string[] KnowledgeStrings; //For Chatmapper Integration
 	public bool IsActive
 	{
 		get
