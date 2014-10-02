@@ -6,6 +6,19 @@ public class BookPage : Page
 	public int PageNumber;
 	public string BookName;
 
+    public override bool IsActive
+    {
+        get
+        {
+            return base.IsActive;
+        }
+        set
+        {
+            base.IsActive = value;
+            this.GetComponent<MeshRenderer>().enabled = value;
+        }
+    }
+
 	private BookController _myBook;
 
 	protected override void Start ()

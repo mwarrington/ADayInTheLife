@@ -7,8 +7,13 @@ public class ComputerController : ItemController
 	protected override void Start ()
 	{
 		base.Start ();
-		
-		ItemCamera = GameObject.FindGameObjectWithTag("ComputerCamera").GetComponent<Camera>();
+
+        ItemCamera = GameObject.FindGameObjectWithTag("ComputerCamera").GetComponent<Camera>();
+        
+        foreach (Page p in GetComponentsInChildren<Page>())
+        {
+            Pages.Add(p.name, p);
+        }
 	}
 
 	protected override void Update ()

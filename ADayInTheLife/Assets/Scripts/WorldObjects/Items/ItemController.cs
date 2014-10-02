@@ -43,11 +43,6 @@ public class ItemController : MonoBehaviour
 			}
 		}
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
-
-		foreach (Page p in GetComponentsInChildren<Page>())
-		{
-			Pages.Add(p.name, p);
-		}
 	}
 
 	protected virtual void Update()

@@ -19,6 +19,7 @@ public class BookController : ItemController
         _currentPage = this.GetComponentInChildren<Page>().gameObject;
         _currentPage.GetComponent<BookPage>().PageNumber = _pageCount;
         _currentPage.name = _currentPage.name + _pageCount;
+        Pages.Add(_currentPage.name, _currentPage.GetComponent<Page>());
         _currentTextMesh = _currentPage.GetComponent<TextMesh>();
         _currentRenderer = _currentPage.GetComponent<MeshRenderer>();
 
@@ -83,7 +84,10 @@ public class BookController : ItemController
         foreach (Page p in Pages.Values)
         {
             if (p.name != StartPage.name)
-                p.gameObject.SetActive(false);
+            {
+                p.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                p.MySprite.enabled = false;
+            }
         }
     }
 }

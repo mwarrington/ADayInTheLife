@@ -8,7 +8,7 @@ public class Page : MonoBehaviour
 	public float PageLength;
 	public bool ImpartsInfo;
 	public string[] KnowledgeStrings; //For Chatmapper Integration
-	public bool IsActive
+	public virtual bool IsActive
 	{
 		get
 		{
