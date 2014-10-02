@@ -44,6 +44,7 @@ public class BookController : ItemController
     private void StringFormatter()
     {
         string currentWord = "";
+        bool isFirstWord = true;
 
         for(int i = 0; i < BookContent.Length; i++)
         {
@@ -53,7 +54,13 @@ public class BookController : ItemController
             }
             else
             {
-                _currentTextMesh.text = _currentTextMesh.text + " " + currentWord;
+                if (isFirstWord)
+                {
+                    _currentTextMesh.text = _currentTextMesh.text + currentWord;
+                    isFirstWord = false;
+                }
+                else
+                    _currentTextMesh.text = _currentTextMesh.text + " " + currentWord;
 
                 if(_currentRenderer.bounds.extents.x > 6.7f)
                 {
