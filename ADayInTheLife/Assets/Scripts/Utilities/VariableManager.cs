@@ -15,26 +15,29 @@ public class VariableManager : MonoBehaviour
 	}
 
 	//This method will set variables in databases that share variables
-	public void SyncVariables(string CurrentConvo)
-	{
-		switch(CurrentConvo)
-		{
-			case "Darrell_1":
-				DialogueLua.SetVariable("KnowsAboutRumor_Jack",DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
-				DialogueLua.SetVariable("KnowsAboutRumor_Glasses",DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
-				DialogueLua.SetVariable("KnowsAboutPicture_Jack",DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
-				DialogueLua.SetVariable("KnowsAboutPicture_Glasses",DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
-				break;
-			case "Jack_1":
-				DialogueLua.SetVariable("JackWantsHelp_Darrell",DialogueLua.GetVariable("JackWantsHelp").AsBool);
-				DialogueLua.SetVariable("JackWantsHelp_Glasses",DialogueLua.GetVariable("JackWantsHelp").AsBool);
-				break;
-			default:
-				Debug.Log("That isn't the correct conversation name");
-				break;
-		}
-		//DialogueLua.GetVariable("Helped Gonzo").AsBool);
-	}
+    public void SyncVariables(string CurrentConvo)
+    {
+        switch (CurrentConvo)
+        {
+            case "Darrell_1":
+                DialogueLua.SetVariable("KnowsAboutRumor_Jack", DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
+                DialogueLua.SetVariable("KnowsAboutRumor_Glasses", DialogueLua.GetVariable("KnowsAboutRumor").AsBool);
+                DialogueLua.SetVariable("KnowsAboutPicture_Jack", DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
+                DialogueLua.SetVariable("KnowsAboutPicture_Glasses", DialogueLua.GetVariable("KnowsAboutPicture").AsBool);
+                break;
+            case "Jack_1":
+                DialogueLua.SetVariable("JackWantsHelp_Darrell", DialogueLua.GetVariable("JackWantsHelp").AsBool);
+                DialogueLua.SetVariable("JackWantsHelp_Glasses", DialogueLua.GetVariable("JackWantsHelp").AsBool);
+                break;
+            case "Markeshia_2":
+                DialogueLua.SetVariable("Dali_Phone", DialogueLua.GetVariable("Dali").AsBool);
+                break;
+            default:
+                Debug.Log("That isn't the correct conversation name");
+                break;
+        }
+        //DialogueLua.GetVariable("Helped Gonzo").AsBool);
+    }
 
 	public void ProgressSync(string myName, List<string> namesToSync)
 	{

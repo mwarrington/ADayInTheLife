@@ -123,11 +123,11 @@ public class BCCharacter : NPCScript
         //HACK:
         //Resets the TalkedTo vars for test purposes
         //This alows you to complete a level in a single day
-        //if (_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
-        //{
-        //    DialogueLua.SetVariable("TalkedTo" + this.name, false);
-        //    _myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
-        //}
+        if (_myProgress < DialogueLua.GetVariable(progressVarName).AsInt)
+        {
+            DialogueLua.SetVariable("TalkedTo" + this.name, false);
+            _myProgress = DialogueLua.GetVariable(progressVarName).AsInt;
+        }
 
         //Sets the Conversation to load
         if (PlayerSpacificDialog && myGameManager.IsSarylyn)

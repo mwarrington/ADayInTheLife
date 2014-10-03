@@ -33,8 +33,6 @@ public class NPCScript : MonoBehaviour
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
 		Invoke("DialogSetup", 0.1f);
-        if (MyDialogGui != null)
-            DialogueManager.DialogueUI = MyDialogGui;
 	}
 	
 	// Update is called once per frame
@@ -45,7 +43,7 @@ public class NPCScript : MonoBehaviour
 	}
 
 	protected virtual void OnConversationStart(Transform actor)
-	{
+    {
 		if(TimedResponse)
 			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 30;
 		else
@@ -116,6 +114,7 @@ public class NPCScript : MonoBehaviour
 
 		if(HasSharedVariables)
 		{
+            Debug.Log(dialogString);
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
 
@@ -127,6 +126,12 @@ public class NPCScript : MonoBehaviour
 
 		StartCoroutine(myGameManager.LogJSON());
 	}
+
+    protected virtual void OnTriggerEnter(Collider col)
+    {
+        if (MyDialogGui != null && col.tag == "Player")
+            DialogueManager.DialogueUI = MyDialogGui;
+    }
 
 	protected virtual void RotateTowardPlayer()
 	{
