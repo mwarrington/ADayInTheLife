@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\ACharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs" />
+     <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\ElevatorCharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\EmpathicEmoticons.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\HallMonitor.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\LunchLadyEyes.cs" />
