@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class ElevatorCharacter : NPCScript
 {
@@ -22,17 +23,30 @@ public class ElevatorCharacter : NPCScript
         MoveElevator();
     }
 
+    protected override void DialogSetup()
+    {
+        if (_elevatorPrince)
+            dialogString = "Prince";
+        else
+            dialogString = "Administrative_Assistant";
+
+        base.DialogSetup();
+    }
+
     private void MoveElevator()
     {
-        if (!_elevatorPrince && !animation.isPlaying)
+        Debug.Log(DialogueLua.GetVariable("SwitchToPrince").AsBool);
+        if (!_elevatorPrince && !animation.isPlaying && DialogueLua.GetVariable("SwitchToPrince").AsBool)
         {
             animation.Play("OfficeElevatorDown");
             _elevatorPrince = true;
+            DialogSetup();
         }
-        if (_elevatorPrince && !animation.isPlaying)
+        if (_elevatorPrince && !animation.isPlaying && DialogueLua.GetVariable("SwitchToAA").AsBool)
         {
             animation.Play("OfficeElevatorUp");
             _elevatorPrince = false;
+            DialogSetup();
         }
     }
 }
