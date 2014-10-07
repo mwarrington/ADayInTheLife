@@ -363,7 +363,7 @@ public class GameManager : MonoBehaviour
 		{
 			if(DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
 			{
-				if(DialogueManager.MasterDatabase.variables[i].fields[1].value == "true")
+				if(DialogueLua.GetVariable(DialogueManager.MasterDatabase.variables[i].Name).AsBool == true)
 					loadNewLevel = true;
 			}
 		}
