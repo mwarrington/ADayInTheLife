@@ -7,8 +7,9 @@ using SimpleJSON;
 
 public class GameManager : MonoBehaviour
 {
-	//Static fields with properties that have get and set accessors
-	static float timer = 360;
+    //Static fields with properties that have get and set accessors
+    #region Static fields with public accessors
+    static float timer = 360;
 	public float Timer
 	{
 		get
@@ -104,8 +105,9 @@ public class GameManager : MonoBehaviour
 			formJSON = value;
 		}
 	}
-	
-	//Simple Static fields
+    #endregion
+
+    //Simple Static fields
 	static int DayCount = 0;
 	static bool lvl1DatabasesLoaded = false,
 				lvl2DatabasesLoaded = false,
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour
 		}
 		else if(LevelCount == 2 && !lvl2DatabasesLoaded)
 		{
+            DialogueManager.MasterDatabase.Clear();
 			DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
 			
 			foreach(DialogueDatabase dd in myDatabaseLoader.Level2Databases)
