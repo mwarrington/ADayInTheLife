@@ -290,6 +290,22 @@ public class GameManager : MonoBehaviour
 						_desk.rigidbody.AddForce(0,100,0);
 					}
 				}
+                break;
+            case "GreenWorld":
+                if (timer <= 30 && MainBGM.pitch > 0.75f)
+                {
+                    GameObject[] animationObjects = GameObject.FindGameObjectsWithTag("Set Piece");
+                    List<Animation> animations = new List<Animation>();
+
+                    for(int i = 0; i < animationObjects.Length; i++)
+                    {
+                        animations.Add(animationObjects[i].GetComponent<Animation>());
+                    }
+                    for (int i = 0; i < animations.Count; i++)
+                    {
+                        animations[i].Play();
+                    }
+                }
 				break;
 			default:
 				//Nothing should happen here
