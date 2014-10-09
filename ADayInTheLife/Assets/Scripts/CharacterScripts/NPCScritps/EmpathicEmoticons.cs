@@ -27,7 +27,7 @@ public class EmpathicEmoticons : MonoBehaviour
 		_emoticons[14] = "SadHappy";
 		_emoticons[15] = "SadSad";
 
-		switch(this.GetComponent<GameManager>().LevelCount)
+		switch(this.GetComponent<GameManager>().DayCount)
 		{
 			case 1:
 				for(int i = 0; i < 16; i++)
@@ -38,12 +38,14 @@ public class EmpathicEmoticons : MonoBehaviour
 			case 2:
 				for(int i = 0; i < 16; i++)
 				{
-					//SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
+                    SpriteDictionary.Clear();
+					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
 				}
 				break;
 			case 3:
 				for(int i = 0; i < 16; i++)
-				{
+                {
+                    SpriteDictionary.Clear();
 					SpriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle3/" + _emoticons[i]));
 				}
 				break;

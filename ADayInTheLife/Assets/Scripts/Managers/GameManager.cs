@@ -105,10 +105,24 @@ public class GameManager : MonoBehaviour
 			formJSON = value;
 		}
 	}
+    static int dayCount = 1;
+    public int DayCount
+    {
+        get
+        {
+            return dayCount;
+        }
+        set
+        {
+            if (value > 2)
+                dayCount = 3;
+            else
+                dayCount = value;
+        }
+    }
     #endregion
 
     //Simple Static fields
-	static int DayCount = 0;
 	static bool lvl1DatabasesLoaded = false,
 				lvl2DatabasesLoaded = false,
 				lvl1JSONInitialized = false;
@@ -394,7 +408,7 @@ public class GameManager : MonoBehaviour
 		if(loadNewLevel)
 		{
 			Application.LoadLevel("MainMenu");
-			DayCount = 0;
+			DayCount = 1;
 			//Something to clear the database for new databases.
 		}
 		else
