@@ -347,7 +347,6 @@ public class GameManager : MonoBehaviour
 		_alpha += Time.deltaTime * 0.35f;
         MainBGM.volume -= Time.deltaTime * 0.15f;
 		_fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
-
 	}
 
 	private IEnumerator StaggeredAnimationPlay(Animation animation, float variance)
@@ -422,5 +421,6 @@ public class GameManager : MonoBehaviour
 		timer = 360;
 		FadingAway = false;
 		gameTimerActive = false;
+        this.GetComponent<EmpathicEmoticons>().EmoticonsLoaded = false;
 	}
 }
