@@ -294,7 +294,10 @@ public class GameManager : MonoBehaviour
             case "GreenWorld":
                 if (timer <= 30 && MainBGM.pitch > 0.75f)
                 {
-                    GameObject[] animationObjects = GameObject.FindGameObjectsWithTag("Set Piece");
+                    MainBGM.pitch = 0.75f;
+                    MainBGM.volume = 0.5f;
+                    Countdown30.volume = 0.6f;
+                    GameObject[] animationObjects = GameObject.FindGameObjectsWithTag("SetPiece");
                     List<Animation> animations = new List<Animation>();
 
                     for(int i = 0; i < animationObjects.Length; i++)
@@ -303,7 +306,11 @@ public class GameManager : MonoBehaviour
                     }
                     for (int i = 0; i < animations.Count; i++)
                     {
-                        animations[i].Play();
+                        //This way all of the set pieces don't fall at once
+                        StartCoroutine(StaggeredAnimationPlay(animations[i], 1f));
+
+                        //This way all of the set pieces fall at once
+                        //animations[i].Play();
                     }
                 }
 				break;
