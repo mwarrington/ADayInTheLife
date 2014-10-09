@@ -69,6 +69,7 @@
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateQuestLogWindow.cs" />
      <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateTextFieldUI.cs" />
      <Compile Include="Assets\JSON Tests\CSharp\Test_CSharp.cs" />
+     <Compile Include="Assets\MiniGames\MiniGameTest\Scripts\DoubleSwishScript.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\ACharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\BCCharacter.cs" />
      <Compile Include="Assets\Scripts\CharacterScripts\NPCScritps\Consular.cs" />
