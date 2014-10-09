@@ -3,10 +3,8 @@ using System.Collections;
 
 public class TrainMovement : MonoBehaviour
 {
-    private bool _elevatorPrince = false; //if true, the elevator shows the Prince Apall
     public bool AutoTrain;
 
-    // Use this for initialization
     void Start()
     {
         if (this.gameObject.tag == "train" && AutoTrain)

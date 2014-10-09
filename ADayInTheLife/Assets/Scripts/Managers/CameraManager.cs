@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour
 {
-    private GameManager _myManager;
+    //private GameManager _myManager;
     private GameObject _player;
     private Vector3 _startPoint,
                     _endPoint;
@@ -18,7 +18,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-        _myManager = FindObjectOfType<GameManager>();
+        //_myManager = FindObjectOfType<GameManager>();
         _player = FindObjectOfType<PlayerScript>().gameObject;
         _endPos = -20f;
         _startPoint = new Vector3(-3.853245f, 5.765692f, -50.30481f);

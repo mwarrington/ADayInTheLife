@@ -60,14 +60,12 @@ public class VisualTimer : MonoBehaviour
     private bool _isItemActive;
 
     private GameManager _myGameManager;
-    private PlayerScript _player;
     private TextMesh _myTextMesh;
     private int _gameTimer;
 
     void Start()
     {
         _myGameManager = GameObject.FindObjectOfType<GameManager>();
-        _player = GameObject.FindObjectOfType<PlayerScript>();
         _myTextMesh = this.GetComponentInChildren<TextMesh>();
 
         //This handles turning off the the Timer Cloud renderers
