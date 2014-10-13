@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
     {
         //_myManager = FindObjectOfType<GameManager>();
         _player = FindObjectOfType<PlayerScript>().gameObject;
-        _endPos = -20f;
+        _endPos = -55f;
         _startPoint = new Vector3(-3.853245f, 5.765692f, -50.30481f);
         _endPoint = new Vector3(-2.861506f, 2.626634f, -43.38896f);
         _startTime = Time.time;
@@ -41,7 +41,7 @@ public class CameraManager : MonoBehaviour
 
                 if (_playerPos > _endPos)
                 {
-                    this.transform.position = new Vector3(_playerPos + PlayerPosOffset, this.transform.position.y);
+                    this.transform.position = new Vector3(_playerPos + PlayerPosOffset, this.transform.position.y, this.transform.position.z);
                 }
                 break;
             case Scenes.SecCamTemp:
