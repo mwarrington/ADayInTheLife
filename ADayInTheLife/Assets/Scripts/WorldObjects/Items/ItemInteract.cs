@@ -4,21 +4,34 @@ using PixelCrushers.DialogueSystem.Examples;
 
 public class ItemInteract : MonoBehaviour
 {
+    static protected Vector3 myLastPos;
+
+    private PlayerScript _myPlayer;
+
 	protected GameManager myGameManager;
 	protected GameObject currentItem;
 	
 	public GameObject ItemPrefab;
 	public Camera ItemViewCamera;
 	public Transform PlaceToInstantiate;
+    public string SceneToLoad;
 	public bool SimpleItem,
 				ItemActive;
 
 	protected virtual void Start()
 	{
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
-		
-		this.gameObject.GetComponent<Usable>().overrideName = ItemPrefab.GetComponent<ItemController>().OverrideName;
-		this.gameObject.GetComponent<Usable>().overrideUseMessage = ItemPrefab.GetComponent<ItemController>().OverrideUseMessage;
+        _myPlayer = FindObjectOfType<PlayerScript>();
+
+        if (SimpleItem)
+        {
+            this.gameObject.GetComponent<Usable>().overrideName = ItemPrefab.GetComponent<ItemController>().OverrideName;
+            this.gameObject.GetComponent<Usable>().overrideUseMessage = ItemPrefab.GetComponent<ItemController>().OverrideUseMessage;
+        }
+        else if (myGameManager.LastLevelLoaded == SceneToLoad)
+        {
+            FindObjectOfType<PlayerScript>().transform.position = myLastPos;
+        }
 	}
 
 	protected virtual void OnTriggerStay(Collider col)
@@ -40,7 +53,9 @@ public class ItemInteract : MonoBehaviour
 				}
 				else
 				{
-					//This is for items that load a new scenes.
+                    //This is for items that load a new scenes.
+                    myLastPos = _myPlayer.transform.position;
+                    Application.LoadLevel(SceneToLoad);
 				}
 			}
 		}
