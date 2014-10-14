@@ -35,15 +35,16 @@ public class ElevatorCharacter : NPCScript
 
     private void MoveElevator()
     {
-        Debug.Log(DialogueLua.GetVariable("SwitchToPrince").AsBool);
         if (!_elevatorPrince && !animation.isPlaying && DialogueLua.GetVariable("SwitchToPrince").AsBool)
         {
+            DialogueLua.SetVariable("SwitchToPrince", false);
             animation.Play("OfficeElevatorDown");
             _elevatorPrince = true;
             DialogSetup();
         }
         if (_elevatorPrince && !animation.isPlaying && DialogueLua.GetVariable("SwitchToAA").AsBool)
         {
+            DialogueLua.SetVariable("SwitchToAA", false);
             animation.Play("OfficeElevatorUp");
             _elevatorPrince = false;
             DialogSetup();
