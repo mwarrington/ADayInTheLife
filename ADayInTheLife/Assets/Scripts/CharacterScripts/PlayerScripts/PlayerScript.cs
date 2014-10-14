@@ -20,7 +20,8 @@ public class PlayerScript : MonoBehaviour
 	private float _bobTimer,
 				  _waveslice,
 				  _midpoint,
-				  _gameTimer;
+				  _gameTimer,
+                  _playerVelocity;
 	private Vector3 _newPos,
 					_orriginalRotation;
 	private GameManager _myManager;
@@ -114,7 +115,7 @@ public class PlayerScript : MonoBehaviour
 	public SpriteRenderer SarylynSprite,
 						  SanomeSprite;
     public AudioSource SpeedSFX;
-	public float PlayerVelocity,
+	public float StandardVelocity,
 				 BobbingSpeed,
 				 BobbingAmount,
 				 TranslateChange;
@@ -162,7 +163,6 @@ public class PlayerScript : MonoBehaviour
 			{
 				SlowBGM.audio.volume = 0;
 				FastBGM.audio.volume = 1.0f;
-
 			}
 			else
 			{
@@ -347,19 +347,19 @@ public class PlayerScript : MonoBehaviour
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
-			this.transform.Translate(Vector3.forward * PlayerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity);
 		}
 		if(_isWalkingBack && !_hitWallBack)
 		{
-			this.transform.Translate(Vector3.back * PlayerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity);
 		}
 		if(_isWalkingLeft && !_hitWallLeft)
 		{
-			this.transform.Translate(Vector3.left * PlayerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity);
 		}
 		if(_isWalkingRight && !_hitWallRight)
 		{
-			this.transform.Translate(Vector3.right * PlayerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity);
 		}
 	}
 
@@ -398,11 +398,11 @@ public class PlayerScript : MonoBehaviour
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingLeft && !_hitWallLeft)
 		{
-			this.transform.Translate(Vector3.left * PlayerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity);
 		}
 		if(_isWalkingRight && !_hitWallRight)
 		{
-			this.transform.Translate(Vector3.right * PlayerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity);
 		}
 	}
 
@@ -469,11 +469,11 @@ public class PlayerScript : MonoBehaviour
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
-			this.transform.Translate(Vector3.forward * PlayerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity);
 		}
 		if(_isWalkingBack && !_hitWallBack)
 		{
-			this.transform.Translate(Vector3.back * PlayerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity);
 		}
 		if(_isRotatingLeft)
 		{
@@ -552,19 +552,19 @@ public class PlayerScript : MonoBehaviour
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingForward && !_hitWallForward)
 		{
-			this.transform.Translate(Vector3.forward * PlayerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity);
 		}
 		if(_isWalkingBack && !_hitWallBack)
 		{
-			this.transform.Translate(Vector3.back * PlayerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity);
 		}
 		if(_isWalkingLeft && !_hitWallLeft)
 		{
-			this.transform.Translate(Vector3.left * PlayerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity);
 		}
 		if(_isWalkingRight && !_hitWallRight)
 		{
-			this.transform.Translate(Vector3.right * PlayerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity);
 		}
 	}
 
@@ -578,7 +578,7 @@ public class PlayerScript : MonoBehaviour
 		
 		//This is how the method uses the bools set by pressing the keys
 		if(_isWalkingLeft)
-			this.transform.Translate(Vector3.left * PlayerVelocity);
+			this.transform.Translate(Vector3.left * _playerVelocity);
 	}
 
 	private void ZeroDMove()
@@ -609,7 +609,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            PlayerVelocity = 0.25f;
+            _playerVelocity = 0.25f;
             BobbingSpeed = 0.25f;
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 1;
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
@@ -622,7 +622,7 @@ public class PlayerScript : MonoBehaviour
         }
         else if(Input.GetKey(KeyCode.RightShift))
         {
-            PlayerVelocity = 0.04f;
+            _playerVelocity = 0.04f;
             BobbingSpeed = 0.07f;
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 5;
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
@@ -632,7 +632,7 @@ public class PlayerScript : MonoBehaviour
         else
         {
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = false;
-            PlayerVelocity = 0.1f;
+            _playerVelocity = StandardVelocity;
             BobbingSpeed = 0.15f;
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 1f;

@@ -44,8 +44,8 @@ public class LunchLadyEyes : MonoBehaviour
 	{
 		if(QuickEyeFollow)//This one is the super quick scary version
 		{
-			_startPos = _myLunchLady.position.x + 0.12f;
-			_endPos = _myLunchLady.position.x - 0.1f;
+			_startPos = _myLunchLady.position.x + 0.152f;
+			_endPos = _myLunchLady.position.x - 0.2765f;
 
 			if(_player.transform.position.x > _endPos && _player.transform.position.x < _startPos)
 				this.transform.position = new Vector3(_player.transform.position.x - 0.1f, this.transform.position.y, this.transform.position.z);
