@@ -60,7 +60,6 @@ public class CafeteriaTray : MonoBehaviour
 		{
 			if(hit.collider.tag == "CafeteriaFood" && Input.GetKeyDown(KeyCode.Mouse0) && _trayIndex < 5)
 			{
-                Debug.Log(hit.collider.name);
 				FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
 				_trayIndex++;
 			}
