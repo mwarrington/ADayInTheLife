@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
-    static float timer = 360;
+    static float timer = 5;
 	public float Timer
 	{
 		get
@@ -132,9 +132,25 @@ public class GameManager : MonoBehaviour
 	private SpriteRenderer _fadeMask;
 	private PlayerScript _player;
 
+    //Public fields with accessors
+    public bool FadingAway
+    {
+        get
+        {
+            return _fadingAway;
+        }
+        set
+        {
+            if(value != _fadingAway && value)
+                _fadeMask = MainCamera.GetComponentInChildren<SpriteRenderer>();
+
+            _fadingAway = value;
+        }
+    }
+    private bool _fadingAway;
+
 	//Public fields
-	public bool	FadingAway,
-                ITestThereforeIAm; //HACK: for testing purposes (iTestTherforeIHack{not an interface})
+	public bool ITestThereforeIAm; //HACK: for testing purposes (iTestTherforeIHack{not an interface})
 	public Camera MainCamera;
 	public AudioSource Countdown30,
 					   Countdown10,
@@ -193,8 +209,6 @@ public class GameManager : MonoBehaviour
 			timer -= Time.deltaTime;
 		}
 
-		DayEnd();
-
 		if(FadingAway)
 			Fade();
 
@@ -205,155 +219,14 @@ public class GameManager : MonoBehaviour
 		//}
 	}
 
-	//This method handles the strange things that happen at the end of a day.
-	private void DayEnd()
-	{
-        if (timer <= 60 && MainBGM.pitch > 0.9f)
-		{
-            MainBGM.pitch = 0.9f;
-		}
-		if(timer <= 50 && !this.Countdown30.isPlaying)
-		{
-            MainBGM.pitch = 0.85f;
-            MainBGM.volume = 0.7f;
-			Countdown30.Play();
-			Countdown30.volume = 0.3f;
-		}
-        if (timer <= 40 && MainBGM.pitch > 0.8f)
-		{
-            MainBGM.pitch = 0.8f;
-            MainBGM.volume = 0.65f;
-			Countdown30.volume = 0.5f;
-		}
-        if (timer <= 20 && MainBGM.pitch > 0.7f)
-		{
-            MainBGM.pitch = 0.7f;
-            MainBGM.volume = 0.3f;
-			Countdown30.volume = 0.75f;
-		}
-		if (timer <= 10 && !this.Countdown10.isPlaying)
-		{
-            MainBGM.pitch = 0.5f;
-            MainBGM.volume = 0.25f;
-			_player.ConfuseMovement();
-			this.Countdown10.Play();
-		}
-		switch(Application.loadedLevelName)
-		{
-			case "Hallway":
-                if (timer <= 30 && MainBGM.pitch > 0.75f)
-				{
-                    MainBGM.pitch = 0.75f;
-                    MainBGM.volume = 0.5f;
-					Countdown30.volume = 0.6f;
-					GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
-					foreach(GameObject _locker in _lockerSearch)
-					{
-						StartCoroutine(StaggeredAnimationPlay(_locker.GetComponent<Animation>(), 0.7f));
-					}
-				}
-				
-				if(timer <= 10 && timer > 9.9)
-				{
-					GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");    
-					foreach(GameObject _locker in _lockerSearch)
-					{
-						_locker.GetComponent<Animation>().Stop ();
-						_locker.collider.enabled = true;
-						_locker.rigidbody.AddForce(1f, 1f, 1f);
-					}
-				}
-				break;
-			case "Labrary":
-                if (timer <= 30 && MainBGM.pitch > 0.75f)
-				{
-                    MainBGM.pitch = 0.75f;
-                    MainBGM.volume = 0.5f;
-					Countdown30.volume = 0.6f;
-					GameObject[ ] _computerSearch = GameObject.FindGameObjectsWithTag("computer60");    
-					foreach(GameObject _computer in _computerSearch)
-					{
-						StartCoroutine(StaggeredAnimationPlay(_computer.GetComponent<Animation>(), 1f));
-					}
-				}
-				break;
-			case "Classroom":
-                if (timer <= 30 && MainBGM.pitch > 0.75f)
-				{
-                    MainBGM.pitch = 0.75f;
-                    MainBGM.volume = 0.5f;
-					Countdown30.volume = 0.6f;
-					GameObject[] _deskSearch = GameObject.FindGameObjectsWithTag("desk");    
-					foreach(GameObject _desk in _deskSearch)
-					{
-						_desk.rigidbody.useGravity = true;
-						_desk.rigidbody.isKinematic = false;
-					}
-				}
-				break;
-			case "Roomclass":
-                if (timer <= 30 && MainBGM.pitch > 0.75f)
-				{
-                    MainBGM.pitch = 0.75f;
-                    MainBGM.volume = 0.5f;
-					Countdown30.volume = 0.6f;
-					GameObject[] _deskSearch = GameObject.FindGameObjectsWithTag("desk");    
-					foreach(GameObject _desk in _deskSearch)
-					{
-						_desk.rigidbody.isKinematic = false;
-						_desk.rigidbody.AddForce(0,100,0);
-					}
-				}
-                break;
-            case "GreenWorld":
-                if (timer <= 30 && MainBGM.pitch > 0.75f)
-                {
-                    MainBGM.pitch = 0.75f;
-                    MainBGM.volume = 0.5f;
-                    Countdown30.volume = 0.6f;
-                    GameObject[] animationObjects = GameObject.FindGameObjectsWithTag("SetPiece");
-                    List<Animation> animations = new List<Animation>();
-
-                    for(int i = 0; i < animationObjects.Length; i++)
-                    {
-                        animations.Add(animationObjects[i].GetComponent<Animation>());
-                    }
-                    for (int i = 0; i < animations.Count; i++)
-                    {
-                        //This way all of the set pieces don't fall at once
-                        StartCoroutine(StaggeredAnimationPlay(animations[i], 1f));
-
-                        //This way all of the set pieces fall at once
-                        //animations[i].Play();
-                    }
-                }
-				break;
-			default:
-				//Nothing should happen here
-				//Debug.Log("That level doesn't exist...");
-				break;
-		}
-		if(timer <= 3)
-		{
-			Invoke("LoadNextLevel", 3);
-			DialogueManager.StopConversation();
-			_fadeMask = MainCamera.GetComponentInChildren<SpriteRenderer>();
-			FadingAway = true;
-		}
-	}
-
+	
+    //Handles fade away
+    //I might move this to DayEndManager.cs but haven't decided yet
 	private void Fade()
 	{
 		_alpha += Time.deltaTime * 0.35f;
         MainBGM.volume -= Time.deltaTime * 0.15f;
 		_fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
-	}
-
-	private IEnumerator StaggeredAnimationPlay(Animation animation, float variance)
-	{
-		float randFloat = Random.Range(0, variance);
-		yield return new WaitForSeconds(randFloat);
-		animation.Play();
 	}
 
 	private IEnumerator JSONSetUp()
@@ -391,7 +264,7 @@ public class GameManager : MonoBehaviour
 		yield return new WWW(url, Encoding.Default.GetBytes(FormJSON.data.ToString()), headers);
 	}
 
-	private void LoadNextLevel()
+	public void LoadNextLevel()
 	{
 		bool loadNewLevel = false;
 
