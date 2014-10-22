@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 			gameTimerActive = value;
 		}
 	}
-	static int levelCount = 1;
+	static int levelCount = 2;
 	public int LevelCount
 	{
 		get
