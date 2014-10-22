@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
-    static float timer = 5;
+    static float timer = 360;
 	public float Timer
 	{
 		get
