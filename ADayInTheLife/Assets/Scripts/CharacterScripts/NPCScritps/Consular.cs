@@ -15,11 +15,12 @@ public class Consular : NPCScript
 				case 1:
 					int progress = 0;
 					
-					if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
-					{
-						_currentEmpathyType = EmpathyTypes.Community;
-					}
-					else if(DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
+                    //if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
+                    //{
+                    //    _currentEmpathyType = EmpathyTypes.Community;
+                    //}
+                    //else
+                    if(DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
 					{
 						_currentEmpathyType = EmpathyTypes.Self;
 					}

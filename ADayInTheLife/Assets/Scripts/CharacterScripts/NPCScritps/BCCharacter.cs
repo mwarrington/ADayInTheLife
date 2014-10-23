@@ -85,7 +85,7 @@ public class BCCharacter : NPCScript
             _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             CancelInvoke("RemoveThoughtCloud");
-            Invoke("RemoveThoughtCloud", 2);
+            Invoke("RemoveThoughtCloud", 3);
         }
     }
 

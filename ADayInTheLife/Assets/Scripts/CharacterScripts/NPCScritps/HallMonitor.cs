@@ -35,17 +35,7 @@ public class HallMonitor : NPCScript
 			myGameManager.HasBeenIntroduced = true;
 		}
 
-		//Randomizes dialog the Hall Monitor says making sure they don't
-		//repeat the same dialog twice in a row.
-		//Slightly hacky, this may need to be revised in the future.
-		int rand = 0;
-		do
-		{
-			rand = Random.Range(1,MyDatabase.conversations.Count);
-		}
-		while(dialogString[13].ToString() == rand.ToString());
-		dialogString = "Hall_Monitor_" + rand;
-		myConTrigger.conversation = dialogString;
+        DialogSetup();
 
 		base.OnConversationEnd (actor);
 	}
@@ -57,10 +47,23 @@ public class HallMonitor : NPCScript
 	
 	protected override void DialogSetup ()
 	{
-		if(!myGameManager.HasBeenIntroduced)
-			dialogString = "Hall_Monitor_Intro";
-		else
-			myConTrigger.trigger = DialogueTriggerEvent.OnUse;
+        if (!myGameManager.HasBeenIntroduced)
+            dialogString = "Hall_Monitor_Intro";
+        else
+        {
+            //Randomizes dialog the Hall Monitor says making sure they don't
+            //repeat the same dialog twice in a row.
+            //Slightly hacky, this may need to be revised in the future.
+            int rand = 0;
+            do
+            {
+                rand = Random.Range(1, MyDatabase.conversations.Count);
+            }
+            while (dialogString[13].ToString() == rand.ToString());
+            dialogString = "Hall_Monitor_" + rand;
+            myConTrigger.conversation = dialogString;
+            myConTrigger.trigger = DialogueTriggerEvent.OnUse;
+        }
 
 		base.DialogSetup ();
 	}
