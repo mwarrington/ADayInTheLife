@@ -82,7 +82,7 @@ public class BCCharacter : NPCScript
 
         if (moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
         {
-            _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[12].value];
+            _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             CancelInvoke("RemoveThoughtCloud");
             Invoke("RemoveThoughtCloud", 2);
