@@ -55,11 +55,8 @@ public class HallMonitor : NPCScript
             //repeat the same dialog twice in a row.
             //Slightly hacky, this may need to be revised in the future.
             int rand = 0;
-            do
-            {
-                rand = Random.Range(1, MyDatabase.conversations.Count);
-            }
-            while (dialogString[13].ToString() == rand.ToString());
+            //HACK: Figure this out later
+            rand = Random.Range(1, 7);
             dialogString = "Hall_Monitor_" + rand;
             myConTrigger.conversation = dialogString;
             myConTrigger.trigger = DialogueTriggerEvent.OnUse;
