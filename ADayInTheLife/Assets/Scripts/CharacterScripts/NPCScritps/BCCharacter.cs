@@ -117,7 +117,9 @@ public class BCCharacter : NPCScript
         for (int i = 0; i < MyDatabase.variables.Count; i++)
         {
             if (MyDatabase.variables[i].fields[2].value == "CharacterProgress")
+            {
                 progressVarName = MyDatabase.variables[i].fields[0].value;
+            }
         }
 
         //HACK:

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 
 public class CafeteriaTray : MonoBehaviour
 {
@@ -53,16 +54,19 @@ public class CafeteriaTray : MonoBehaviour
 		if(this.transform.position.x > _endPos)
 			this.transform.position = new Vector3 (_player.transform.position.x + PlayerPosOffset, this.transform.position.y, this.transform.position.z);
 
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hit;
+        if (!DialogueManager.IsConversationActive)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-		if (Physics.Raycast(ray, out hit))
-		{
-			if(hit.collider.tag == "CafeteriaFood" && Input.GetKeyDown(KeyCode.Mouse0) && _trayIndex < 5)
-			{
-				FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
-				_trayIndex++;
-			}
-		}
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.tag == "CafeteriaFood" && Input.GetKeyDown(KeyCode.Mouse0) && _trayIndex < 5)
+                {
+                    FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
+                    _trayIndex++;
+                }
+            }
+        }
 	}
 }
