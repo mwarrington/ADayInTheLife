@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
             gameTimerActive = value;
         }
     }
-    static int levelCount = 1;
+    static int levelCount = 2;
     public int LevelCount
     {
         get
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
                 lvl2DatabasesLoaded = false,
                 lvl1JSONInitialized = false,
                 testDatabasesLoaded = false,
-                iTestThereforeIAm = true; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
+                iTestThereforeIAm = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
 
     //Private fields
     private float _alpha = 0;
