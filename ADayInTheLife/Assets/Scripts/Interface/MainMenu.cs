@@ -69,18 +69,18 @@ public class MainMenu : MonoBehaviour
 
     void LoadResources()
     {
-        _startCloudActive = Resources.Load("Interface/MainMenu/Materials/StartCloudActive") as Material;
-        _startCloudInactive = Resources.Load("Interface/MainMenu/Materials/StartCloudInactive") as Material;
-        _creditsCloudActive = Resources.Load("Interface/MainMenu/Materials/CreditsCloudActive") as Material;
-        _creditsCloudInactive = Resources.Load("Interface/MainMenu/Materials/CreditsCloudInactive") as Material;
-        _mouseClick = Resources.Load("Interface/MainMenu/Materials/MouseClick") as Material;
-        _mouseHover = Resources.Load("Interface/MainMenu/Materials/MouseHover") as Material;
-        _sarylynActive = Resources.Load("Interface/MainMenu/Materials/SarylynActive") as Material;
-        _sarylynInactive = Resources.Load("Interface/MainMenu/Materials/SarylynInactive") as Material;
-        _sanomeActive = Resources.Load("Interface/MainMenu/Materials/SanomeActive") as Material;
-        _sanomeInactive = Resources.Load("Interface/MainMenu/Materials/SanomeInactive") as Material;
-        _backCloudActive = Resources.Load("Interface/MainMenu/Materials/BackCloudActive") as Material;
-        _backCloudInactive = Resources.Load("Interface/MainMenu/Materials/BackCloudInactive") as Material;
+        _startCloudActive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/StartCloudActive") as Material;
+        _startCloudInactive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/StartCloudInactive") as Material;
+        _creditsCloudActive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/CreditsCloudActive") as Material;
+        _creditsCloudInactive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/CreditsCloudInactive") as Material;
+        _mouseClick = Resources.Load("Art/Textures/Interface/MainMenu/Materials/MouseClick") as Material;
+        _mouseHover = Resources.Load("Art/Textures/Interface/MainMenu/Materials/MouseHover") as Material;
+        _sarylynActive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/SarylynActive") as Material;
+        _sarylynInactive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/SarylynInactive") as Material;
+        _sanomeActive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/SanomeActive") as Material;
+        _sanomeInactive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/SanomeInactive") as Material;
+        _backCloudActive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/BackCloudActive") as Material;
+        _backCloudInactive = Resources.Load("Art/Textures/Interface/MainMenu/Materials/BackCloudInactive") as Material;
 
         _topArrow = GameObject.Find("TopArrow");
         _bottomArrow = GameObject.Find("BottomArrow");

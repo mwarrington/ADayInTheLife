@@ -17,8 +17,8 @@ public class DreamSpiral : MonoBehaviour
     void Awake()
     {
 		_myGameManager = FindObjectOfType<GameManager>();
-        _startCloudActive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudActive") as Material;
-		_startCloudInactive = Resources.Load("Interface/DreamSpiral/Materials/WakeUpCloudInactive") as Material;
+        _startCloudActive = Resources.Load("Art/Textures/Interface/DreamSpiral/Materials/WakeUpCloudActive") as Material;
+        _startCloudInactive = Resources.Load("Art/Textures/Interface/DreamSpiral/Materials/WakeUpCloudInactive") as Material;
 
         _dreamSpiral = GameObject.Find("DreamSpiral");
         _startCloud = GameObject.Find("WakeUpCloud");
