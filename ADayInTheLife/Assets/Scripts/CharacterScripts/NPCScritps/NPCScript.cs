@@ -114,7 +114,6 @@ public class NPCScript : MonoBehaviour
 
 		if(HasSharedVariables)
 		{
-            Debug.Log(dialogString);
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
 

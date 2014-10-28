@@ -1,36 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
-using PixelCrushers.DialogueSystem;
 
 public class PopupManager : MonoBehaviour
 {
     public GameObject[] MyPopups;
+    public Transform InstantiationTransform;
 
+    protected GameObject currentPopup
+    {
+        get
+        {
+            _currentPopup = MyPopups[0];
+            return _currentPopup;
+        }
+        set
+        {
+            Debug.Log("You shouldn't be trying to set the value of currentPopup...");
+        }
+    }
     private GameObject _currentPopup;
 
-    private void OnConversationEnd(Transform actor)
+    void Update()
     {
-        for (int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            if (DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
-            {
-                if (DialogueLua.GetVariable(DialogueManager.MasterDatabase.variables[i].Name).AsBool == true)
-                {
-                    ShowPopup();
-                    Invoke("RemovePopup", 5);
-                    break;
-                }
-            }
+            ShowPopup();
         }
     }
 
-    private void ShowPopup()
+    public void ShowPopup()
     {
-        Debug.Log("Hello!");
-    }
-
-    private void RemovePopup()
-    {
-        Debug.Log("Goodbye...");
+        GameObject popup = (GameObject)Instantiate(currentPopup, InstantiationTransform.position, InstantiationTransform.rotation);
     }
 }

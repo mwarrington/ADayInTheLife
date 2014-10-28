@@ -699,5 +699,18 @@ public class PlayerScript : MonoBehaviour
 			SarylynSprite.enabled = false;
 		}
 		TimerCloud.GetComponent<SpriteRenderer> ().enabled = true;
+
+        //For Win Condition true
+        //for (int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
+        //{
+        //    if (DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
+        //    {
+        //        if (DialogueLua.GetVariable(DialogueManager.MasterDatabase.variables[i].Name).AsBool == true)
+        //        {
+        //            _myManager.gameObject.GetComponent<PopupManager>().ShowPopup();
+        //            break;
+        //        }
+        //    }
+        //}
 	}
 }

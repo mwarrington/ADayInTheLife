@@ -91,6 +91,8 @@
      <Compile Include="Assets\Scripts\Interface\LogoSpiral.cs" />
      <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Interface\NPCThoughtCloud.cs" />
+     <Compile Include="Assets\Scripts\Interface\Popups\Popup.cs" />
+     <Compile Include="Assets\Scripts\Interface\Popups\PopupButton.cs" />
      <Compile Include="Assets\Scripts\Interface\VisualTimer.cs" />
      <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
