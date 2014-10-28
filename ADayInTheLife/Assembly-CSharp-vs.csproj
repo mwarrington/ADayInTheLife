@@ -98,8 +98,10 @@
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\HintManager.cs" />
      <Compile Include="Assets\Scripts\Managers\NPCPositionManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PopupManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\DatabaseLoader.cs" />
      <Compile Include="Assets\Scripts\Utilities\Enums.cs" />
+     <Compile Include="Assets\Scripts\Utilities\NPCBlueprint.cs" />
      <Compile Include="Assets\Scripts\Utilities\PrefabLoaderScript.cs" />
      <Compile Include="Assets\Scripts\Utilities\VariableManager.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\CafeteriaTray.cs" />
