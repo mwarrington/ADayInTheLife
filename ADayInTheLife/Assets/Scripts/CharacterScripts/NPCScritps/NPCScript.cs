@@ -123,7 +123,7 @@ public class NPCScript : MonoBehaviour
 			hasSharedProgress = false;
 		}
 
-		StartCoroutine(myGameManager.LogJSON());
+		StartCoroutine(myGameManager.GetComponent<JSONHandler>().LogJSON());
 	}
 
     protected virtual void OnTriggerEnter(Collider col)

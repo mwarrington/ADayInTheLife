@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
-using SimpleJSON;
 
 public class GameManager : MonoBehaviour
 {
@@ -81,30 +79,6 @@ public class GameManager : MonoBehaviour
             levelCount = value;
         }
     }
-    static JSONNode jSONOut = new JSONNode();
-    public JSONNode JSONOut
-    {
-        get
-        {
-            return jSONOut;
-        }
-        set
-        {
-            jSONOut = value;
-        }
-    }
-    static WWWForm formJSON = new WWWForm();
-    public WWWForm FormJSON
-    {
-        get
-        {
-            return formJSON;
-        }
-        set
-        {
-            formJSON = value;
-        }
-    }
     //This needs to be updated for the new Dream spiral
     static int dayCount = 1;
     public int DayCount
@@ -126,7 +100,6 @@ public class GameManager : MonoBehaviour
     //Simple Static fields
     static bool lvl1DatabasesLoaded = false,
                 lvl2DatabasesLoaded = false,
-                lvl1JSONInitialized = false,
                 testDatabasesLoaded = false,
                 iTestThereforeIAm = true; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
 
@@ -192,9 +165,6 @@ public class GameManager : MonoBehaviour
             lvl2DatabasesLoaded = true;
         }
 
-        //JSON set up
-        StartCoroutine(JSONSetUp());
-
         MainCamera = Camera.main;
         if (FindObjectOfType<PlayerScript>() != null)
             _player = FindObjectOfType<PlayerScript>();
@@ -238,41 +208,6 @@ public class GameManager : MonoBehaviour
         _alpha += Time.deltaTime * 0.35f;
         MainBGM.volume -= Time.deltaTime * 0.15f;
         _fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
-    }
-
-    private IEnumerator JSONSetUp()
-    {
-        if (!lvl1JSONInitialized && Application.loadedLevelName == "DreamSpiral")
-        {
-            JSONOut = JSONNode.Parse("{\"Player\":\"Sarylyn\"},\"Gamestate\":{}");
-            if (IsSarylyn)
-                JSONOut["Player"] = "Sarylyn";
-            else
-                JSONOut["Player"] = "Sanome";
-
-            for (int i = 0; i < DialogueManager.MasterDatabase.conversations.Count; i++)
-            {
-                string conversationString = DialogueManager.MasterDatabase.conversations[i].Title.ToString();
-                JSONOut["Level1"]["Conversations"][conversationString][0] = "";
-            }
-            lvl1JSONInitialized = true;
-            string url = "http://localhost:3000/gamestates/create";
-            FormJSON.AddField("gamestate", WWW.EscapeURL(jSONOut.ToString()));
-            Hashtable headers = new Hashtable();
-            headers.Add("Content-Type", "application/json");
-
-            //Debug.Log (JSONOut.ToString());
-            yield return new WWW(url, Encoding.Default.GetBytes(FormJSON.data.ToString()), headers);
-        }
-    }
-
-    public IEnumerator LogJSON()
-    {
-        string url = "http://localhost:3000/gamestates/create";
-        FormJSON.AddField("gamestate", jSONOut.ToString());
-        Hashtable headers = new Hashtable();
-        headers.Add("Content-Type", "application/json");
-        yield return new WWW(url, Encoding.Default.GetBytes(FormJSON.data.ToString()), headers);
     }
 
     public void LoadNextLevel()
