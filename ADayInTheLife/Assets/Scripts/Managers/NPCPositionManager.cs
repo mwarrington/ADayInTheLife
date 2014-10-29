@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class NPCPositionManager : MonoBehaviour
 {
+    public NPCBlueprint TestBluePrint;
+
     protected NPCBlueprint currentBluePrint
     {
         get
@@ -11,6 +13,7 @@ public class NPCPositionManager : MonoBehaviour
             switch (Application.loadedLevelName)
             {
                 case "Hallway":
+                    _currentBluePrint = TestBluePrint;
                     break;
                 case "Labrary":
                     break;
@@ -49,11 +52,15 @@ public class NPCPositionManager : MonoBehaviour
     void Start()
     {
         _myGameManager = FindObjectOfType<GameManager>();
-        
+        LevelSetup();
     }
 
-    void Update()
+    private void LevelSetup()
     {
-
+        for (int i = 0; i < currentBluePrint.NPCs.Count; i++)
+        {
+            //GameObject currentNPC = Resources.Load<GameObject>("Prefabs/NPCs/Level" + _myGameManager.LevelCount + "/" + _currentBluePrint.NPCs[i].name);
+            Instantiate(currentBluePrint.NPCs[i], currentBluePrint.TransformList[i].position, Quaternion.identity);
+        }
     }
 }

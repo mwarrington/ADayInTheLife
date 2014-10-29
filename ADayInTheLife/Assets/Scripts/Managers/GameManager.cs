@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
             formJSON = value;
         }
     }
+    //This needs to be updated for the new Dream spiral
     static int dayCount = 1;
     public int DayCount
     {
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour
                 lvl2DatabasesLoaded = false,
                 lvl1JSONInitialized = false,
                 testDatabasesLoaded = false,
-                iTestThereforeIAm = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
+                iTestThereforeIAm = true; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
 
     //Private fields
     private float _alpha = 0;

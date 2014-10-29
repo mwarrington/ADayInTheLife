@@ -110,7 +110,6 @@ public class BCCharacter : NPCScript
 
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {
-            Debug.Log("sadf");
             myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
         }
