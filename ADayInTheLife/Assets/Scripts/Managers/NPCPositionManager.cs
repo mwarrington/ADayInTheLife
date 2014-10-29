@@ -59,8 +59,8 @@ public class NPCPositionManager : MonoBehaviour
     {
         for (int i = 0; i < currentBluePrint.NPCs.Count; i++)
         {
-            //GameObject currentNPC = Resources.Load<GameObject>("Prefabs/NPCs/Level" + _myGameManager.LevelCount + "/" + _currentBluePrint.NPCs[i].name);
-            Instantiate(currentBluePrint.NPCs[i], currentBluePrint.TransformList[i].position, Quaternion.identity);
+            GameObject currentNPC = (GameObject)Instantiate(currentBluePrint.NPCs[i], currentBluePrint.TransformList[i].position, Quaternion.identity);
+            currentNPC.name = currentBluePrint.NPCs[i].name;
         }
     }
 }
