@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
             levelCount = value;
         }
     }
-    //This needs to be updated for the new Dream spiral
     static int dayCount = 1;
     public int DayCount
     {
@@ -89,10 +88,7 @@ public class GameManager : MonoBehaviour
         }
         set
         {
-            if (value > 2)
-                dayCount = 3;
-            else
-                dayCount = value;
+            dayCount = value;
         }
     }
     #endregion

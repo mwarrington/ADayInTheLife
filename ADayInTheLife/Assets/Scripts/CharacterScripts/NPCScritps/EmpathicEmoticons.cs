@@ -48,29 +48,26 @@ public class EmpathicEmoticons : MonoBehaviour
         if (!emoticonsLoaded)
         {
             spriteDictionary.Clear();
-            switch (this.GetComponent<GameManager>().DayCount)
+            if (this.GetComponent<GameManager>().DayCount == 1)
             {
-                case 1:
-                    for (int i = 0; i < 16; i++)
-                    {
-                        spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle1/" + _emoticons[i]));
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i < 16; i++)
-                    {
-                        spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i < 16; i++)
-                    {
-                        spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle3/" + _emoticons[i]));
-                    }
-                    break;
-                default:
-                    Debug.Log("Hmm this shouldn't be happening... Check the public accessor for DayCount in GameManager.cs");
-                    break;
+                for (int i = 0; i < 16; i++)
+                {
+                    spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle1/" + _emoticons[i]));
+                }
+            }
+            else if(this.GetComponent<GameManager>().DayCount == 2)
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
+                }
+            }
+            else if (this.GetComponent<GameManager>().DayCount >= 3)
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("NPCs/NPCEmotions/Cycle3/" + _emoticons[i]));
+                }
             }
 
             emoticonsLoaded = true;
