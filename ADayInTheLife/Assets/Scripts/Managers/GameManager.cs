@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     static bool lvl1DatabasesLoaded = false,
                 lvl2DatabasesLoaded = false,
                 testDatabasesLoaded = false,
-                iTestThereforeIAm = true; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
+                iTestThereforeIAm = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
 
     //Private fields
     private float _alpha = 0;

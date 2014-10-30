@@ -170,6 +170,14 @@ public class PlayerScript : MonoBehaviour
 				FastBGM.audio.volume = 0;	
 			}
 		}
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            for (int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
+            {
+                Debug.Log(DialogueManager.MasterDatabase.variables[i].Name);
+            }
+        }
 	}
 
 	private void InputBasedMovement()
