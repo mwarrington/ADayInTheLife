@@ -129,7 +129,6 @@ public class BCCharacter : NPCScript
             if (MyDatabase.variables[i].fields[2].value == "CharacterProgress")
             {
                 progressVarName = MyDatabase.variables[i].fields[0].value;
-                Debug.Log(progressVarName);
             }
         }
 
