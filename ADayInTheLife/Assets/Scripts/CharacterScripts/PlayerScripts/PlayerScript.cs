@@ -170,11 +170,6 @@ public class PlayerScript : MonoBehaviour
 				FastBGM.audio.volume = 0;	
 			}
 		}
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log(DialogueLua.GetVariable("KnowsAboutDali_MarkesiaHeart").AsBool);
-        }
 	}
 
 	private void InputBasedMovement()

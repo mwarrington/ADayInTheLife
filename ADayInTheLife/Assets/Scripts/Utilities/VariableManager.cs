@@ -30,7 +30,6 @@ public class VariableManager : MonoBehaviour
                 DialogueLua.SetVariable("JackWantsHelp_Glasses", DialogueLua.GetVariable("JackWantsHelp").AsBool);
                 break;
             case "Markeshia_2":
-                Debug.Log("sadf");
                 DialogueLua.SetVariable("KnowsAboutDali_MarkeshiaHeart", DialogueLua.GetVariable("KnowsAboutDali").AsBool);
                 break;
             default:
