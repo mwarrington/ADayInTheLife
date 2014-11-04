@@ -6,10 +6,12 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 
 public class BCCharacter : NPCScript
 {
-    public GameObject MyThoughtCloud;
+    public List<GameObject> MyThoughtCloud = new List<GameObject>();
     public Transform MySpotLightTransform;
-    public bool CCharacter;
+    public bool CCharacter,
+                HasMultipleThoughtClouds;
 
+    private Dictionary<string, GameObject> _thoughtCloudDic = new Dictionary<string, GameObject>();
     private GameObject _dLights,
                        _mySpotLight;
     private GameObject[] _roomPieces;
@@ -27,7 +29,8 @@ public class BCCharacter : NPCScript
     {
         base.Start();
         _myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
-        _emoticonRenderer = MyThoughtCloud.GetComponent<SpriteRenderer>();
+        if (!HasMultipleThoughtClouds)
+            _emoticonRenderer = MyThoughtCloud[0].GetComponent<SpriteRenderer>();
         _dLights = GameObject.FindGameObjectWithTag("D-Lights");
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
