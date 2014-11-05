@@ -6,7 +6,6 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 
 public class BCCharacter : NPCScript
 {
-    public List<GameObject> MyThoughtCloud = new List<GameObject>();
     public Transform MySpotLightTransform;
     public bool CCharacter,
                 HasMultipleThoughtClouds;
@@ -29,8 +28,7 @@ public class BCCharacter : NPCScript
     {
         base.Start();
         _myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
-        if (!HasMultipleThoughtClouds)
-            _emoticonRenderer = MyThoughtCloud[0].GetComponent<SpriteRenderer>();
+        ThoughtCloudSetUp();
         _dLights = GameObject.FindGameObjectWithTag("D-Lights");
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
@@ -62,6 +60,7 @@ public class BCCharacter : NPCScript
     {
         base.OnConversationLine(line);
 
+        string characterName = "";
         for (int i = 0; i < line.dialogueEntry.fields.Count; i++)
         {
             if (line.dialogueEntry.fields[i].title == "Description")
@@ -69,6 +68,7 @@ public class BCCharacter : NPCScript
                 if (line.dialogueEntry.fields[i].value != "")
                 {
                     _currentConversant = line.dialogueEntry.fields[1].value;
+                    characterName = line.dialogueEntry.fields[1].value;
                     Invoke("ChangeNames", 0.001f);
                 }
             }
@@ -87,6 +87,7 @@ public class BCCharacter : NPCScript
 
         if (moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
         {
+            _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
             _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             CancelInvoke("RemoveThoughtCloud");
@@ -225,6 +226,32 @@ public class BCCharacter : NPCScript
         for (int i = 0; i < FindObjectOfType<DialogUINameHandler>().DisplayNames.Length; i++)
         {
             FindObjectOfType<DialogUINameHandler>().DisplayNames[i].text = _currentConversant;
+        }
+    }
+
+    private void ThoughtCloudSetUp()
+    {
+        //Thought cloud set up
+        List<GameObject> myThoughtClouds = new List<GameObject>();
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("ThoughtCloud").Length; i++)
+        {
+            if (GameObject.FindGameObjectsWithTag("ThoughtCloud")[i].transform.parent == this.transform)
+                myThoughtClouds.Add(GameObject.FindGameObjectsWithTag("ThoughtCloud")[i]);
+        }
+
+        for (int i = 0; i < myThoughtClouds.Count; i++)
+        {
+            string thoughtCloudName = "";
+
+            for (int j = 0; j < myThoughtClouds[i].name.Length; j++)
+            {
+                if (myThoughtClouds[i].name[j] != '_')
+                    thoughtCloudName = thoughtCloudName + myThoughtClouds[i].name[j];
+                else
+                    break;
+            }
+
+            _thoughtCloudDic.Add(thoughtCloudName, myThoughtClouds[i]);
         }
     }
 }
