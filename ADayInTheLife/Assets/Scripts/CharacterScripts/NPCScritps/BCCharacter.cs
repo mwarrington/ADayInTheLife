@@ -15,7 +15,8 @@ public class BCCharacter : NPCScript
                        _mySpotLight;
     private GameObject[] _roomPieces;
     private EmpathicEmoticons _myEmpathicEmoticons;
-    private SpriteRenderer _emoticonRenderer;
+    private SpriteRenderer _emoticonRenderer,
+                           _lastEmoticonRenderer;
     private Subtitle _currentLine;
     private List<Subtitle> _viewedLines = new List<Subtitle>();
     private string _currentTopic,
@@ -60,6 +61,7 @@ public class BCCharacter : NPCScript
     {
         base.OnConversationLine(line);
 
+        //Checks for unique name and sets that name if it's found in the Description of a line
         string characterName = "";
         for (int i = 0; i < line.dialogueEntry.fields.Count; i++)
         {
@@ -75,6 +77,8 @@ public class BCCharacter : NPCScript
         }
 
         LineManager(line);
+
+        //Finds which field the Mood field is and records it's index
         int moodIndex = 0;
         for (int i = 0; i < line.dialogueEntry.fields.Count; i++)
         {
@@ -85,19 +89,31 @@ public class BCCharacter : NPCScript
             }
         }
 
+        //Shows the mood of a character
         if (moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
         {
+            if (_lastEmoticonRenderer != _emoticonRenderer)
+                _lastEmoticonRenderer = _emoticonRenderer;
             _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
             _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
-            CancelInvoke("RemoveThoughtCloud");
+            if (_lastEmoticonRenderer == _emoticonRenderer)
+                CancelInvoke("RemoveThoughtCloud");
             Invoke("RemoveThoughtCloud", 3);
         }
     }
 
     private void RemoveThoughtCloud()
     {
-        _emoticonRenderer.enabled = false;
+        if (_lastEmoticonRenderer != _emoticonRenderer)
+        {
+            _lastEmoticonRenderer.enabled = false;
+            _lastEmoticonRenderer = _emoticonRenderer;
+        }
+        else
+        {
+            _emoticonRenderer.enabled = false;
+        }
     }
 
     protected override void OnConversationEnd(Transform actor)
