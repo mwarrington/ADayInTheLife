@@ -92,10 +92,13 @@ public class BCCharacter : NPCScript
         //Shows the mood of a character
         if (moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
         {
-            if (_lastEmoticonRenderer != _emoticonRenderer)
+            if (_lastEmoticonRenderer != _emoticonRenderer && HasMultipleThoughtClouds)
                 _lastEmoticonRenderer = _emoticonRenderer;
+            if (HasMultipleThoughtClouds)
+                _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
+            else
+                _emoticonRenderer = _thoughtCloudDic["NPC"].GetComponent<SpriteRenderer>();
 
-            _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
             _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             if (_lastEmoticonRenderer == _emoticonRenderer)
@@ -107,7 +110,7 @@ public class BCCharacter : NPCScript
 
     private void RemoveThoughtCloud()
     {
-        if (_lastEmoticonRenderer != _emoticonRenderer)
+        if (_lastEmoticonRenderer != _emoticonRenderer && HasMultipleThoughtClouds)
         {
             _lastEmoticonRenderer.enabled = false;
             _lastEmoticonRenderer = _emoticonRenderer;
