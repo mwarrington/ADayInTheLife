@@ -94,11 +94,13 @@ public class BCCharacter : NPCScript
         {
             if (_lastEmoticonRenderer != _emoticonRenderer)
                 _lastEmoticonRenderer = _emoticonRenderer;
+
             _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
             _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             if (_lastEmoticonRenderer == _emoticonRenderer)
                 CancelInvoke("RemoveThoughtCloud");
+
             Invoke("RemoveThoughtCloud", 3);
         }
     }
@@ -111,9 +113,7 @@ public class BCCharacter : NPCScript
             _lastEmoticonRenderer = _emoticonRenderer;
         }
         else
-        {
             _emoticonRenderer.enabled = false;
-        }
     }
 
     protected override void OnConversationEnd(Transform actor)
