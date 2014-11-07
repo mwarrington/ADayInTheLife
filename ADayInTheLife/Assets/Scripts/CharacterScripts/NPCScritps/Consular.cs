@@ -9,12 +9,12 @@ public class Consular : NPCScript
 	protected EmpathyTypes currentEmpathyType
 	{
 		get
-		{
+        {
+            int progress = 1;
+
 			switch (myGameManager.LevelCount)
 			{
 				case 1:
-					int progress = 0;
-					
                     //if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
                     //{
                     //    _currentEmpathyType = EmpathyTypes.Community;
@@ -30,7 +30,18 @@ public class Consular : NPCScript
 					}
 					break;
 				case 2:
-					Debug.Log ("NothingYet");
+                    if (DialogueLua.GetVariable("GonzoProgress").AsInt > progress && DialogueLua.GetVariable("RobynProgress").AsInt > progress)
+                    {
+                        _currentEmpathyType = EmpathyTypes.Community;
+                    }
+                    else if (DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
+                    {
+                        _currentEmpathyType = EmpathyTypes.Self;
+                    }
+                    else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt > progress)
+                    {
+                        _currentEmpathyType = EmpathyTypes.Another;
+                    }
 					break;
 				case 3:
 					Debug.Log ("NothingYet");
