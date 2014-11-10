@@ -30,7 +30,11 @@ public class Consular : NPCScript
 					}
 					break;
 				case 2:
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt > progress && DialogueLua.GetVariable("RobynProgress").AsInt > progress)
+                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 || DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    {
+                        _currentEmpathyType = EmpathyTypes.Special;
+                    }
+                    else if (DialogueLua.GetVariable("GonzoProgress").AsInt > progress || DialogueLua.GetVariable("RobynProgress").AsInt > progress)
                     {
                         _currentEmpathyType = EmpathyTypes.Community;
                     }
@@ -60,6 +64,8 @@ public class Consular : NPCScript
 	}
 	private EmpathyTypes _currentEmpathyType;
 
+    public string SpecialConvoModifier;
+
 	protected override void Start ()
 	{
 		base.Start ();
@@ -85,6 +91,9 @@ public class Consular : NPCScript
 			case EmpathyTypes.Another:
 				_convoModifier = "Another";
 				break;
+            case EmpathyTypes.Special:
+                _convoModifier = SpecialConvoModifier;
+                break;
 			default:
 				Debug.Log ("Listen pal, there are only three types of empathy that we're exploring in this game. How did you even end up here?");
 				break;

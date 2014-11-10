@@ -33,5 +33,6 @@ public enum EmpathyTypes
 {
 	Self,
 	Community,
-	Another
+	Another,
+    Special
 }
