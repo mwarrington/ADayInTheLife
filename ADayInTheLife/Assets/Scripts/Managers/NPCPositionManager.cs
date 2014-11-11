@@ -70,7 +70,6 @@ public class NPCPositionManager : MonoBehaviour
     void Start()
     {
         _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
-        Debug.Log(_defaultBluePrint);
         _myGameManager = FindObjectOfType<GameManager>();
         LevelSetup();
     }
