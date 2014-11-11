@@ -48,21 +48,21 @@ public class EmpathicEmoticons : MonoBehaviour
         if (!emoticonsLoaded)
         {
             spriteDictionary.Clear();
-            if (this.GetComponent<GameManager>().DayCount == 1)
+            if (this.GetComponent<GameManager>().DayCount == 0)
             {
                 for (int i = 0; i < 16; i++)
                 {
                     spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("Art/Textures/NPCs/NPCEmotions/Cycle1/" + _emoticons[i]));
                 }
             }
-            else if(this.GetComponent<GameManager>().DayCount == 2)
+            else if(this.GetComponent<GameManager>().DayCount == 1)
             {
                 for (int i = 0; i < 16; i++)
                 {
                     spriteDictionary.Add(_emoticons[i], Resources.Load<Sprite>("Art/Textures/NPCs/NPCEmotions/Cycle2/" + _emoticons[i]));
                 }
             }
-            else if (this.GetComponent<GameManager>().DayCount >= 3)
+            else if (this.GetComponent<GameManager>().DayCount >= 2)
             {
                 for (int i = 0; i < 16; i++)
                 {

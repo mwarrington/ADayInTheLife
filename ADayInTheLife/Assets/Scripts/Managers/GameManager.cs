@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             gameTimerActive = value;
         }
     }
-    static int levelCount = 2;
+    static int levelCount = 1;
     public int LevelCount
     {
         get
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
             levelCount = value;
         }
     }
-    static int dayCount = 1;
+    static int dayCount = 0;
     public int DayCount
     {
         get

@@ -93,6 +93,8 @@
      <Compile Include="Assets\Scripts\Interface\NPCThoughtCloud.cs" />
      <Compile Include="Assets\Scripts\Interface\Popups\PopupButton.cs" />
      <Compile Include="Assets\Scripts\Interface\VisualTimer.cs" />
+     <Compile Include="Assets\Scripts\Interface\WeLearnByRepetition.cs" />
+     <Compile Include="Assets\Scripts\Managers\AnimationManager.cs" />
      <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
      <Compile Include="Assets\Scripts\Managers\DayEndManager.cs" />
@@ -124,6 +126,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Dialogue System\Examples\Mobile Test\_README.txt" />
+     <None Include="Assets\Fonts\handmedown.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\Three NPCs Bark\_README.txt" />
