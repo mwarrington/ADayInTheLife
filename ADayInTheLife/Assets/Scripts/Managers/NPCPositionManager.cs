@@ -5,8 +5,6 @@ using PixelCrushers.DialogueSystem;
 
 public class NPCPositionManager : MonoBehaviour
 {
-    public bool DontUsePositionLoader;
-
     protected NPCBlueprint currentBluePrint
     {
         get
@@ -71,14 +69,11 @@ public class NPCPositionManager : MonoBehaviour
 
     void Start()
     {
-        if (!DontUsePositionLoader)
-        {
             _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
             _myGameManager = FindObjectOfType<GameManager>();
 
             ClearLevel();
             LevelSetup();
-        }
     }
 
     private void LevelSetup()
