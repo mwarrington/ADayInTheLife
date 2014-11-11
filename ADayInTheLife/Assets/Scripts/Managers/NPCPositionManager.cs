@@ -24,7 +24,7 @@ public class NPCPositionManager : MonoBehaviour
                     _currentBluePrint = _defaultBluePrint;
                     break;
                 case "Cafeteria":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 || DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationCafeteriaBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;
@@ -39,13 +39,13 @@ public class NPCPositionManager : MonoBehaviour
                     _currentBluePrint = _defaultBluePrint;
                     break;
                 case "Lobby":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 || DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationLobbyBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;
                     break;
                 case "GreenWorld":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 || DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationGreenWorldBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;
@@ -69,19 +69,20 @@ public class NPCPositionManager : MonoBehaviour
 
     void Start()
     {
-            _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
-            _myGameManager = FindObjectOfType<GameManager>();
+        _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
+        _myGameManager = FindObjectOfType<GameManager>();
 
-            ClearLevel();
-            LevelSetup();
+        ClearLevel();
+        LevelSetup();
     }
 
     private void LevelSetup()
     {
-        for (int i = 0; i < currentBluePrint.NPCs.Count; i++)
+        NPCBlueprint lvlBluePrint = currentBluePrint;
+        for (int i = 0; i < lvlBluePrint.NPCs.Count; i++)
         {
-            GameObject currentNPC = (GameObject)Instantiate(currentBluePrint.NPCs[i], currentBluePrint.TransformList[i].position, Quaternion.identity);
-            currentNPC.name = currentBluePrint.NPCs[i].name;
+            GameObject currentNPC = (GameObject)Instantiate(lvlBluePrint.NPCs[i], lvlBluePrint.TransformList[i].position, Quaternion.identity);
+            currentNPC.name = lvlBluePrint.NPCs[i].name;
         }
     }
 
