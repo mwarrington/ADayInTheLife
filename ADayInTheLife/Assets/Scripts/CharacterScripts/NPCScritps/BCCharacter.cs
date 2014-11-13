@@ -8,7 +8,8 @@ public class BCCharacter : NPCScript
 {
     public Transform MySpotLightTransform;
     public bool CCharacter,
-                HasMultipleThoughtClouds;
+                HasMultipleThoughtClouds,
+                FormerCCharacter;
 
     private Dictionary<string, GameObject> _thoughtCloudDic = new Dictionary<string, GameObject>();
     private GameObject _dLights,
@@ -116,7 +117,10 @@ public class BCCharacter : NPCScript
             _lastEmoticonRenderer = _emoticonRenderer;
         }
         else
-            _emoticonRenderer.enabled = false;
+        {
+            if (_emoticonRenderer != null)
+                _emoticonRenderer.enabled = false;
+        }
     }
 
     protected override void OnConversationEnd(Transform actor)
@@ -169,6 +173,8 @@ public class BCCharacter : NPCScript
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
         else if (PlayerSpacificDialog && !myGameManager.IsSarylyn)
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sanome";
+        else if (FormerCCharacter)//HACK: This will default to NotSolved until I set up a proper level change system
+            dialogString = this.name.ToString() + "_NotSolved_" + DialogueLua.GetVariable(progressVarName).AsInt;
         else
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt;
 

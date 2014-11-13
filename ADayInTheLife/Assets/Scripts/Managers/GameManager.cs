@@ -91,6 +91,18 @@ public class GameManager : MonoBehaviour
             dayCount = value;
         }
     }
+    static EmpathyTypes lastEmpathyTypeCompleted;
+    public EmpathyTypes LastEmpathyTypeCompleted
+    {
+        get
+        {
+            return lastEmpathyTypeCompleted;
+        }
+        set
+        {
+            lastEmpathyTypeCompleted = value;
+        }
+    }
     #endregion
 
     //Simple Static fields
@@ -198,7 +210,6 @@ public class GameManager : MonoBehaviour
 
 
     //Handles fade away
-    //I might move this to DayEndManager.cs but haven't decided yet
     private void Fade()
     {
         _alpha += Time.deltaTime * 0.35f;
@@ -222,7 +233,7 @@ public class GameManager : MonoBehaviour
         if (loadNewLevel)
         {
             Application.LoadLevel("MainMenu");
-            DayCount = 1;
+            DayCount = 0;
             //Something to clear the database for new databases.
         }
         else
