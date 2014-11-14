@@ -11,6 +11,7 @@ public class DreamSpiral : MonoBehaviour
     //private Material _startCloudActive,
                      //_startCloudInactive;
 	private GameManager _myGameManager;
+    private TextMesh[] _repCount = new TextMesh[2];
     private bool _canMove = true;
     public static bool startTimerOnce = false;
 
@@ -22,7 +23,9 @@ public class DreamSpiral : MonoBehaviour
 
         _dreamSpiral = GameObject.Find("DreamSpiral");
         //_startCloud = GameObject.Find("WakeUpCloud");
-
+        //Kind of hacky. Might want to revise...
+        FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[0].text = (_myGameManager.DayCount - 1).ToString();
+        FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[1].text = (_myGameManager.DayCount - 1).ToString();
     }
 
     // Use this for initialization

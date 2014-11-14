@@ -17,7 +17,8 @@ public class DayEndManager : MonoBehaviour
     
     void Update()
     {
-        DayEnd();
+        if (_player != null)
+            DayEnd();
     }
 
     //This method handles the strange things that happen at the end of a day.

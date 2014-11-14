@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
-    static float timer = 360;
+    static float timer = 5;
     public float Timer
     {
         get
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             gameTimerActive = value;
         }
     }
-    static int levelCount = 2;
+    static int levelCount = 1;
     public int LevelCount
     {
         get
@@ -232,19 +232,18 @@ public class GameManager : MonoBehaviour
 
         if (loadNewLevel)
         {
-            Application.LoadLevel("MainMenu");
             DayCount = 0;
-            //Something to clear the database for new databases.
+            LevelCount++;
         }
         else
         {
             this.GetComponent<VariableManager>().ResetEventVars();
-            Application.LoadLevel("DreamSpiral");
             DayCount++;
-            hasBeenIntroduced = false;
         }
+        hasBeenIntroduced = false;
+        Application.LoadLevel("DreamSpiral");
 
-        timer = 360;
+        timer = 5;
         FadingAway = false;
         gameTimerActive = false;
         this.GetComponent<EmpathicEmoticons>().EmoticonsLoaded = false;
