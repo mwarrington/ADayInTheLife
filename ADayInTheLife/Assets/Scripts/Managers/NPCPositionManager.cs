@@ -26,7 +26,7 @@ public class NPCPositionManager : MonoBehaviour
                     _currentBluePrint = _defaultBluePrint;
                     break;
                 case "Cafeteria":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    if ((DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2) && (DialogueLua.GetVariable("GonzoAgrees").AsBool || DialogueLua.GetVariable("RobynAgrees").AsBool))
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationCafeteriaBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;
@@ -41,13 +41,15 @@ public class NPCPositionManager : MonoBehaviour
                     _currentBluePrint = _defaultBluePrint;
                     break;
                 case "Lobby":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    Debug.Log("Gonzo Progress: " + DialogueLua.GetVariable("GonzoProgress").AsInt + "\nRobyn Progress: " + DialogueLua.GetVariable("RobynProgress").AsInt +
+                 "\nGonzo Agrees: " + DialogueLua.GetVariable("GonzoAgrees").AsBool + "\nRobyn Agrees: " + DialogueLua.GetVariable("RobynAgrees").AsBool);
+                    if ((DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2) && (DialogueLua.GetVariable("GonzoAgrees").AsBool || DialogueLua.GetVariable("RobynAgrees").AsBool))
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationLobbyBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;
                     break;
                 case "GreenWorld":
-                    if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2)
+                    if ((DialogueLua.GetVariable("GonzoProgress").AsInt == 3 && DialogueLua.GetVariable("RobynProgress").AsInt == 2) && (DialogueLua.GetVariable("GonzoAgrees").AsBool || DialogueLua.GetVariable("RobynAgrees").AsBool))
                         _currentBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/MediationGreenWorldBlueprint") as GameObject).GetComponent<NPCBlueprint>();
                     else
                         _currentBluePrint = _defaultBluePrint;

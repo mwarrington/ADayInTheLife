@@ -32,6 +32,12 @@ public class VariableManager : MonoBehaviour
 			case "Markeshia_2":
                 DialogueLua.SetVariable("KnowsAboutDali_MarkeshiaHeart", DialogueLua.GetVariable("KnowsAboutDali").AsBool);
                 break;
+            case "Gonzo_2_Sarylyn":
+                DialogueLua.SetVariable("GonzoAgrees_Klarissa", DialogueLua.GetVariable("GonzoAgrees").AsBool);
+                break;
+            case "Gonzo_2_Sanome":
+                DialogueLua.SetVariable("GonzoAgrees_Klarissa", DialogueLua.GetVariable("GonzoAgrees").AsBool);
+                break;
             default:
                 Debug.Log("That isn't the correct conversation name");
                 break;

@@ -170,6 +170,12 @@ public class PlayerScript : MonoBehaviour
 				FastBGM.audio.volume = 0;	
 			}
 		}
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log("Gonzo Progress: " + DialogueLua.GetVariable("GonzoProgress").AsInt + "\nRobyn Progress: " + DialogueLua.GetVariable("RobynProgress").AsInt +
+                "\nGonzo Agrees: " + DialogueLua.GetVariable("GonzoAgrees").AsBool + "\nRobyn Agrees: " + DialogueLua.GetVariable("RobynAgrees").AsBool);
+        }
 	}
 
 	private void InputBasedMovement()
