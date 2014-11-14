@@ -19,9 +19,11 @@ public class PopupManager : MonoBehaviour
         }
     }
     private GameObject _currentPopup;
+    private GameManager _myGameManager;
 
     void Update()
     {
+        _myGameManager = this.GetComponent<GameManager>();
         if (Input.GetKeyDown(KeyCode.P))
         {
             ShowPopup();
@@ -31,5 +33,6 @@ public class PopupManager : MonoBehaviour
     public void ShowPopup()
     {
         GameObject popup = (GameObject)Instantiate(currentPopup, InstantiationTransform.position, InstantiationTransform.rotation);
+        popup.transform.parent = _myGameManager.MainCamera.transform;
     }
 }
