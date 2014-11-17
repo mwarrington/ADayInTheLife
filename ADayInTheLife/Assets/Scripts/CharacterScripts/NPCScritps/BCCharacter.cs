@@ -7,6 +7,7 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 public class BCCharacter : NPCScript
 {
     public Transform MySpotLightTransform;
+    public EmpathyTypes MyPastEmpathyType;
     public bool CCharacter,
                 HasMultipleThoughtClouds,
                 FormerCCharacter;
@@ -169,11 +170,14 @@ public class BCCharacter : NPCScript
         //}
 
         //Sets the Conversation to load
+        //This will need to be further elaborated if we have player spacific former C level NPCs
         if (PlayerSpacificDialog && myGameManager.IsSarylyn)
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
         else if (PlayerSpacificDialog && !myGameManager.IsSarylyn)
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sanome";
-        else if (FormerCCharacter)//HACK: This will default to NotSolved until I set up a proper level change system
+        else if (FormerCCharacter && MyPastEmpathyType == myGameManager.LastEmpathyTypeCompleted)
+            dialogString = this.name.ToString() + "_Solved_" + DialogueLua.GetVariable(progressVarName).AsInt;
+        else if (FormerCCharacter && MyPastEmpathyType != myGameManager.LastEmpathyTypeCompleted)
             dialogString = this.name.ToString() + "_NotSolved_" + DialogueLua.GetVariable(progressVarName).AsInt;
         else
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt;

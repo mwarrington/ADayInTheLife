@@ -226,7 +226,24 @@ public class GameManager : MonoBehaviour
             if (DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
             {
                 if (DialogueLua.GetVariable(DialogueManager.MasterDatabase.variables[i].Name).AsBool == true)
+                {
+                    if (LevelCount == 1)
+                    {
+                        switch (DialogueManager.MasterDatabase.variables[i].Name)
+                        {
+                            case "MarkeshiaHeartWin":
+                                LastEmpathyTypeCompleted = EmpathyTypes.Another;
+                                break;
+                            case "ShawnWin":
+                                LastEmpathyTypeCompleted = EmpathyTypes.Self;
+                                break;
+                            default:
+                                Debug.Log("Check your databases, this win condition shouldn't be true.");
+                                break;
+                        }
+                    }
                     loadNewLevel = true;
+                }
             }
         }
 
