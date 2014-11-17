@@ -28,14 +28,12 @@ public class DreamSpiral : MonoBehaviour
         FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[1].text = (_myGameManager.DayCount - 1).ToString();
     }
 
-    // Use this for initialization
     void Start()
     {
        // _startCloud.renderer.material = _startCloudInactive;
 		_secondSFX = GameObject.FindGameObjectWithTag("SecondSFX").GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_canMove)
@@ -99,23 +97,4 @@ public class DreamSpiral : MonoBehaviour
             _hit.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
         }
     }
-
-	private void LoadLevel()
-	{
-		switch(_myGameManager.LevelCount)
-		{
-		case 1:
-			Application.LoadLevel("Hallway");
-			break;
-		case 2:
-			Application.LoadLevel("Lobby");
-			break;
-		case 3:
-			Debug.Log("sdf");
-			break;
-		default:
-			Debug.Log ("There are only three levels so why are you on " + _myGameManager.LevelCount + "?");
-			break;
-		}
-	}
 }

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
-    static float timer = 5;
+    static float timer = 360;
     public float Timer
     {
         get
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
         hasBeenIntroduced = false;
         Application.LoadLevel("DreamSpiral");
 
-        timer = 5;
+        timer = 360;
         FadingAway = false;
         gameTimerActive = false;
         this.GetComponent<EmpathicEmoticons>().EmoticonsLoaded = false;
