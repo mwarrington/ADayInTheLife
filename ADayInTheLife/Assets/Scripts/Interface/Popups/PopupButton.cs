@@ -17,7 +17,7 @@ public class PopupButton : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray ray = _myGameManager.MainCamera.ScreenPointToRay(Input.mousePosition);//Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _myGameManager.MainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (collider.Raycast(ray, out hit, 100))
