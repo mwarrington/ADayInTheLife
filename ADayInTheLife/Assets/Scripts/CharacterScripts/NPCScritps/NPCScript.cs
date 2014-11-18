@@ -6,7 +6,8 @@ using PixelCrushers.DialogueSystem;
 
 public class NPCScript : MonoBehaviour
 {
-	public Camera CloseUpCamera;
+    public Camera CloseUpCamera;
+    public AudioSource MyVoice;
 	public DialogueDatabase MyDatabase;
     public DialogueVisualUI MyDialogGui;
 	public NPCType MyType;
@@ -18,7 +19,6 @@ public class NPCScript : MonoBehaviour
 
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
-	protected AudioSource myVoice;
 	protected GameManager myGameManager;
 	protected ConversationTrigger myConTrigger;
 	protected List<string> namesToSync = new List<string>();
@@ -29,7 +29,7 @@ public class NPCScript : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
 		orriginalRotation = this.transform.rotation.eulerAngles;
-		myVoice = this.GetComponent<AudioSource>();
+		MyVoice = this.GetComponent<AudioSource>();
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
 		Invoke("DialogSetup", 0.1f);
@@ -54,8 +54,8 @@ public class NPCScript : MonoBehaviour
 			CloseUpCamera.enabled = true;
 			myGameManager.MainCamera.enabled = false;
 
-			if(myVoice != null)
-				myVoice.Play();
+			if(MyVoice != null)
+				MyVoice.Play();
 		}
 
 		Conversation currentConvo = DialogueManager.MasterDatabase.GetConversation(DialogueManager.LastConversationStarted);

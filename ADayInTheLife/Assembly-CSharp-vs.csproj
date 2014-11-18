@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Interface\Popups\PopupButton.cs" />
      <Compile Include="Assets\Scripts\Interface\VisualTimer.cs" />
      <Compile Include="Assets\Scripts\Interface\WeLearnByRepetition.cs" />
+     <Compile Include="Assets\Scripts\Managers\AnimationEventManager.cs" />
      <Compile Include="Assets\Scripts\Managers\AnimationManager.cs" />
      <Compile Include="Assets\Scripts\Managers\CameraManager.cs" />
      <Compile Include="Assets\Scripts\Managers\DatabaseManager.cs" />
