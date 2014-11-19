@@ -590,7 +590,7 @@ public class PlayerScript : MonoBehaviour
 	private void ZeroDMove()
 	{
 		//Nothing so far
-		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.Escape))
+		if(Input.GetKeyDown(KeyCode.Escape))
 		{
             if (_myManager.LevelCount == 1)
                 Application.LoadLevel("Hallway");

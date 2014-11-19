@@ -123,7 +123,9 @@ public class NPCScript : MonoBehaviour
 			hasSharedProgress = false;
 		}
 
-		StartCoroutine(myGameManager.GetComponent<JSONHandler>().LogJSON());
+        //JSON component
+		//StartCoroutine(myGameManager.GetComponent<JSONHandler>().LogJSON());
+        myGameManager.LastCharacterTalkedTo = this.name;
 	}
 
     protected virtual void OnTriggerEnter(Collider col)

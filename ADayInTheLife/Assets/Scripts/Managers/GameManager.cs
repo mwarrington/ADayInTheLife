@@ -103,6 +103,18 @@ public class GameManager : MonoBehaviour
             lastEmpathyTypeCompleted = value;
         }
     }
+    static string lastCharacterTalkedTo;
+    public string LastCharacterTalkedTo
+    {
+        get
+        {
+            return lastCharacterTalkedTo;
+        }
+        set
+        {
+            lastCharacterTalkedTo = value;
+        }
+    }
     #endregion
 
     //Simple Static fields

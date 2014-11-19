@@ -27,14 +27,20 @@ public class PopupButton : MonoBehaviour
                 {
                     if (!CloseButton)
                         Instantiate(PopupToLoad, this.transform.parent.position, this.transform.parent.rotation);
-                    else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt == 2)
+                    else if (GameObject.Find(_myGameManager.LastCharacterTalkedTo).GetComponentInChildren<Animator>() != null)
                     {
-                        GameObject.Find("Markeshia").GetComponentInChildren<Animator>().SetBool("ProgressAchieved", true);
+                        GameObject.Find(_myGameManager.LastCharacterTalkedTo).GetComponentInChildren<Animator>().SetBool("ProgressAchieved", true);
+                        Invoke("ResetProgressForAnimator", 3);
                     }
 
                     Destroy(this.transform.parent.gameObject);
                 }
             }
         }
+    }
+
+    private void ResetProgressForAnimator()
+    {
+        GameObject.Find(_myGameManager.LastCharacterTalkedTo).GetComponentInChildren<Animator>().SetBool("ProgressAchieved", false);
     }
 }

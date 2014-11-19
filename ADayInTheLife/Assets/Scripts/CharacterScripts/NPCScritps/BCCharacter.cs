@@ -36,6 +36,13 @@ public class BCCharacter : NPCScript
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
 
+        if (this.GetComponentInChildren<Animator>() != null)
+        {
+            this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
+            if (DialogueLua.GetVariable(this.name + "Progress").AsInt > 1)
+                this.GetComponentInChildren<Animator>().SetBool("DefaultIdle", false);
+        }
+
         //HACK: Resets the TalkedToVars to allow for single cycle completion
         //_myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
     }
@@ -141,6 +148,7 @@ public class BCCharacter : NPCScript
         {
             myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
+            this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
             //Debug.Log(this.GetComponentInChildren<Animation>().clip);
         }
     }
