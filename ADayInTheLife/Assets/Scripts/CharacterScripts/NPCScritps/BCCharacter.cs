@@ -24,7 +24,7 @@ public class BCCharacter : NPCScript
     private string _currentTopic,
                    _currentConversant;
     private float _timeSpentOnLine;
-    private int _myProgress;
+    private int _myProgress = 1;
     private bool _conversationActive;
 
     protected override void Start()
@@ -46,6 +46,9 @@ public class BCCharacter : NPCScript
 
         if (_conversationActive)
             LineTimer();
+
+        if(Input.GetKeyDown(KeyCode.Y) && this.name == "Markeshia")
+            Debug.Log(this.GetComponentInChildren<Animation>());
     }
 
     protected override void OnConversationStart(Transform actor)
@@ -55,8 +58,6 @@ public class BCCharacter : NPCScript
 
         if (CCharacter)
             ToggleSpotLight(true);
-
-        _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
     }
 
     protected override void OnConversationLine(Subtitle line)
@@ -140,6 +141,7 @@ public class BCCharacter : NPCScript
         {
             myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
+            //Debug.Log(this.GetComponentInChildren<Animation>().clip);
         }
     }
 

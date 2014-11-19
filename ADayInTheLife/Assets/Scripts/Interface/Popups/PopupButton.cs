@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class PopupButton : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class PopupButton : MonoBehaviour
                 {
                     if (!CloseButton)
                         Instantiate(PopupToLoad, this.transform.parent.position, this.transform.parent.rotation);
+                    else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt == 2)
+                    {
+                        GameObject.Find("Markeshia").GetComponentInChildren<Animator>().SetBool("ProgressAchieved", true);
+                    }
 
                     Destroy(this.transform.parent.gameObject);
                 }

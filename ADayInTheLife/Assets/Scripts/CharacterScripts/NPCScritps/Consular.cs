@@ -10,24 +10,31 @@ public class Consular : NPCScript
 	{
 		get
         {
-            int progress = 1;
-
 			switch (myGameManager.LevelCount)
 			{
 				case 1:
+                    //Hack: This is made specifically for the Markeshia Demo.
                     //if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
                     //{
                     //    _currentEmpathyType = EmpathyTypes.Community;
                     //}
                     //else
-                    if(DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
-					{
-						_currentEmpathyType = EmpathyTypes.Self;
-					}
-					else if(DialogueLua.GetVariable("MarkeshiaProgress").AsInt > progress)
-					{
-						_currentEmpathyType = EmpathyTypes.Another;
-					}
+                    //if(DialogueLua.GetVariable("ShawnProgress").AsInt > progress)
+                    //{
+                    //    _currentEmpathyType = EmpathyTypes.Self;
+                    //}
+                    //else if(DialogueLua.GetVariable("MarkeshiaProgress").AsInt > progress)
+                    //{
+                    //    _currentEmpathyType = EmpathyTypes.Another;
+                    //}
+                    if (DialogueLua.GetVariable("KnowsAboutDali_MarkeshiaHeart").AsBool)
+                        progress = 3;
+                    else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt == 1)
+                        progress = 1;
+                    else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt == 2)
+                        progress = 2;
+
+                    _currentEmpathyType = EmpathyTypes.Another;
 					break;
 				case 2:
                     if (DialogueLua.GetVariable("GonzoProgress").AsInt == 3 || DialogueLua.GetVariable("RobynProgress").AsInt == 2)
@@ -63,6 +70,21 @@ public class Consular : NPCScript
 		}
 	}
 	private EmpathyTypes _currentEmpathyType;
+    protected int progress
+    {
+        get
+        {
+            return _progress;
+        }
+        set
+        {
+            if (_progress != value)
+                DialogueLua.SetVariable("Another", 1);
+
+            _progress = value;
+        }
+    }
+    private int _progress = 0;
 
     public string SpecialConvoModifier;
 
@@ -104,7 +126,10 @@ public class Consular : NPCScript
 
 	protected override void DialogSetup ()
 	{
-		dialogString = "Sam" + "_" + _convoModifier;
+        if (DialogueLua.GetVariable("ShowHint").AsBool)
+            dialogString = "Sam" + "_" + _convoModifier + "_" + progress;
+        else
+            dialogString = "Sam_Intro";
 
 		base.DialogSetup ();
 	}

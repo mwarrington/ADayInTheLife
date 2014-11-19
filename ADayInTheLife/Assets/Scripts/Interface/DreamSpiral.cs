@@ -24,8 +24,11 @@ public class DreamSpiral : MonoBehaviour
         _dreamSpiral = GameObject.Find("DreamSpiral");
         //_startCloud = GameObject.Find("WakeUpCloud");
         //Kind of hacky. Might want to revise...
-        FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[0].text = (_myGameManager.DayCount - 1).ToString();
-        FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[1].text = (_myGameManager.DayCount - 1).ToString();
+        if (_myGameManager.DayCount > 0)
+        {
+            FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[0].text = (_myGameManager.DayCount - 1).ToString();
+            FindObjectOfType<WeLearnByRepetition>().GetComponentsInChildren<TextMesh>()[1].text = (_myGameManager.DayCount - 1).ToString();
+        }
     }
 
     void Start()
