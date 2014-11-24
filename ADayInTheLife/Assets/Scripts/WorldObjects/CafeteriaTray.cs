@@ -39,12 +39,12 @@ public class CafeteriaTray : MonoBehaviour
 
                 if(isUnique)
                 {
-                    _foodTable.Add(go.name, Resources.Load<Sprite>("Environment/Served" + go.name));
+                    _foodTable.Add(go.name, Resources.Load<Sprite>("Art/Textures/Environment/Served" + go.name));
                 }
             }
             else
             {
-                _foodTable.Add(go.name, Resources.Load<Sprite>("Environment/Served" + go.name));
+                _foodTable.Add(go.name, Resources.Load<Sprite>("Art/Textures/Environment/Served" + go.name));
             }
 		}
 	}
@@ -63,6 +63,7 @@ public class CafeteriaTray : MonoBehaviour
             {
                 if (hit.collider.tag == "CafeteriaFood" && Input.GetKeyDown(KeyCode.Mouse0) && _trayIndex < 5)
                 {
+                    Debug.Log(_foodTable[hit.collider.name].name);
                     FoodTraySections[_trayIndex].sprite = _foodTable[hit.collider.name];
                     _trayIndex++;
                 }
