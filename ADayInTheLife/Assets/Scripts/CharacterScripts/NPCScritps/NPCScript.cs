@@ -6,6 +6,7 @@ using PixelCrushers.DialogueSystem;
 
 public class NPCScript : MonoBehaviour
 {
+    //Public Fields to be set in inspector
     public Camera CloseUpCamera;
     public AudioSource MyVoice;
 	public DialogueDatabase MyDatabase;
@@ -17,6 +18,7 @@ public class NPCScript : MonoBehaviour
 				HasCloseUpCam,
 				TimedResponse;
 
+    //Protected fields to be set in Start()
 	protected GameObject player;
 	protected Vector3 orriginalRotation;
 	protected GameManager myGameManager;
@@ -27,39 +29,49 @@ public class NPCScript : MonoBehaviour
 
 	protected virtual void Start ()
 	{
+        //Initialization of protected fields
 		player = GameObject.FindGameObjectWithTag("Player");
 		orriginalRotation = this.transform.rotation.eulerAngles;
 		MyVoice = this.GetComponent<AudioSource>();
 		myGameManager = GameObject.FindObjectOfType<GameManager>();
 		myConTrigger = this.GetComponent<ConversationTrigger>();
+        //Calls DialogSetup() after a 0.1 second delay
+        //This gives the game manager time to load all of the databases before dialogs are set up
 		Invoke("DialogSetup", 0.1f);
 	}
 	
-	// Update is called once per frame
 	protected virtual void Update ()
 	{
+        //Calls RotateTowardPlayer if AlwaysFacePlayer is true
 		if(AlwaysFacePlayer)
 			RotateTowardPlayer();
 	}
 
+    //Called when conversation is initiated
 	protected virtual void OnConversationStart(Transform actor)
     {
+        //This sets the amount of time for the response timer if TimedResponse is true
 		if(TimedResponse)
 			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 30;
-		else
+		else //Sets response timer to 0 if TimedResponse is false. This effectivly disables the response timer
 			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 0;
 
+        //If the player has a close up cam then it will be enabled while turning off the main camera
 		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = true;
 			myGameManager.MainCamera.enabled = false;
 
-			if(MyVoice != null)
-				MyVoice.Play();
+            //This will handle talk voice but requires a design conversation before it can be implimented
+            //if(MyVoice != null)
+            //    MyVoice.Play();
 		}
 
+        //Sets which convo the player just initiated
 		Conversation currentConvo = DialogueManager.MasterDatabase.GetConversation(DialogueManager.LastConversationStarted);
-
+        //If a convorsation is meant to share progress changes in Lua then
+        //it's Description field will need to be set to "SharedProgress" followed by the names of every NPC it's sharing with followed by a ' '
+        //Example: "SharedProgress Tom Dick Harry "
 		for (int i = 0; i < currentConvo.fields.Count; i++)
 		{
 			if(currentConvo.fields[i].title == "Description" && currentConvo.fields[i].value != "")
@@ -80,7 +92,7 @@ public class NPCScript : MonoBehaviour
 						}
 						else
 						{
-							namesToSync.Add(name);
+                            namesToSync.Add(name);
 							name = "";
 						}
 					}
@@ -91,6 +103,7 @@ public class NPCScript : MonoBehaviour
 		}
 	}
 
+    //Called per dialog line
 	protected virtual void OnConversationLine(Subtitle line)
 	{
 		if(line.speakerInfo.IsPlayer)
@@ -104,19 +117,22 @@ public class NPCScript : MonoBehaviour
 		}
 	}
 
+    //Called at the end of each conversation
 	protected virtual void OnConversationEnd(Transform actor)
 	{
+        //Switches back to main camera if there was a close up cam
 		if(HasCloseUpCam)
 		{
 			CloseUpCamera.enabled = false;
 			myGameManager.MainCamera.enabled = true;
 		}
 
+        //If the NPC has Shared Variables then it will call the SyncVariables method
 		if(HasSharedVariables)
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().SyncVariables(dialogString);
 		}
-
+        //If the NPC has Shared Progress then it will call the SharedProgress method
 		if(hasSharedProgress)
 		{
 			GameObject.FindGameObjectWithTag("GameManager").GetComponent<VariableManager>().ProgressSync(this.name, namesToSync);
@@ -130,10 +146,12 @@ public class NPCScript : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider col)
     {
+        //Changes which DialogUI the game uses for convos
         if (MyDialogGui != null && col.tag == "Player")
             DialogueManager.DialogueUI = MyDialogGui;
     }
 
+    //This method handles the rotation of NPCs in rotates toward player scenes
 	protected virtual void RotateTowardPlayer()
 	{
 		//This will make sprites turn to look at the player

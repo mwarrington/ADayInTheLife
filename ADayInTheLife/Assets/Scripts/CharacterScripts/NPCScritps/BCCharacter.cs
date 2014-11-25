@@ -6,12 +6,14 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 
 public class BCCharacter : NPCScript
 {
+    //Public fields to be set in the inspector
     public Transform MySpotLightTransform;
     public EmpathyTypes MyPastEmpathyType;
     public bool CCharacter,
                 HasMultipleThoughtClouds,
                 FormerCCharacter;
 
+    //private fields to be set/populated in script
     private Dictionary<string, GameObject> _thoughtCloudDic = new Dictionary<string, GameObject>();
     private GameObject _dLights,
                        _mySpotLight;
@@ -27,6 +29,7 @@ public class BCCharacter : NPCScript
     private int _myProgress = 1;
     private bool _conversationActive;
 
+    //Initializes some fields
     protected override void Start()
     {
         base.Start();
@@ -36,6 +39,7 @@ public class BCCharacter : NPCScript
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
 
+        //Initializes what animation should be active for the NPC based on this NPCs progress var
         if (this.GetComponentInChildren<Animator>() != null)
         {
             this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
@@ -51,18 +55,18 @@ public class BCCharacter : NPCScript
     {
         base.Update();
 
+        //If a convo is active then LineTimer will be called
         if (_conversationActive)
             LineTimer();
-
-        if(Input.GetKeyDown(KeyCode.Y) && this.name == "Markeshia")
-            Debug.Log(this.GetComponentInChildren<Animation>());
     }
 
     protected override void OnConversationStart(Transform actor)
     {
         base.OnConversationStart(actor);
+        //Sets _conversationActive to true
         _conversationActive = true;
 
+        //If this is a C class NPC then the spot light will appear
         if (CCharacter)
             ToggleSpotLight(true);
     }

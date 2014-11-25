@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
+    //Game timer. Day resets after this runs out
     static float timer = 360;
     public float Timer
     {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Who told you that you could set this property!?");
         }
     }
+    //Whether the player is Sarylyn or Sanome
     static bool isSarylyn = true;
     public bool IsSarylyn
     {
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
             isSarylyn = value;
         }
     }
+    //Indicates that last level that has been loaded
     static string lastLevelLoaded = "DreamSpiral";
     public string LastLevelLoaded
     {
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
             lastLevelLoaded = value;
         }
     }
+    //If the player has had an introduction with a hall monitor
     static bool hasBeenIntroduced = false;
     public bool HasBeenIntroduced
     {
@@ -55,6 +59,7 @@ public class GameManager : MonoBehaviour
             hasBeenIntroduced = value;
         }
     }
+    //Whether the game timer is running
     static bool gameTimerActive;
     public bool GameTimerActive
     {
@@ -67,6 +72,7 @@ public class GameManager : MonoBehaviour
             gameTimerActive = value;
         }
     }
+    //Indicates what level the player is currently on
     static int levelCount = 1;
     public int LevelCount
     {
@@ -79,6 +85,7 @@ public class GameManager : MonoBehaviour
             levelCount = value;
         }
     }
+    //Indicates the number of repetitions the player has experienced
     static int dayCount = 0;
     public int DayCount
     {
@@ -91,6 +98,7 @@ public class GameManager : MonoBehaviour
             dayCount = value;
         }
     }
+    //Indicates which empathy type the player completed last
     static EmpathyTypes lastEmpathyTypeCompleted;
     public EmpathyTypes LastEmpathyTypeCompleted
     {
@@ -103,6 +111,7 @@ public class GameManager : MonoBehaviour
             lastEmpathyTypeCompleted = value;
         }
     }
+    //Indicates the last NPC the player talked to
     static string lastCharacterTalkedTo;
     public string LastCharacterTalkedTo
     {
@@ -137,6 +146,7 @@ public class GameManager : MonoBehaviour
         }
         set
         {
+            //if the value of FadingAway is changing to true this finds the appropriate Fade Mask
             if (value != _fadingAway && value)
                 _fadeMask = MainCamera.GetComponentInChildren<SpriteRenderer>();
 
@@ -153,6 +163,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //Loads the test list of databases
         if (iTestThereforeIAm && !testDatabasesLoaded)
         {
             DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
@@ -163,7 +174,7 @@ public class GameManager : MonoBehaviour
             }
             testDatabasesLoaded = true;
         }
-        else if (LevelCount == 1 && !lvl1DatabasesLoaded && !iTestThereforeIAm)
+        else if (LevelCount == 1 && !lvl1DatabasesLoaded && !iTestThereforeIAm) //Loads the databases for lvl 1
         {
             DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
 
@@ -173,7 +184,7 @@ public class GameManager : MonoBehaviour
             }
             lvl1DatabasesLoaded = true;
         }
-        else if (LevelCount == 2 && !lvl2DatabasesLoaded && !iTestThereforeIAm)
+        else if (LevelCount == 2 && !lvl2DatabasesLoaded && !iTestThereforeIAm) //Loads the databases for lvl 2
         {
             DialogueManager.MasterDatabase.Clear();
             DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
@@ -185,15 +196,20 @@ public class GameManager : MonoBehaviour
             lvl2DatabasesLoaded = true;
         }
 
+        //Sets the main camera; this exists because Camera.main is kinda funky
         MainCamera = Camera.main;
+
+        //Finds and sets the player script for reference
         if (FindObjectOfType<PlayerScript>() != null)
             _player = FindObjectOfType<PlayerScript>();
 
+        //Finds and sets the MainBGM AudioSource
         MainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        //Allows the player to load differnt levels for test purposes
         if (iTestThereforeIAm)
         {
             if (Input.GetKey(KeyCode.N) && Input.GetKey(KeyCode.O) && Input.GetKey(KeyCode.T))
@@ -205,11 +221,13 @@ public class GameManager : MonoBehaviour
                 Application.LoadLevel("Hallway");
             }
         }
+        //Runs the game clock if GameTimerActive is true
         if (GameTimerActive)
         {
             timer -= Time.deltaTime;
         }
 
+        //Runs the Fade method if FadingAway is true
         if (FadingAway)
             Fade();
 
@@ -224,15 +242,19 @@ public class GameManager : MonoBehaviour
     //Handles fade away
     private void Fade()
     {
+        //Increases the alpha of the fade mask over time
         _alpha += Time.deltaTime * 0.35f;
         MainBGM.volume -= Time.deltaTime * 0.15f;
         _fadeMask.color = new Color(_fadeMask.color.r, _fadeMask.color.g, _fadeMask.color.b, _alpha);
     }
 
+    //Handles scene loadeding at the end of a day
     public void LoadNextLevel()
     {
         bool loadNewLevel = false;
 
+        //Checks to see if any of the win conditions are met
+        //Sets the which win condition is met in LastEmpathyTypeCompleted
         for (int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
         {
             if (DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
@@ -259,19 +281,23 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Resets DayCount and adds 1 to LevelCount if a win condition is met
         if (loadNewLevel)
         {
             DayCount = 0;
             LevelCount++;
         }
-        else
+        else //Adds one to DayCount and resets event vars if a win condition is not met
         {
             this.GetComponent<VariableManager>().ResetEventVars();
             DayCount++;
         }
+        //Always resets hasBeenIntroduced and loads the "DreamSpiral" scene
         hasBeenIntroduced = false;
         Application.LoadLevel("DreamSpiral");
 
+        //Resets game timer, starts the fade process, stops game timer, and tells the EmpathicEmoticons script that it will need to load new EEs
+        //NOTE: The game time may need to be set to different amounts based on the level but this has not been decided yet
         timer = 360;
         FadingAway = false;
         gameTimerActive = false;

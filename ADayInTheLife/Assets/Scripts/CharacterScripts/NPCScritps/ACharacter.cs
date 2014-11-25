@@ -4,13 +4,15 @@ using PixelCrushers.DialogueSystem;
 
 public class ACharacter : NPCScript
 {
+    //This indicates which convo the A level character should load
 	public int DialogIndex;
+    //Indicates whether this AlvlChar is a member of the team
 	public bool IsTeamMember;
 
+    //The following six methods don't need unique lines from NPCScripts
 	protected override void Start ()
 	{
 		base.Start ();
-		DialogSetup();
 	}
 
 	protected override void Update ()
@@ -23,7 +25,6 @@ public class ACharacter : NPCScript
 		base.OnConversationStart (actor);
 	}
 
-	//For now only BCCharacters use this function
 	protected override void OnConversationLine (Subtitle line)
 	{
 		base.OnConversationLine (line);
@@ -41,9 +42,10 @@ public class ACharacter : NPCScript
 
 	protected override void DialogSetup ()
 	{
+        //If the AlvlChar is a team member thne it will use the player's name to find which convo to load
 		if(IsTeamMember)
 			dialogString = this.name + "_" + DialogIndex.ToString();
-		else
+		else //Else it will use a number set in the inspector
 			dialogString = DialogIndex.ToString();
 
 		base.DialogSetup ();
