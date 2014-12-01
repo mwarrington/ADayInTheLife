@@ -92,53 +92,63 @@ public class BCCharacter : NPCScript
 
         LineManager(line);
 
+        EmpathicEmoticonHandler(line, characterName);
+    }
+
+    public void EmpathicEmoticonHandler(Subtitle currentLine, string name)
+    {
         //Finds which field the Mood field is and records it's index
         int moodIndex = 0;
-        for (int i = 0; i < line.dialogueEntry.fields.Count; i++)
+        for (int i = 0; i < currentLine.dialogueEntry.fields.Count; i++)
         {
-            if (line.dialogueEntry.fields[i].title == "Mood")
+            if (currentLine.dialogueEntry.fields[i].title == "Mood")
             {
                 moodIndex = i;
                 break;
             }
         }
 
-        //Shows the mood of a character
-        if (moodIndex != 0 && line.dialogueEntry.fields[moodIndex].value != "")
+        //Checks to see if there is a value in the "Mood" field
+        if (currentLine.dialogueEntry.fields[moodIndex].value != "")
         {
             if (_lastEmoticonRenderer != _emoticonRenderer && HasMultipleThoughtClouds)
                 _lastEmoticonRenderer = _emoticonRenderer;
-            if (HasMultipleThoughtClouds)
-                _emoticonRenderer = _thoughtCloudDic[characterName].GetComponent<SpriteRenderer>();
-            else
+            if (HasMultipleThoughtClouds) //If there are multiple thought clouds then the thought cloud will be named specifically in _thoughtCouldDic
+                _emoticonRenderer = _thoughtCloudDic[name].GetComponent<SpriteRenderer>();
+            else //Otherwise they will be generically known as NPC in _thoughtCloudDic
                 _emoticonRenderer = _thoughtCloudDic["NPC"].GetComponent<SpriteRenderer>();
 
-            _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[line.dialogueEntry.fields[moodIndex].value];
+            //Sets the sprite to whichever the Mood field's value is then turns the renderer on
+            _emoticonRenderer.sprite = _myEmpathicEmoticons.SpriteDictionary[currentLine.dialogueEntry.fields[moodIndex].value];
             _emoticonRenderer.enabled = true;
             if (_lastEmoticonRenderer == _emoticonRenderer)
                 CancelInvoke("RemoveThoughtCloud");
 
+            //Removes the thought cloud in 3 seconds
             Invoke("RemoveThoughtCloud", 3);
         }
     }
 
     private void RemoveThoughtCloud()
     {
+        //If there are multiple thought coulds this makes sure that the correct thought cloud is removed
         if (_lastEmoticonRenderer != _emoticonRenderer && HasMultipleThoughtClouds)
         {
             _lastEmoticonRenderer.enabled = false;
             _lastEmoticonRenderer = _emoticonRenderer;
         }
-        else
+        else //Otherwise it just removes the one
         {
             if (_emoticonRenderer != null)
                 _emoticonRenderer.enabled = false;
         }
     }
 
+    //Called whenver a conversation ends
     protected override void OnConversationEnd(Transform actor)
     {
         base.OnConversationEnd(actor);
+
         _conversationActive = false;
         DialogSetup();
         RemoveThoughtCloud();
@@ -148,12 +158,12 @@ public class BCCharacter : NPCScript
             ToggleSpotLight(false);
         }
 
+        //This checks to see if progress has been made. If so, then the progress popup will appear.
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {
             myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
             this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
-            //Debug.Log(this.GetComponentInChildren<Animation>().clip);
         }
     }
 
@@ -184,23 +194,25 @@ public class BCCharacter : NPCScript
         //}
 
         //Sets the Conversation to load
-        //This will need to be further elaborated if we have player spacific former C level NPCs
-        if (PlayerSpacificDialog && myGameManager.IsSarylyn)
+        //NOTE: This will need to be further elaborated if we have player spacific former C level NPCs
+        if (PlayerSpacificDialog && myGameManager.IsSarylyn) //If NPC has dialog specific to Sarylyn
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sarylyn";
-        else if (PlayerSpacificDialog && !myGameManager.IsSarylyn)
+        else if (PlayerSpacificDialog && !myGameManager.IsSarylyn) //If NPC has dialog specific to Sanome
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt + "_Sanome";
-        else if (FormerCCharacter && MyPastEmpathyType == myGameManager.LastEmpathyTypeCompleted)
+        else if (FormerCCharacter && MyPastEmpathyType == myGameManager.LastEmpathyTypeCompleted) //If NPC has dialog specific to whether the player has completed their past story line
             dialogString = this.name.ToString() + "_Solved_" + DialogueLua.GetVariable(progressVarName).AsInt;
-        else if (FormerCCharacter && MyPastEmpathyType != myGameManager.LastEmpathyTypeCompleted)
+        else if (FormerCCharacter && MyPastEmpathyType != myGameManager.LastEmpathyTypeCompleted) //If NPC has dialog specific to whether the player has not completed their past story line
             dialogString = this.name.ToString() + "_NotSolved_" + DialogueLua.GetVariable(progressVarName).AsInt;
-        else
+        else //Otherwise the most simple type of dialog string will be used
             dialogString = this.name.ToString() + "_" + DialogueLua.GetVariable(progressVarName).AsInt;
 
         base.DialogSetup();
     }
 
+    //Toggles Spotlight on or off based on "val"
     private void ToggleSpotLight(bool val)
     {
+        //This for loop darkens the room pieces so that everything appears to be darkened when the spotlight comes on
         for (int i = 0; i < _roomPieces.Length; i++)
         {
             Renderer renderer = _roomPieces[i].GetComponent<Renderer>();
@@ -218,12 +230,15 @@ public class BCCharacter : NPCScript
         _mySpotLight.SetActive(val);
     }
 
+    //Updates the dialog timer
     private void LineTimer()
     {
         _timeSpentOnLine += Time.deltaTime;
         DialogueLua.SetVariable(this.name + "Timer", (int)_timeSpentOnLine);
     }
 
+    //This has to do with the Line timer
+    //NOTE: It's possible we may never use this but we might.
     private void LineManager(Subtitle myLine)
     {
         //This sets the current line if it is initally null
@@ -264,6 +279,7 @@ public class BCCharacter : NPCScript
         }
     }
 
+    //This method changes the displayed name of the Dialog UI if there are multiple NPCs
     private void ChangeNames()
     {
         for (int i = 0; i < FindObjectOfType<DialogUINameHandler>().DisplayNames.Length; i++)
@@ -272,9 +288,9 @@ public class BCCharacter : NPCScript
         }
     }
 
+    //This method populates the dictionary _thoughtCloudDic
     private void ThoughtCloudSetUp()
     {
-        //Thought cloud set up
         List<GameObject> myThoughtClouds = new List<GameObject>();
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("ThoughtCloud").Length; i++)
         {

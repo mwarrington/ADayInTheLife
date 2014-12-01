@@ -3,6 +3,8 @@ using System.Collections;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.Examples;
 
+//For now the only thing this script does is handle the things that happen in the Consular's Office
+//Eventually this script might do more but I won't know that until we finish designing the hint system
 public class HintManager : MonoBehaviour
 {
 	public GameObject SceneCurtains,

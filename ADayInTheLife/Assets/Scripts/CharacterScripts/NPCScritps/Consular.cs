@@ -2,10 +2,14 @@
 using System.Collections;
 using PixelCrushers.DialogueSystem;
 
+//Much of this script is incomplete because the hint system has not been fully designed
+//I will revisit this once we have finished designing how this will work
 public class Consular : NPCScript
 {
 	private string _convoModifier = "Intro";
 
+    //This property is the meat and potatoes of the script
+    //It determins what dialog the Consular will say
 	protected EmpathyTypes currentEmpathyType
 	{
 		get
@@ -13,7 +17,6 @@ public class Consular : NPCScript
 			switch (myGameManager.LevelCount)
 			{
 				case 1:
-                    //Hack: This is made specifically for the Markeshia Demo.
                     //if(DialogueLua.GetVariable("GlassesProgress").AsInt > progress)
                     //{
                     //    _currentEmpathyType = EmpathyTypes.Community;
@@ -27,6 +30,8 @@ public class Consular : NPCScript
                     //{
                     //    _currentEmpathyType = EmpathyTypes.Another;
                     //}
+                    //Hack: This is made specifically for the Markeshia Demo.
+                    //That being said, each empathy type will work much like this one does
                     if (DialogueLua.GetVariable("KnowsAboutDali_MarkeshiaHeart").AsBool)
                         progress = 3;
                     else if (DialogueLua.GetVariable("MarkeshiaProgress").AsInt == 1)
@@ -70,6 +75,9 @@ public class Consular : NPCScript
 		}
 	}
 	private EmpathyTypes _currentEmpathyType;
+
+    //Whenever the progress value is different the value of "Another"(there will be one for "Self" and "Community" in the future)
+    //is reverted back to 1
     protected int progress
     {
         get
@@ -86,6 +94,7 @@ public class Consular : NPCScript
     }
     private int _progress = 0;
 
+    //If ever we need Sam to say a special line we'll use this string
     public string SpecialConvoModifier;
 
 	protected override void Start ()
@@ -126,6 +135,7 @@ public class Consular : NPCScript
 
 	protected override void DialogSetup ()
 	{
+        //ShowHint is a variable in Sam's DialogDatabase. When it's set to true the next dialog shown is as follows.
         if (DialogueLua.GetVariable("ShowHint").AsBool)
             dialogString = "Sam" + "_" + _convoModifier + "_" + progress;
         else
