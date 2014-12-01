@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviour
 	private GameManager _myManager;
     private AudioClip[] _mySpeedClips = new AudioClip[5];
 
+    //This property will set itself based on which scene we are currently in
+    //We also set the whether the player is able to move fast
 	public Scenes CurrentScene
 	{
 		get
@@ -86,6 +88,7 @@ public class PlayerScript : MonoBehaviour
 	}
 	private Scenes _currentScene;
 
+    //This will set itself to true or false depending on a field form the GameManager
 	protected bool isSarylyn
 	{
 		get
@@ -95,6 +98,7 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //Looks to see if any of the isWalking bools is true and sets IsMoving to true if so
 	public bool IsMoving
 	{
 		get
@@ -129,6 +133,8 @@ public class PlayerScript : MonoBehaviour
 		_myManager = FindObjectOfType<GameManager>();
 		_midpoint = this.gameObject.transform.position.y;
 		_orriginalRotation = this.transform.rotation.eulerAngles;
+
+        //Depending on whether the player is Sarylyn or not the correct sprite will be set to true
 		if(isSarylyn)
 		{
 			SarylynSprite.enabled = true;
@@ -141,9 +147,12 @@ public class PlayerScript : MonoBehaviour
 		}
 
 		//Sets the player's appropriate postion then
-		//Declares current scene as the LastLevelLoaded
 		SetPlayerPosition();
+
+        //Declares current scene as the LastLevelLoaded
 		_myManager.LastLevelLoaded = Application.loadedLevelName;
+
+        //Population of _mySpeedClips
         _mySpeedClips[0] = PrefabLoaderScript.instance.Boing;
         _mySpeedClips[1] = PrefabLoaderScript.instance.Pop;
         _mySpeedClips[2] = PrefabLoaderScript.instance.Werp;
@@ -153,10 +162,17 @@ public class PlayerScript : MonoBehaviour
 
 	void Update ()
 	{
+        //This method handles all types of movement
 		InputBasedMovement();
+
+        //Some scenes alow you move at a faster speed
         if (_hasSpeedControls)
             WalkSpeedHandler();
+
+        //This method handles the head bob
 		Headbob();
+
+        //In the GreenWorld the music changes depending on if you're moving or not
 		if (Application.loadedLevelName == "GreenWorld")
 		{
 			if (IsMoving)
@@ -170,16 +186,11 @@ public class PlayerScript : MonoBehaviour
 				FastBGM.audio.volume = 0;	
 			}
 		}
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.Log("Gonzo Progress: " + DialogueLua.GetVariable("GonzoProgress").AsInt + "\nRobyn Progress: " + DialogueLua.GetVariable("RobynProgress").AsInt +
-                "\nGonzo Agrees: " + DialogueLua.GetVariable("GonzoAgrees").AsBool + "\nRobyn Agrees: " + DialogueLua.GetVariable("RobynAgrees").AsBool);
-        }
 	}
 
 	private void InputBasedMovement()
 	{
+        //This checks to see which scene is active then uses the appropriate method
 		switch(CurrentScene)
 		{
 			case Scenes.Hallway:
@@ -224,7 +235,8 @@ public class PlayerScript : MonoBehaviour
 		float horizontal = 1;
 		float vertical = 1;
 		
-		if ((!_isWalkingForward && !_isWalkingBack && !_isWalkingLeft && !_isWalkingRight) || _hitWallForward || _hitWallBack || _hitWallLeft || _hitWallRight)
+        //If the player is neither walking or 
+		if (!IsMoving || _hitWallForward || _hitWallBack || _hitWallLeft || _hitWallRight)
 		{
 			_bobTimer = 0.0f;
 			horizontal = 0;

@@ -10,17 +10,24 @@ public class HintManager : MonoBehaviour
 	public GameObject SceneCurtains,
 					  DeskCurtains;
 
+    //This property determins whether the player sees the instructions for dialog or leaving the room
 	protected bool colliderActive
 	{
 		get
 		{
-			if((_myCameraManager.ZoomingIn || SceneCurtains.GetComponent<Animation>().isPlaying))
+            //If the camera is zooming in, if the curtains are animating, or if a conversation is active
+            //then the instructions wont be shown.
+			if((_myCameraManager.ZoomingIn || SceneCurtains.GetComponent<Animation>().isPlaying || DialogueManager.IsConversationActive))
 				_colliderActive = false;
 			else
 				_colliderActive = true;
 
 			return _colliderActive;
 		}
+        set
+        {
+            Debug.Log("You shouldn't be trying to set this property");
+        }
 	}
 	private bool _colliderActive;
 
@@ -33,20 +40,19 @@ public class HintManager : MonoBehaviour
 		_myCameraManager = FindObjectOfType<CameraManager>();
 		_player = FindObjectOfType<PlayerScript>();
 		_playerProxSelector = _player.GetComponent<ProximitySelector>();
+        //Disables the proximity selector so that it doesn't initially show the talk to options
 		_playerProxSelector.enabled = false;
 	}
 
 	void Update()
 	{
+        //If the collider is active then the proximity selector becomes true.
 		if(colliderActive)
-		{
-			_player.transform.position = new Vector3(_player.transform.position.x + 1, _player.transform.position.y, _player.transform.position.z);
 			_playerProxSelector.enabled = true;
-			_player.transform.position = new Vector3(_player.transform.position.x - 1, _player.transform.position.y, _player.transform.position.z);
-		}
 		else
 			_playerProxSelector.enabled = false;
 
+        //This resets the curtains to thier 0 position if the camera isn't zooming in
 		if(!_myCameraManager.ZoomingIn)
 		{
 			DeskCurtains.SampleAnimation(DeskCurtains.GetComponent<Animation>().clip, 0);
@@ -55,6 +61,7 @@ public class HintManager : MonoBehaviour
 
 	void OnConversationEnd (Transform actor)
 	{
+        //Checks to see if the player has requested a hint
 		if(DialogueLua.GetVariable("ShowHint").AsBool)
 		{
 			ShowHint();
@@ -62,6 +69,7 @@ public class HintManager : MonoBehaviour
 		}
 	}
 
+    //Plays the desk curtain animation and zooms in
 	private void ShowHint()
 	{
 		DeskCurtains.GetComponent<Animation>().Play();
