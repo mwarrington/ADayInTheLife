@@ -123,7 +123,7 @@ public class PlayerScript : MonoBehaviour
 				 BobbingSpeed,
 				 BobbingAmount,
 				 TranslateChange;
-	public bool ConfusedMovement,
+	public bool ConfusedMovement, //At 5 seconds to day end the movements of the player is messed up
 				DontHideSprite;
 
 	public GameObject SlowBGM, FastBGM;
@@ -278,6 +278,7 @@ public class PlayerScript : MonoBehaviour
 	}
 
 	//This method sets the player position depending on which scene the player was in last.
+    //This might be scrapped since we want to have a sort of loop effect whenever the player changes scenes.
 	private void SetPlayerPosition()
 	{
 		if(Application.loadedLevelName == "Hallway")
@@ -300,11 +301,12 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //Movement Types
 	#region Movement Methods
-	//Movement Types
+    //This movement type is the most basic four directional movement
 	private void Standard2DMove()
 	{
-		//When the player is pressing an arrow or WASD key
+		//When the player is pressing an arrow or WASD key it changes one of the four direction bools
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			if(!ConfusedMovement)
@@ -381,9 +383,10 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //This is used for scenes where the player can only move left or right
 	private void Standard1DMove()
 	{
-		//When the player is pressing an arrow or WASD key
+        //When the player is pressing an arrow or WASD key it changes one of the four direction bools
 		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 		{
 			if(!ConfusedMovement)
@@ -424,9 +427,10 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //This is used for scenes where the player rotates with the left(or A) or right(or D) key
 	private void Rotatable2DMove()
 	{
-		//When the player is pressing an arrow or WASD key
+        //When the player is pressing an arrow or WASD key it changes one of the two direction bools or one of the two rotation bools
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			if(!ConfusedMovement)
@@ -503,13 +507,14 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //This is used for rooms that have a second person view as if the player is being watched by a security camera
 	private void SecurityCamera2DMove()
 	{
-		//This will maintain rotation with the camera
+		//This will maintain player rotation with the camera
 		this.transform.LookAt(_myManager.MainCamera.transform);
 		this.transform.rotation = Quaternion.Euler(new Vector3(0 + _orriginalRotation.x, (this.transform.rotation.eulerAngles.y + _orriginalRotation.y) + 180, 0 + _orriginalRotation.z));
 
-		//When the player is pressing an arrow or WASD key
+        //When the player is pressing an arrow or WASD key it changes one of the four direction bools
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 		{
 			if(!ConfusedMovement)
@@ -586,22 +591,24 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 
+    //This is used for rooms where the player automatically moves as if on a conveyor belt
 	private void Auto1DMove()
 	{
-		//When the player is pressing an arrow or WASD key
-		if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow))
+		//When the player is pressing an arrow or WASD key in the opposite direction of the auto movement it changes the one relavent bool
+		if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
 			_isWalkingLeft = false;
 		else
 			_isWalkingLeft = true;
 		
-		//This is how the method uses the bools set by pressing the keys
+		//This is how the method uses the bool set by pressing the keys
 		if(_isWalkingLeft)
 			this.transform.Translate(Vector3.left * _playerVelocity);
 	}
 
+    //This is for scenes where the player can't move
 	private void ZeroDMove()
 	{
-		//Nothing so far
+		//When the player presses the escape key they leave the room
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
             if (_myManager.LevelCount == 1)
@@ -609,9 +616,9 @@ public class PlayerScript : MonoBehaviour
             else if (_myManager.LevelCount == 2)
                 Application.LoadLevel("Lobby");
 		}
-		
 	}
 
+    //This turns ConfusedMovement to true and halts all player movement
 	public void ConfuseMovement()
 	{
 		ConfusedMovement = true;
@@ -623,6 +630,7 @@ public class PlayerScript : MonoBehaviour
 		_isRotatingLeft = false;
 	}
 
+    //This method handles
     private void WalkSpeedHandler()
     {
         if (Input.GetKey(KeyCode.LeftShift))
