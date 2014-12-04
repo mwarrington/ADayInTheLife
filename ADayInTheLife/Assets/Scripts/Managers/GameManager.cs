@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         }
     }
     //Indicates what level the player is currently on
-    static int levelCount = 2;
+    static int levelCount = 1;
     public int LevelCount
     {
         get

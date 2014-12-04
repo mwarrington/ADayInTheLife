@@ -109,7 +109,8 @@ public class BCCharacter : NPCScript
         }
 
         //Checks to see if there is a value in the "Mood" field
-        if (currentLine.dialogueEntry.fields[moodIndex].value != "")
+        //It also checks to see if moodIndex is anything but 0 because if it's 0 that means there is no field titled "Mood"
+        if (currentLine.dialogueEntry.fields[moodIndex].value != "" && moodIndex != 0)
         {
             if (_lastEmoticonRenderer != _emoticonRenderer && HasMultipleThoughtClouds)
                 _lastEmoticonRenderer = _emoticonRenderer;
@@ -312,5 +313,13 @@ public class BCCharacter : NPCScript
 
             _thoughtCloudDic.Add(thoughtCloudName, myThoughtClouds[i]);
         }
+    }
+    
+    //Rests the the ProgressAchieved bool in this character's Animator after 3 seconds
+    private IEnumerator ResetProgressForAnimator()
+    {
+        yield return new WaitForSeconds(3);
+
+        this.GetComponentInChildren<Animator>().SetBool("ProgressAchieved", false);
     }
 }

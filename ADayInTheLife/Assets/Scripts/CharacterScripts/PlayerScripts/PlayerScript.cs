@@ -630,9 +630,10 @@ public class PlayerScript : MonoBehaviour
 		_isRotatingLeft = false;
 	}
 
-    //This method handles
+    //This method handles the player's ability to walk faster or slower
     private void WalkSpeedHandler()
     {
+        //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _playerVelocity = 0.25f;
@@ -646,7 +647,7 @@ public class PlayerScript : MonoBehaviour
                 _spedUp = true;
             }
         }
-        else if(Input.GetKey(KeyCode.RightShift))
+        else if(Input.GetKey(KeyCode.RightShift)) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
         {
             _playerVelocity = 0.04f;
             BobbingSpeed = 0.07f;
@@ -655,7 +656,7 @@ public class PlayerScript : MonoBehaviour
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 0.7f;
         }
-        else
+        else //Otherwise the motion blur is turned off and all values are set to their default
         {
             _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = false;
             _playerVelocity = StandardVelocity;
@@ -667,6 +668,7 @@ public class PlayerScript : MonoBehaviour
     }
 	#endregion
 
+    //When player collideds with something
 	void OnCollisionEnter(Collision col)
 	{
 		Vector3 centerColPoint = new Vector3();
@@ -683,6 +685,7 @@ public class PlayerScript : MonoBehaviour
 		}
 		
 		//Checks to see if the centermost point of collision is on the same side as the player is moving.
+        //If so, then the bool associated with hitting the wall in that direction is set to true.
 		if (_isWalkingForward && centerColPoint.z > this.transform.position.z + 0.7f)
 			_hitWallForward = true;
 		if (_isWalkingBack && centerColPoint.z < this.transform.position.z - 0.7f)
@@ -693,8 +696,11 @@ public class PlayerScript : MonoBehaviour
 			_hitWallRight = true;
 	}
 
+    //When the player stops colliding with something
 	void OnCollisionExit(Collision col)
 	{
+        //Sets all hit wall bools to false
+        //HACK: This needs some work since only the relavent hit wall bool should be turned to false.
 		_hitWallForward = false;
 		_hitWallBack = false;
 		_hitWallLeft = false;
@@ -703,17 +709,20 @@ public class PlayerScript : MonoBehaviour
 
 	void OnConversationStart(Transform actor)
 	{
+        //In most situations we want the player's sprite to go invisible during convos. This does that as long as DontHideSprite is false
 		if(!DontHideSprite)
 		{
 			SarylynSprite.enabled = false;
 			SanomeSprite.enabled = false;
 		}
 
+        //The timer cloud is always turned off when a convo is active
 		TimerCloud.GetComponent<SpriteRenderer> ().enabled = false;
 	}
 
 	void OnConversationEnd(Transform actor)
 	{
+        //Once the convo is over the appropriate sprite is turned back on
 		if(isSarylyn)
 		{
 			SarylynSprite.enabled = true;
@@ -724,9 +733,12 @@ public class PlayerScript : MonoBehaviour
 			SanomeSprite.enabled = true;
 			SarylynSprite.enabled = false;
 		}
+
+        //The time cloud is always enabled after a convo
 		TimerCloud.GetComponent<SpriteRenderer> ().enabled = true;
 
         //For Win Condition true
+        //Right now we don't have a pop up for win conditions but when we do we can use this
         //for (int i = 0; i < DialogueManager.MasterDatabase.variables.Count; i++)
         //{
         //    if (DialogueManager.MasterDatabase.variables[i].fields[2].value == "WinCondition")
