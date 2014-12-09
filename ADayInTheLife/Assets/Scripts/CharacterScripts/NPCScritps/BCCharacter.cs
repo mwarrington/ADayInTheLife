@@ -34,7 +34,7 @@ public class BCCharacter : NPCScript
     {
         base.Start();
         _myEmpathicEmoticons = myGameManager.GetComponent<EmpathicEmoticons>();
-        ThoughtCloudSetUp();
+        Invoke("ThoughtCloudSetUp", 0.01f);
         _dLights = GameObject.FindGameObjectWithTag("D-Lights");
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
@@ -295,8 +295,10 @@ public class BCCharacter : NPCScript
         List<GameObject> myThoughtClouds = new List<GameObject>();
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("ThoughtCloud").Length; i++)
         {
-            if (GameObject.FindGameObjectsWithTag("ThoughtCloud")[i].transform.parent == this.transform)
+            if (GameObject.FindGameObjectsWithTag("ThoughtCloud")[i].transform.parent.name == this.transform.name)
+            {
                 myThoughtClouds.Add(GameObject.FindGameObjectsWithTag("ThoughtCloud")[i]);
+            }
         }
 
         for (int i = 0; i < myThoughtClouds.Count; i++)

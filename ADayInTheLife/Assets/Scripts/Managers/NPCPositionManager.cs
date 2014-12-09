@@ -69,7 +69,7 @@ public class NPCPositionManager : MonoBehaviour
 
     private GameManager _myGameManager;
 
-    void Start()
+    void Awake()
     {
         if (!Disabled)
         {
