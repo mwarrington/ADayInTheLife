@@ -3,6 +3,7 @@ using System.Collections;
 
 public class LunchLadyEyes : MonoBehaviour
 {
+    //This property will play the animation if its set to true and isn't already true
 	protected bool animationPlaying
 	{
 		get
@@ -42,7 +43,7 @@ public class LunchLadyEyes : MonoBehaviour
 
 	void Update()
 	{
-		if(QuickEyeFollow)//This one is the super quick scary version
+		if(QuickEyeFollow)//This one is the super quick scary version. Prolly not going to use this one going forward...
 		{
 			_startPos = _myLunchLady.position.x + 0.152f;
 			_endPos = _myLunchLady.position.x - 0.2765f;
@@ -63,6 +64,7 @@ public class LunchLadyEyes : MonoBehaviour
 		}
 	}
 
+    //This initiates the eye follow animation
 	void OnTriggerEnter(Collider col)
 	{
 		if(col.tag == "Player" && !QuickEyeFollow)

@@ -16,17 +16,17 @@ public class MainMenu : MonoBehaviour
 
     private RaycastHit _hit;
     private Material _startCloudActive,
-                    _startCloudInactive,
-                    _creditsCloudActive,
-                    _creditsCloudInactive,
-                    _mouseClick,
-                    _mouseHover,
-                    _sarylynActive,
-                    _sarylynInactive,
-                    _sanomeActive,
-                    _sanomeInactive,
-                    _backCloudActive,
-                    _backCloudInactive;
+                     _startCloudInactive,
+                     _creditsCloudActive,
+                     _creditsCloudInactive,
+                     _mouseClick,
+                     _mouseHover,
+                     _sarylynActive,
+                     _sarylynInactive,
+                     _sanomeActive,
+                     _sanomeInactive,
+                     _backCloudActive,
+                     _backCloudInactive;
     private GameObject _topArrow,
                        _bottomArrow,
                        _mouse,

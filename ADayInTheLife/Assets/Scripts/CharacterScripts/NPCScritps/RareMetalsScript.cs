@@ -3,23 +3,18 @@ using System.Collections;
 
 public class RareMetalsScript : MonoBehaviour
 {
-
+    //The sounds that the rare metals make
     public GameObject RareMetalFemaleSFX,
                       RareMetalMaleSFX;
 
+    //Each section of the rare metals
     public GameObject BackRow,
                       MidForeRow,
                       ForeRow,
                       MidBackRow;
 
-    void Start()
-    {
-        BackRow = GameObject.Find("Back");
-    }
-
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (!RareMetalFemaleSFX.audio.isPlaying)
@@ -27,7 +22,6 @@ public class RareMetalsScript : MonoBehaviour
                 RareMetalFemaleSFX.audio.Play();
                 BackRow.animation.Play("RareMetalFemales");
             }
-
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -35,6 +29,5 @@ public class RareMetalsScript : MonoBehaviour
                 RareMetalMaleSFX.audio.Play();
             MidForeRow.animation.Play("RareMetalMales");
         }
-
     }
 }

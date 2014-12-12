@@ -4,6 +4,7 @@ using PixelCrushers.DialogueSystem;
 
 public class HallMonitor : NPCScript
 {
+    //This int just keeps track of whatever random int we last used for dialog set up
     private int _lastRand = 0;
 
 	protected override void Start ()
