@@ -51,6 +51,21 @@
      <Compile Include="Assets\Dialogue System\Scripts\Editor\Wizards\NPCSetupWizard.cs" />
      <Compile Include="Assets\Dialogue System\Scripts\Editor\Wizards\PlayerSetupWizard.cs" />
      <Compile Include="Assets\Dialogue System\Scripts\Supplemental\Utility\Editor\SupplementalMenuItems.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\AdvancedMenuGUI.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\Atlasser.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\Constants.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\MaterialCombiner.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\Node.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\ObjSorter.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\OptimizableObject.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\OptimizableShader.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\ShaderManager.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\TextureReuseManager.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\TextureScale.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\TileManager.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\Core\Utils.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\ObjectsGUI.cs" />
+     <Compile Include="Assets\ProDrawCallOptimizer\Scripts\Editor\ProDrawCallOptimizerMenu.cs" />
      <None Include="Assets\Dialogue System\_README.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
@@ -89,6 +104,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ContrastComposite.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\FisheyeShader.shader" />
+     <None Include="Assets\ProDrawCallOptimizer\VersionHistory.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Dialogue System\Examples\Bark Example\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Save Load Example\_README_FIRST_IMPORTANT!.txt" />
@@ -165,6 +181,7 @@
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Menu Text Demo\_README.txt" />
      <None Include="Assets\Dialogue System\Examples\Feature Demo\Articy Feature Demo\Articy Feature Demo.xml" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAA3Console.shader" />
+     <None Include="Assets\ProDrawCallOptimizer\README.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset2.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendForBloom.shader" />
