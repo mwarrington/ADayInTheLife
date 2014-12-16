@@ -16,7 +16,8 @@ public class PlayerScript : MonoBehaviour
 				 _hitWallRight = false,
 				 _playingFootSound = false,
 				 _isSarylyn = true,
-                 _hasSpeedControls = false;
+                 _hasSpeedControls = false,
+                 _blurStarted = false;
 	private float _bobTimer,
 				  _waveslice,
 				  _midpoint,
@@ -633,13 +634,25 @@ public class PlayerScript : MonoBehaviour
     //This method handles the player's ability to walk faster or slower
     private void WalkSpeedHandler()
     {
+        //Once player hits either shift key, we enable the blur focus and get it prepped for the gradual change
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+            _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 64;
+            _blurStarted = true;
+        }
+
         //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _playerVelocity = 0.25f;
             BobbingSpeed = 0.25f;
-            _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 1;
-            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
+            //Increases the area of screen that the blur covers based on how close we are to the target amount
+            //In other words: the farther we are to the target the faster the blur area will increase and vice versa
+            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 4)
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 4));
+            else //Once the target is reached the value is set to 4 to accomidate any over shootting
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 4;
             if (!SpeedSFX.isPlaying && !_spedUp)
             {
                 SpeedSFX.clip = _mySpeedClips[Random.Range(0, 5)];
@@ -651,14 +664,26 @@ public class PlayerScript : MonoBehaviour
         {
             _playerVelocity = 0.04f;
             BobbingSpeed = 0.07f;
-            _myManager.MainCamera.GetComponent<CameraMotionBlur>().velocityScale = 5;
-            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = true;
+            //Increases the area of screen that the blur covers based on how close we are to the target amount
+            //In other words: the farther we are to the target the faster the blur area will increase and vice versa
+            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6)
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 6));
+            else //Once the target is reached the value is set to 4 to accomidate any over shootting
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 6;
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 0.7f;
         }
         else //Otherwise the motion blur is turned off and all values are set to their default
         {
-            _myManager.MainCamera.GetComponent<CameraMotionBlur>().enabled = false;
+            //Decreases the area of screen that the blur covers based on how close we are to the target amount
+            //In other words: the farther we are to the target the slower the blur area will decrease and vice versa
+            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes < 63 && _blurStarted)
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes += Time.deltaTime * (5 * (64 - _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes));
+            else //Once the target is reached the blur effect is turned off
+            {
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = false;
+                _blurStarted = false;
+            }
             _playerVelocity = StandardVelocity;
             BobbingSpeed = 0.15f;
             if (_myManager.Timer > 60)
