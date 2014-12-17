@@ -660,7 +660,7 @@ public class PlayerScript : MonoBehaviour
                 _spedUp = true;
             }
         }
-        else if(Input.GetKey(KeyCode.RightShift)) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
+        else if (Input.GetKey(KeyCode.RightShift)) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
         {
             _playerVelocity = 0.04f;
             BobbingSpeed = 0.07f;
