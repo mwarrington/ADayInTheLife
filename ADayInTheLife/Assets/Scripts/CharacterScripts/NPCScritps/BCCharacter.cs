@@ -226,7 +226,8 @@ public class BCCharacter : NPCScript
                     renderer.material.color = new Color(renderer.material.color.r * 3, renderer.material.color.g * 3, renderer.material.color.b * 3);
             }
         }
-        _dLights.SetActive(!val);
+        if (_dLights != null)
+            _dLights.SetActive(!val);
         _mySpotLight.transform.position = MySpotLightTransform.position;
         _mySpotLight.SetActive(val);
     }
