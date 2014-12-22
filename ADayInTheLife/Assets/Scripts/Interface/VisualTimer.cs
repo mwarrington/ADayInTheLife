@@ -8,34 +8,36 @@ public class VisualTimer : MonoBehaviour
     {
         get
         {
-            if (_showingGameTimer)
-            {
-                if (DialogueManager.IsConversationActive)
-                    _showingGameTimer = false;
-                else if (isItemActive)
-                    _showingGameTimer = false;
-                else
-                {
-                    foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
-                    {
-                        r.enabled = true;
-                    }
-                }
-            }
-            else
-            {
-                foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
-                {
-                    r.enabled = false;
-                }
-            }
-
             return _showingGameTimer;
         }
 
         set
         {
-            _showingGameTimer = value;
+            if (value != _showingGameTimer)
+            {
+                if (value)
+                {
+                    if (DialogueManager.IsConversationActive)
+                        _showingGameTimer = false;
+                    else if (isItemActive)
+                        _showingGameTimer = false;
+                    else
+                    {
+                        foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
+                        {
+                            r.enabled = true;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
+                    {
+                        r.enabled = false;
+                    }
+                }
+                _showingGameTimer = value;
+            }
         }
     }
     private bool _showingGameTimer = false;
@@ -86,14 +88,14 @@ public class VisualTimer : MonoBehaviour
     void Update()
     {
         //This handles when to turn on the Timer Cloud renderers
-        if (Application.loadedLevelName != "Hallway")
+        if (!showingGameTimer)
         {
             if (_myGameManager.Timer < 61)
             {
                 _myGameManager.GameTimerActive = true;
                 showingGameTimer = true;
             }
-            else if (_myGameManager.Timer % 30 < 1)
+            else if (_myGameManager.Timer % 30 < 0.1f && _myGameManager.HasBeenIntroduced)
             {
                 if (!showingGameTimer)
                 {
@@ -102,37 +104,10 @@ public class VisualTimer : MonoBehaviour
                 }
             }
             else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
-            {
                 showingGameTimer = true;
-            }
-            else if (_myGameManager.Timer % 30 < 25 && showingGameTimer)
-            {
-                showingGameTimer = false;
-            }
         }
-        else
-        {
-            if (_myGameManager.Timer < 61)
-            {
-                showingGameTimer = true;
-            }
-            else if (_myGameManager.Timer % 30 < 1 && _myGameManager.HasBeenIntroduced == true)
-            {
-                if (!showingGameTimer)
-                {
-                    _myGameManager.GameTimerActive = true;
-                    showingGameTimer = true;
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
-            {
-                showingGameTimer = true;
-            }
-            else if (_myGameManager.Timer % 30 < 25 && showingGameTimer)
-            {
-                showingGameTimer = false;
-            }
-        }
+        else if (_myGameManager.Timer % 30 < 25 && _myGameManager.Timer % 30 > 0.1f && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
+            showingGameTimer = false;
     }
 
     private void GameTimer()

@@ -205,6 +205,12 @@ public class GameManager : MonoBehaviour
 
         //Finds and sets the MainBGM AudioSource
         MainBGM = GameObject.FindGameObjectWithTag("MainBGM").GetComponent<AudioSource>();
+
+        //If we are working in editor then has been introduced will always = true unless we are in the Hallway scene. (for testing purposes)
+#if UNITY_EDITOR
+        if (Application.loadedLevelName != "Hallway")
+            hasBeenIntroduced = true;
+#endif
     }
 
     void Update()
