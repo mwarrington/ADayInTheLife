@@ -5,14 +5,25 @@ public class Door : MonoBehaviour
 {
 	public string SceneToLoad;
 
-	void OnTriggerStay(Collider col)
+    private bool _nearDoor;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _nearDoor)
+        {
+            Application.LoadLevel(SceneToLoad);
+        }
+    }
+
+	void OnTriggerEnter(Collider col)
 	{
 		if(col.gameObject.tag == "Player")
-		{
-			if(Input.GetKeyDown(KeyCode.Space))
-			{
-				Application.LoadLevel(SceneToLoad);
-			}
-		}
+            _nearDoor = true;
 	}
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+            _nearDoor = false;
+    }
 }
