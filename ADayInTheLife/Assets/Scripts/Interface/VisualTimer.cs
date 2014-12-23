@@ -106,7 +106,7 @@ public class VisualTimer : MonoBehaviour
             else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
                 showingGameTimer = true;
         }
-        else if (_myGameManager.Timer % 30 < 25 && _myGameManager.Timer % 30 > 0.1f && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
+        else if (_myGameManager.Timer > 61 && _myGameManager.Timer % 30 < 25 && _myGameManager.Timer % 30 > 0.1f && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
             showingGameTimer = false;
     }
 
