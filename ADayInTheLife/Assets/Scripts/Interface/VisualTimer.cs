@@ -74,7 +74,14 @@ public class VisualTimer : MonoBehaviour
         if (_myGameManager.Timer % 30 > 1)
         {
             showingGameTimer = false;
+
+            foreach (Renderer r in this.GetComponentsInChildren<Renderer>())
+            {
+                r.enabled = false;
+            }
         }
+        else
+            showingGameTimer = true;
     }
 
     void OnGUI()
@@ -88,25 +95,19 @@ public class VisualTimer : MonoBehaviour
     void Update()
     {
         //This handles when to turn on the Timer Cloud renderers
-        if (!showingGameTimer)
+        if (_myGameManager.Timer < 61)
         {
-            if (_myGameManager.Timer < 61)
-            {
-                _myGameManager.GameTimerActive = true;
-                showingGameTimer = true;
-            }
-            else if (_myGameManager.Timer % 30 < 0.1f && _myGameManager.HasBeenIntroduced)
-            {
-                if (!showingGameTimer)
-                {
-                    _myGameManager.GameTimerActive = true;
-                    showingGameTimer = true;
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
-                showingGameTimer = true;
+            _myGameManager.GameTimerActive = true;
+            showingGameTimer = true;
         }
-        else if (_myGameManager.Timer > 61 && _myGameManager.Timer % 30 < 25 && _myGameManager.Timer % 30 > 0.1f && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
+        else if (_myGameManager.Timer % 30 < 0.1f && _myGameManager.HasBeenIntroduced)
+        {
+            _myGameManager.GameTimerActive = true;
+            showingGameTimer = true;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
+            showingGameTimer = true;
+        else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
             showingGameTimer = false;
     }
 
