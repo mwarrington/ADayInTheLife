@@ -742,25 +742,25 @@ public class PlayerScript : MonoBehaviour
 		}
 
         //The timer cloud is always turned off when a convo is active
-		TimerCloud.GetComponent<SpriteRenderer> ().enabled = false;
+        TimerCloud.GetComponent<VisualTimer>().TimerReminder();
 	}
 
-	void OnConversationEnd(Transform actor)
-	{
+    void OnConversationEnd(Transform actor)
+    {
         //Once the convo is over the appropriate sprite is turned back on
-		if(isSarylyn)
-		{
-			SarylynSprite.enabled = true;
-			SanomeSprite.enabled = false;
-		}
-		else
-		{
-			SanomeSprite.enabled = true;
-			SarylynSprite.enabled = false;
-		}
+        if (isSarylyn)
+        {
+            SarylynSprite.enabled = true;
+            SanomeSprite.enabled = false;
+        }
+        else
+        {
+            SanomeSprite.enabled = true;
+            SarylynSprite.enabled = false;
+        }
 
         //The time cloud is always enabled after a convo
-		TimerCloud.GetComponent<SpriteRenderer> ().enabled = true;
+        TimerCloud.GetComponent<VisualTimer>().TimerReminder();
 
         //For Win Condition true
         //Right now we don't have a pop up for win conditions but when we do we can use this
@@ -775,5 +775,5 @@ public class PlayerScript : MonoBehaviour
         //        }
         //    }
         //}
-	}
+    }
 }

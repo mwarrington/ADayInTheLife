@@ -64,6 +64,7 @@ public class VisualTimer : MonoBehaviour
     private GameManager _myGameManager;
     private TextMesh _myTextMesh;
     private int _gameTimer;
+    private bool _reminding;
 
     void Start()
     {
@@ -107,7 +108,7 @@ public class VisualTimer : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
             showingGameTimer = true;
-        else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl))
+        else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl) && !_reminding)
             showingGameTimer = false;
     }
 
@@ -117,5 +118,18 @@ public class VisualTimer : MonoBehaviour
         int displaySeconds = Mathf.CeilToInt(_gameTimer) % 60;
         int displayMinutes = Mathf.CeilToInt(_gameTimer) / 60;
         _myTextMesh.text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
+    }
+
+    public void TimerReminder()
+    {
+        showingGameTimer = true;
+        _reminding = true;
+        Invoke("EndReminder", 3);
+    }
+
+    private void EndReminder()
+    {
+        showingGameTimer = false;
+        _reminding = false;
     }
 }
