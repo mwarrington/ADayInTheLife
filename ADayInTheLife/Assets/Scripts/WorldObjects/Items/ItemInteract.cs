@@ -40,6 +40,7 @@ public class ItemInteract : MonoBehaviour
 		{
 			if(Input.GetKeyDown(KeyCode.Space) && !ItemActive)
 			{
+                //Simple items don't load new scenes
 				if(SimpleItem)
 				{
 					currentItem = Instantiate(ItemPrefab, PlaceToInstantiate.position, Quaternion.identity) as GameObject;
@@ -51,7 +52,7 @@ public class ItemInteract : MonoBehaviour
 					this.gameObject.GetComponent<Usable>().overrideUseMessage = "Press the Escape Key to exit";
 					ItemActive = true;
 				}
-				else
+				else //Saves the position of the player before loading the new scene
 				{
                     //This is for items that load a new scenes.
                     myLastPos = _myPlayer.transform.position;

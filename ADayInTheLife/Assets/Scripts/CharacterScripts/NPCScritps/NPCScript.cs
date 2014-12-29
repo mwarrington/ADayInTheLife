@@ -48,60 +48,60 @@ public class NPCScript : MonoBehaviour
 	}
 
     //Called when conversation is initiated
-	protected virtual void OnConversationStart(Transform actor)
+    protected virtual void OnConversationStart(Transform actor)
     {
         //This sets the amount of time for the response timer if TimedResponse is true
-		if(TimedResponse)
-			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 30;
-		else //Sets response timer to 0 if TimedResponse is false. This effectivly disables the response timer
-			DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 0;
+        if (TimedResponse)
+            DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 30;
+        else //Sets response timer to 0 if TimedResponse is false. This effectivly disables the response timer
+            DialogueManager.Instance.displaySettings.inputSettings.responseTimeout = 0;
 
         //If the player has a close up cam then it will be enabled while turning off the main camera
-		if(HasCloseUpCam)
-		{
-			CloseUpCamera.enabled = true;
-			myGameManager.MainCamera.enabled = false;
+        if (HasCloseUpCam)
+        {
+            CloseUpCamera.enabled = true;
+            myGameManager.MainCamera.enabled = false;
 
             //This will handle talk voice but requires a design conversation before it can be implimented
             //if(MyVoice != null)
             //    MyVoice.Play();
-		}
+        }
 
         //Sets which convo the player just initiated
-		Conversation currentConvo = DialogueManager.MasterDatabase.GetConversation(DialogueManager.LastConversationStarted);
+        Conversation currentConvo = DialogueManager.MasterDatabase.GetConversation(DialogueManager.LastConversationStarted);
         //If a convorsation is meant to share progress changes in Lua then
         //it's Description field will need to be set to "SharedProgress" followed by the names of every NPC it's sharing with followed by a ' '
         //Example: "SharedProgress Tom Dick Harry "
-		for (int i = 0; i < currentConvo.fields.Count; i++)
-		{
-			if(currentConvo.fields[i].title == "Description" && currentConvo.fields[i].value != "")
-			{
-				string title = "";
-				for(int j = 0; j < 14; j++)
-				{
-					title = title + currentConvo.fields[i].value[j];
-				}
-				if(title == "SharedProgress")
-				{
-					string name = "";
-					for (int j = 15; j < (currentConvo.fields[i].value.Length); j++)
-					{
-						if(currentConvo.fields[i].value[j] != ' ')
-						{
-							name = name + currentConvo.fields[i].value[j];
-						}
-						else
-						{
+        for (int i = 0; i < currentConvo.fields.Count; i++)
+        {
+            if (currentConvo.fields[i].title == "Description" && currentConvo.fields[i].value != "")
+            {
+                string title = "";
+                for (int j = 0; j < 14; j++)
+                {
+                    title = title + currentConvo.fields[i].value[j];
+                }
+                if (title == "SharedProgress")
+                {
+                    string name = "";
+                    for (int j = 15; j < (currentConvo.fields[i].value.Length); j++)
+                    {
+                        if (currentConvo.fields[i].value[j] != ' ')
+                        {
+                            name = name + currentConvo.fields[i].value[j];
+                        }
+                        else
+                        {
                             namesToSync.Add(name);
-							name = "";
-						}
-					}
-					hasSharedProgress = true;
-					break;
-				}
-			}
-		}
-	}
+                            name = "";
+                        }
+                    }
+                    hasSharedProgress = true;
+                    break;
+                }
+            }
+        }
+    }
 
     //Called per dialog line
 	protected virtual void OnConversationLine(Subtitle line)
