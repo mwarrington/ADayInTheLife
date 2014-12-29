@@ -96,20 +96,23 @@ public class VisualTimer : MonoBehaviour
     void Update()
     {
         //This handles when to turn on the Timer Cloud renderers
-        if (_myGameManager.Timer < 61)
+        if (!DialogueManager.IsConversationActive)
         {
-            _myGameManager.GameTimerActive = true;
-            showingGameTimer = true;
+            if (_myGameManager.Timer < 61)
+            {
+                _myGameManager.GameTimerActive = true;
+                showingGameTimer = true;
+            }
+            else if (_myGameManager.Timer % 30 < 0.1f && _myGameManager.HasBeenIntroduced)
+            {
+                _myGameManager.GameTimerActive = true;
+                showingGameTimer = true;
+            }
+            else if (Input.GetKey(KeyCode.LeftControl))
+                showingGameTimer = true;
+            else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl) && !_reminding)
+                showingGameTimer = false;
         }
-        else if (_myGameManager.Timer % 30 < 0.1f && _myGameManager.HasBeenIntroduced)
-        {
-            _myGameManager.GameTimerActive = true;
-            showingGameTimer = true;
-        }
-        else if (Input.GetKey(KeyCode.LeftControl) && !DialogueManager.IsConversationActive)
-            showingGameTimer = true;
-        else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl) && !_reminding)
-            showingGameTimer = false;
     }
 
     private void GameTimer()
@@ -120,11 +123,18 @@ public class VisualTimer : MonoBehaviour
         _myTextMesh.text = string.Format("{0:00}:{1:00}", displayMinutes, displaySeconds);
     }
 
-    public void TimerReminder()
+    public void ToggleTimerReminder(bool toggle)
     {
-        showingGameTimer = true;
-        _reminding = true;
-        Invoke("EndReminder", 3);
+        if (toggle)
+        {
+            showingGameTimer = true;
+            _reminding = true;
+            Invoke("EndReminder", 3);
+        }
+        else
+        {
+            showingGameTimer = false;
+        }
     }
 
     private void EndReminder()
