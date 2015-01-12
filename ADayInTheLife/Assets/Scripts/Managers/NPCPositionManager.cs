@@ -77,8 +77,11 @@ public class NPCPositionManager : MonoBehaviour
         if (!Disabled)
         {
             _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
-            if (HallMonitorsCount > 1)
+            if (HallMonitorsCount > 0)
+            {
+                Debug.Log("Prefabs/NPCs/BluePrints/HallMonitor" + Application.loadedLevelName + "Blueprint");
                 _hallMonitorBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/HallMonitor" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
+            }
 
             _myGameManager = FindObjectOfType<GameManager>();
 
@@ -105,7 +108,7 @@ public class NPCPositionManager : MonoBehaviour
                 hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
             }
         }
-        else
+        else if (HallMonitorsCount > 0)
         {
             hallMonitor = (GameObject)Instantiate(_hallMonitorBluePrint.NPCs[0], _hallMonitorBluePrint.TransformList[Random.Range(0, HallMonitorPositions)].position, Quaternion.identity);
             hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
