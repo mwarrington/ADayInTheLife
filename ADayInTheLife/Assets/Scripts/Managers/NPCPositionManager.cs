@@ -6,6 +6,8 @@ using PixelCrushers.DialogueSystem;
 public class NPCPositionManager : MonoBehaviour
 {
     public bool Disabled;
+    public int HallMonitorsCount,
+               HallMonitorPositions;
 
     protected NPCBlueprint currentBluePrint
     {
@@ -65,7 +67,8 @@ public class NPCPositionManager : MonoBehaviour
         }
     }
     private NPCBlueprint _currentBluePrint,
-                         _defaultBluePrint;
+                         _defaultBluePrint,
+                         _hallMonitorBluePrint;
 
     private GameManager _myGameManager;
 
@@ -74,6 +77,9 @@ public class NPCPositionManager : MonoBehaviour
         if (!Disabled)
         {
             _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
+            if (HallMonitorsCount > 1)
+                _hallMonitorBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/HallMonitor" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
+
             _myGameManager = FindObjectOfType<GameManager>();
 
             ClearLevel();
@@ -88,6 +94,21 @@ public class NPCPositionManager : MonoBehaviour
         {
             GameObject currentNPC = (GameObject)Instantiate(lvlBluePrint.NPCs[i], lvlBluePrint.TransformList[i].position, Quaternion.identity);
             currentNPC.name = lvlBluePrint.NPCs[i].name;
+        }
+
+        GameObject hallMonitor;
+        if (HallMonitorsCount > 1)
+        {
+            for (int i = 0; i < HallMonitorsCount; i++)
+            {
+                hallMonitor = (GameObject)Instantiate(_hallMonitorBluePrint.NPCs[0], _hallMonitorBluePrint.TransformList[i].position, Quaternion.identity);
+                hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
+            }
+        }
+        else
+        {
+            hallMonitor = (GameObject)Instantiate(_hallMonitorBluePrint.NPCs[0], _hallMonitorBluePrint.TransformList[Random.Range(0, HallMonitorPositions)].position, Quaternion.identity);
+            hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
         }
     }
 
