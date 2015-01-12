@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//This script handles the greatest and best game ever designed or created.
+//It is both theoretically and practically the greatest game of all time.
 public class DoubleSwishScript : MonoBehaviour
 {
     private GUIText _scoreBoard;
