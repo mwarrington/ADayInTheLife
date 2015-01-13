@@ -8,8 +8,8 @@ public class ComputerInteract : ItemInteract
 		base.Start ();
 	}
 
-	protected override void OnTriggerStay (Collider col)
+    protected override void OnTriggerEnter(Collider col)
 	{
-		base.OnTriggerStay (col);
+        base.OnTriggerEnter(col);
 	}
 }
