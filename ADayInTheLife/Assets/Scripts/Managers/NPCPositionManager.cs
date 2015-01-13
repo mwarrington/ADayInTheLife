@@ -106,12 +106,18 @@ public class NPCPositionManager : MonoBehaviour
             {
                 hallMonitor = (GameObject)Instantiate(_hallMonitorBluePrint.NPCs[0], _hallMonitorBluePrint.TransformList[i].position, Quaternion.identity);
                 hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
+
+                if (_myGameManager.HasBeenIntroduced)
+                    hallMonitor.GetComponent<ConversationTrigger>().trigger = DialogueTriggerEvent.OnUse;
             }
         }
         else if (HallMonitorsCount > 0)
         {
             hallMonitor = (GameObject)Instantiate(_hallMonitorBluePrint.NPCs[0], _hallMonitorBluePrint.TransformList[Random.Range(0, HallMonitorPositions)].position, Quaternion.identity);
             hallMonitor.name = _hallMonitorBluePrint.NPCs[0].name;
+
+            if (_myGameManager.HasBeenIntroduced)
+                hallMonitor.GetComponent<ConversationTrigger>().trigger = DialogueTriggerEvent.OnUse;
         }
     }
 

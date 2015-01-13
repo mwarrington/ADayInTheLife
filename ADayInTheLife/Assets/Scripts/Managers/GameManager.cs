@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
         //If we are working in editor then has been introduced will always = true unless we are in the Hallway scene. (for testing purposes)
 #if UNITY_EDITOR
         if (Application.loadedLevelName != "Hallway")
-            hasBeenIntroduced = true;
+            HasBeenIntroduced = true;
 #endif
     }
 
@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviour
             DayCount++;
         }
         //Always resets hasBeenIntroduced and loads the "DreamSpiral" scene
-        hasBeenIntroduced = false;
+        HasBeenIntroduced = false;
         Application.LoadLevel("DreamSpiral");
 
         //Resets game timer, starts the fade process, stops game timer, and tells the EmpathicEmoticons script that it will need to load new EEs
