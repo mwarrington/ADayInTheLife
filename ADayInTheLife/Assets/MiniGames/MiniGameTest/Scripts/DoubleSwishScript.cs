@@ -5,6 +5,8 @@ using System.Collections;
 //It is both theoretically and practically the greatest game of all time.
 public class DoubleSwishScript : MonoBehaviour
 {
+    public bool GameTimerActive;
+
     private GUIText _scoreBoard;
     private GameManager _myGameManager;
     private int _swishCount = 0;
@@ -15,6 +17,7 @@ public class DoubleSwishScript : MonoBehaviour
         _myGameManager = FindObjectOfType<GameManager>();
         _scoreBoard = GameObject.Find("ScoreBoard").GetComponent<GUIText>();
         _myGameManager.LastLevelLoaded = Application.loadedLevelName;
+        _myGameManager.GameTimerActive = GameTimerActive;
     }
 
     private void Update()
@@ -27,6 +30,7 @@ public class DoubleSwishScript : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            _myGameManager.GameTimerActive = true;
             Application.LoadLevel("Labrary");
         }
     }
