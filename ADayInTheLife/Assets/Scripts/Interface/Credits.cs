@@ -30,7 +30,7 @@ public class Credits : MonoBehaviour
         }
         else
         {
-            _credits[_current].position -= new Vector3(0, 0.05f, 0);
+            _credits[_current].position -= new Vector3(0, 2.5f * Time.deltaTime, 0);
         }
 
         if (_last != 99 && _finsihed && _credits[_last].position.y < -13)
@@ -41,7 +41,7 @@ public class Credits : MonoBehaviour
         }
         else if (_last != 99)
         {
-            _credits[_last].position -= new Vector3(0, 0.05f, 0);
+            _credits[_last].position -= new Vector3(0, 2.5f * Time.deltaTime, 0);
         }
     }
 
