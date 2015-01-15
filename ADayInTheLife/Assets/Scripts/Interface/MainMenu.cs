@@ -196,6 +196,7 @@ public class MainMenu : MonoBehaviour
                                 _mouse.renderer.enabled = false;
 								_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
 								_secondSFX.Play();
+                                _currentAudioSource.Stop();
 
                                 State = MenuState.CREDITS;
                             }
