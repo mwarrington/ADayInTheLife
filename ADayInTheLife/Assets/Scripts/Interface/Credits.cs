@@ -6,6 +6,7 @@ public class Credits : MonoBehaviour
     private Transform[] _credits;
     private int _current = 1,
                 _last = 99;
+    private bool _finsihed;
 
     void Awake()
     {
@@ -14,6 +15,8 @@ public class Credits : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(_credits[_current].position.y);
+
         if (_credits[_current].position.y < -7)
         {
             _last = _current;
@@ -21,7 +24,8 @@ public class Credits : MonoBehaviour
 
             if (_current >= _credits.Length)
             {
-                _current = 1;
+                _current--;
+                _finsihed = true;
             }
         }
         else
@@ -29,10 +33,11 @@ public class Credits : MonoBehaviour
             _credits[_current].position -= new Vector3(0, 0.05f, 0);
         }
 
-        if (_last != 99 && _credits[_last].position.y < -13)
+        if (_last != 99 && _finsihed && _credits[_last].position.y < -13)
         {
             _credits[_last].position = new Vector3(_credits[_last].position.x, 14, _credits[_last].position.z);
             _last = 99;
+            FindObjectOfType<MainMenu>().CreditsDone = true;
         }
         else if (_last != 99)
         {
@@ -52,6 +57,7 @@ public class Credits : MonoBehaviour
         {
             _credits[i].position = new Vector3(_credits[_current].position.x, 14, _credits[_current].position.z);
         }
+        _finsihed = false;
     }
 }
 

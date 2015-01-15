@@ -51,6 +51,33 @@ public class MainMenu : MonoBehaviour
 						_mainBGM;
 	private SpriteRenderer _fadeMask;
 
+    public bool CreditsDone
+    {
+        get
+        {
+            return creditsDone;
+        } 
+        set
+        {
+            if (value)
+            {
+                _credits.GetComponent<Credits>().enabled = false;
+                _bottomCloud.renderer.enabled = true;
+                _bottomArrow.renderer.enabled = true;
+                _topArrow.renderer.enabled = true;
+                _topCloud.renderer.enabled = true;
+                _mouse.renderer.enabled = true;
+                _secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
+                _secondSFX.Play();
+                State = MenuState.MAIN;
+                CreditsDone = false;
+            }
+
+            creditsDone = value;
+        }
+    }
+    protected bool creditsDone;
+
     void Awake()
     {
         LoadResources();
@@ -277,6 +304,7 @@ public class MainMenu : MonoBehaviour
 							_secondSFX.clip = PrefabLoaderScript.instance.CloudClick;
 							_secondSFX.Play();
                             State = MenuState.MAIN;
+                            CreditsDone = false;
                         }
                     }
                     break;
