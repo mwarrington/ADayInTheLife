@@ -78,10 +78,7 @@ public class NPCPositionManager : MonoBehaviour
         {
             _defaultBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/Default" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
             if (HallMonitorsCount > 0)
-            {
-                Debug.Log("Prefabs/NPCs/BluePrints/HallMonitor" + Application.loadedLevelName + "Blueprint");
                 _hallMonitorBluePrint = (Resources.Load("Prefabs/NPCs/BluePrints/HallMonitor" + Application.loadedLevelName + "Blueprint") as GameObject).GetComponent<NPCBlueprint>();
-            }
 
             _myGameManager = FindObjectOfType<GameManager>();
 

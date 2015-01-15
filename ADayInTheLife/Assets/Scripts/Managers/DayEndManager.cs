@@ -67,6 +67,7 @@ public class DayEndManager : MonoBehaviour
                     GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");
                     foreach (GameObject _locker in _lockerSearch)
                     {
+                        Debug.Log("sdf");
                         StartCoroutine(StaggeredAnimationPlay(_locker.GetComponent<Animation>(), 0.7f));
                     }
                 }
