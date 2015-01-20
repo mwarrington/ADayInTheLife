@@ -41,9 +41,11 @@ public class MainMenu : MonoBehaviour
 
     private Vector3 _topArrowOrgPos,
                     _bottomArrowOrgPos;
+    private Vector2 _initialClickVec = new Vector2();
     private bool _bounce,
 				 _startFade = false;
-	private float _alpha = 0;
+	private float _alpha = 0,
+                  _adjacent;
     private CharacterTilt _sanomeTilt,
                           _sarylynTilt;
 	private AudioSource _currentAudioSource,
@@ -386,14 +388,26 @@ public class MainMenu : MonoBehaviour
                     break;
             }
 
+            Vector2 currentClickVec;
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
+            }
             if (Input.GetMouseButton(0))
             {
-                float x = -Input.GetAxis("Mouse X");
-                float y = -Input.GetAxis("Mouse Y");
-                float speed = 10;
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
 
-                _spiralLogo.transform.rotation *= Quaternion.AngleAxis(x * speed, Vector3.up);
-                _spiralLogo.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
+                Debug.Log("Initial Vector = (" + _initialClickVec.x + ", " + _initialClickVec.y + ")");
+                Debug.Log("Current Vector = (" + currentClickVec.x + ", " + currentClickVec.y + ")");
+                Debug.Log(Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2)))));
+                //Debug.Log(Mathf.Acos(-1));
+                //float x = -Input.GetAxis("Mouse X");
+                //float y = -Input.GetAxis("Mouse Y");
+                //float speed = 10;
+
+                //_spiralLogo.transform.rotation *= Quaternion.AngleAxis(x * speed, Vector3.up);
+                //_spiralLogo.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
             }
         }
         else
