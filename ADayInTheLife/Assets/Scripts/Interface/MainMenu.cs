@@ -45,7 +45,7 @@ public class MainMenu : MonoBehaviour
     private bool _bounce,
 				 _startFade = false;
 	private float _alpha = 0,
-                  _adjacent;
+                  _initialAngle;
     private CharacterTilt _sanomeTilt,
                           _sarylynTilt;
 	private AudioSource _currentAudioSource,
@@ -322,7 +322,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             _mouse.renderer.material = _mouseHover;
-            _spiralLogo.transform.Rotate(new Vector3(0, 1, 0));
+            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
 			if(_currentAudioSource != null)
 				if(_currentAudioSource.clip == PrefabLoaderScript.instance.CloudHover)
 					_currentAudioSource.Stop();
@@ -393,26 +393,24 @@ public class MainMenu : MonoBehaviour
             if(Input.GetMouseButtonDown(0))
             {
                 _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
+                _initialAngle = _hit.transform.rotation.eulerAngles.z;
             }
             if (Input.GetMouseButton(0))
             {
                 currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
-
-                Debug.Log("Initial Vector = (" + _initialClickVec.x + ", " + _initialClickVec.y + ")");
-                Debug.Log("Current Vector = (" + currentClickVec.x + ", " + currentClickVec.y + ")");
-                Debug.Log(Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2)))));
-                //Debug.Log(Mathf.Acos(-1));
-                //float x = -Input.GetAxis("Mouse X");
-                //float y = -Input.GetAxis("Mouse Y");
-                //float speed = 10;
-
-                //_spiralLogo.transform.rotation *= Quaternion.AngleAxis(x * speed, Vector3.up);
-                //_spiralLogo.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
+                float angleInDegrees = (Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2))))) * (180 / Mathf.PI);
+                if (angleInDegrees != float.NaN)
+                {
+                    if ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y) > 0)
+                        _hit.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                    else
+                        _hit.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                }
             }
         }
         else
         {
-            _spiralLogo.transform.Rotate(new Vector3(0, 1, 0));
+            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
         }
     }
 
