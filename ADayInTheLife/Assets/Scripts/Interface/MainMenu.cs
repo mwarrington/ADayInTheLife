@@ -43,7 +43,8 @@ public class MainMenu : MonoBehaviour
                     _bottomArrowOrgPos;
     private Vector2 _initialClickVec = new Vector2();
     private bool _bounce,
-				 _startFade = false;
+				 _startFade = false,
+                 _clickedOnSpiral;
 	private float _alpha = 0,
                   _initialAngle;
     private CharacterTilt _sanomeTilt,
@@ -130,6 +131,8 @@ public class MainMenu : MonoBehaviour
         Menu();
 		if(_startFade)
 			Fade();
+
+        LogoSpiral();
     }
 
     void Menu()
@@ -149,8 +152,6 @@ public class MainMenu : MonoBehaviour
 
         if (Physics.Raycast(ray, out _hit))
         {
-            LogoSpiral();
-
             switch (State)
             {
                 case MenuState.MAIN:
@@ -358,60 +359,154 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    enum StartingQuadrant
+    {
+        TopRight,
+        TopLeft,
+        BottomRight,
+        BottomLeft
+    }
+
     void LogoSpiral()
     {
-        if (_hit.collider.name == "LogoSpiral")
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        StartingQuadrant _initialQuad = StartingQuadrant.TopRight;
+
+        if (Physics.Raycast(ray, out _hit))
         {
-            switch (State)
+            if (_hit.collider.name == "LogoSpiral")
             {
-                case MenuState.MAIN:
-                    _topCloud.renderer.material = _startCloudInactive;
-                    _bottomCloud.renderer.material = _creditsCloudInactive;
-                    _topArrow.renderer.enabled = true;
-                    _bottomArrow.renderer.enabled = true;
-					_mouse.renderer.material = _mouseHover;
-                    break;
-                case MenuState.NEWGAME:
-                    _topCloud.renderer.material = _sarylynInactive;
-                    _bottomCloud.renderer.material = _sanomeInactive;
-                    _topArrow.renderer.enabled = true;
-                    _bottomArrow.renderer.enabled = true;
-                    _mouse.renderer.material = _mouseHover;
-                    break;
-                case MenuState.CREDITS:
-                    break;
-                case MenuState.EXIT:
-                    break;
-                case MenuState.OPTIONS:
-                    break;
-                default:
-                    break;
-            }
-
-            Vector2 currentClickVec;
-
-            if(Input.GetMouseButtonDown(0))
-            {
-                _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
-                _initialAngle = _hit.transform.rotation.eulerAngles.z;
-            }
-            if (Input.GetMouseButton(0))
-            {
-                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _hit.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _hit.transform.position.y);
-                float angleInDegrees = (Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2))))) * (180 / Mathf.PI);
-                if (angleInDegrees != float.NaN)
+                switch (State)
                 {
-                    if ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y) > 0)
-                        _hit.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
-                    else
-                        _hit.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                    case MenuState.MAIN:
+                        _topCloud.renderer.material = _startCloudInactive;
+                        _bottomCloud.renderer.material = _creditsCloudInactive;
+                        _topArrow.renderer.enabled = true;
+                        _bottomArrow.renderer.enabled = true;
+                        _mouse.renderer.material = _mouseHover;
+                        break;
+                    case MenuState.NEWGAME:
+                        _topCloud.renderer.material = _sarylynInactive;
+                        _bottomCloud.renderer.material = _sanomeInactive;
+                        _topArrow.renderer.enabled = true;
+                        _bottomArrow.renderer.enabled = true;
+                        _mouse.renderer.material = _mouseHover;
+                        break;
+                    case MenuState.CREDITS:
+                        break;
+                    case MenuState.EXIT:
+                        break;
+                    case MenuState.OPTIONS:
+                        break;
+                    default:
+                        break;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y > _spiralLogo.transform.position.y)
+                    {
+                        _initialQuad = StartingQuadrant.TopRight;
+                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+                    }
+                    else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y > _spiralLogo.transform.position.y)
+                    {
+                        _initialQuad = StartingQuadrant.TopLeft;
+                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+                    }
+                    else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y < _spiralLogo.transform.position.y)
+                    {
+                        _initialQuad = StartingQuadrant.BottomRight;
+                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                    }
+                    else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y < _spiralLogo.transform.position.y)
+                    {
+                        _initialQuad = StartingQuadrant.BottomLeft;
+                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                    }
+
+                    _initialAngle = _spiralLogo.transform.rotation.eulerAngles.z;
+                    _clickedOnSpiral = true;
                 }
             }
         }
-        else
+
+        Vector2 currentClickVec;
+        if (_clickedOnSpiral)
         {
-            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
+            if (_initialQuad == StartingQuadrant.TopRight)
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+            else if (_initialQuad == StartingQuadrant.TopLeft)
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+            else if (_initialQuad == StartingQuadrant.BottomRight)
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+            else if (_initialQuad == StartingQuadrant.TopLeft)
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+            else
+                currentClickVec = Vector2.zero;
+
+            float angleInDegrees = (Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2))))) * (180 / Mathf.PI);
+            if (angleInDegrees != float.NaN)
+            {
+                Debug.Log(_initialAngle);
+                Debug.Log(angleInDegrees);
+                //Debug.Log((_initialClickVec.x - currentClickVec.x) + " + " + (currentClickVec.y - _initialClickVec.y) + " = " + ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y)));
+                switch (_initialQuad)
+                {
+                    case StartingQuadrant.TopRight:
+                        if ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y) > 0)
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                        }
+                        else
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                        }
+                        break;
+                    case StartingQuadrant.TopLeft:
+                        //Debug.Log(_initialClickVec.x + " - " + currentClickVec.x);
+                        //Debug.Log(_initialClickVec.y + " - " + currentClickVec.y);
+                        if ((_initialClickVec.x - currentClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
+                        {
+                            Debug.Log("Up");
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                        }
+                        else
+                        {
+                            Debug.Log("Down");
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                        }
+                        break;
+                    case StartingQuadrant.BottomRight:
+                        if ((_initialClickVec.x + currentClickVec.x) + (currentClickVec.y + _initialClickVec.y) > 0)
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                        }
+                        else
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                        }
+                        break;
+                    case StartingQuadrant.BottomLeft:
+                        if ((currentClickVec.x - _initialClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                        }
+                        else
+                        {
+                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                        }
+                        break;
+
+                    default:
+                        Debug.Log("That Quadrant doesn't exist. I mean there are only four. That's why it's called a QUADrant. Keep this nonsense up and I'll go on a QUAD rant.");
+                        break;
+                }
+            }
         }
+
+        if (Input.GetMouseButtonUp(0))
+            _clickedOnSpiral = false;
     }
 
     void ArrowBounce()
