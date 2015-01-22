@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
         OPTIONS
     };
     private MenuState State;
+    private StartingQuadrant _initialQuad = StartingQuadrant.TopRight;
 
     private RaycastHit _hit;
     private Material _startCloudActive,
@@ -370,7 +371,6 @@ public class MainMenu : MonoBehaviour
     void LogoSpiral()
     {
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        StartingQuadrant _initialQuad = StartingQuadrant.TopRight;
 
         if (Physics.Raycast(ray, out _hit))
         {
@@ -440,16 +440,16 @@ public class MainMenu : MonoBehaviour
                 currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
             else if (_initialQuad == StartingQuadrant.BottomRight)
                 currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
-            else if (_initialQuad == StartingQuadrant.TopLeft)
+            else if (_initialQuad == StartingQuadrant.BottomLeft)
                 currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
             else
                 currentClickVec = Vector2.zero;
 
             float angleInDegrees = (Mathf.Acos((_initialClickVec.x * currentClickVec.x + _initialClickVec.y * currentClickVec.y) / (Mathf.Sqrt(Mathf.Pow(_initialClickVec.x, 2) + Mathf.Pow(_initialClickVec.y, 2)) * Mathf.Sqrt(Mathf.Pow(currentClickVec.x, 2) + Mathf.Pow(currentClickVec.y, 2))))) * (180 / Mathf.PI);
-            if (angleInDegrees != float.NaN)
+            if (!float.IsNaN(angleInDegrees))
             {
-                Debug.Log(_initialAngle);
-                Debug.Log(angleInDegrees);
+                //Debug.Log("Initial: " + _initialAngle);
+                //Debug.Log("Current: " + angleInDegrees);
                 //Debug.Log((_initialClickVec.x - currentClickVec.x) + " + " + (currentClickVec.y - _initialClickVec.y) + " = " + ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y)));
                 switch (_initialQuad)
                 {
@@ -464,16 +464,12 @@ public class MainMenu : MonoBehaviour
                         }
                         break;
                     case StartingQuadrant.TopLeft:
-                        //Debug.Log(_initialClickVec.x + " - " + currentClickVec.x);
-                        //Debug.Log(_initialClickVec.y + " - " + currentClickVec.y);
                         if ((_initialClickVec.x - currentClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
                         {
-                            Debug.Log("Up");
                             _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
                         }
                         else
                         {
-                            Debug.Log("Down");
                             _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
                         }
                         break;
@@ -503,6 +499,8 @@ public class MainMenu : MonoBehaviour
                         break;
                 }
             }
+            else
+                Debug.Log("NaN!!!");
         }
 
         if (Input.GetMouseButtonUp(0))
