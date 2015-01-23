@@ -418,17 +418,17 @@ public class MainMenu : MonoBehaviour
                     else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y > _spiralLogo.transform.position.y)
                     {
                         _initialQuad = StartingQuadrant.TopLeft;
-                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+                        _initialClickVec = new Vector2(_spiralLogo.transform.position.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
                     }
                     else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y < _spiralLogo.transform.position.y)
                     {
                         _initialQuad = StartingQuadrant.BottomRight;
-                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, _spiralLogo.transform.position.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                     }
                     else if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < _spiralLogo.transform.position.x && Camera.main.ScreenToWorldPoint(Input.mousePosition).y < _spiralLogo.transform.position.y)
                     {
                         _initialQuad = StartingQuadrant.BottomLeft;
-                        _initialClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                        _initialClickVec = new Vector2(_spiralLogo.transform.position.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x, _spiralLogo.transform.position.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
                     }
 
                     _initialAngle = _spiralLogo.transform.rotation.eulerAngles.z;
@@ -457,53 +457,62 @@ public class MainMenu : MonoBehaviour
                 //Debug.Log("Initial: " + _initialAngle);
                 //Debug.Log("Current: " + angleInDegrees);
                 //Debug.Log((_initialClickVec.x - currentClickVec.x) + " + " + (currentClickVec.y - _initialClickVec.y) + " = " + ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y)));
-                switch (_initialQuad)
-                {
-                    case StartingQuadrant.TopRight:
-                        if ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y) > 0)
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
-                        }
-                        else
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
-                        }
-                        break;
-                    case StartingQuadrant.TopLeft:
-                        if ((_initialClickVec.x - currentClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
-                        }
-                        else
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
-                        }
-                        break;
-                    case StartingQuadrant.BottomRight:
-                        if ((_initialClickVec.x + currentClickVec.x) + (currentClickVec.y + _initialClickVec.y) > 0)
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
-                        }
-                        else
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
-                        }
-                        break;
-                    case StartingQuadrant.BottomLeft:
-                        if ((currentClickVec.x - _initialClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
-                        }
-                        else
-                        {
-                            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
-                        }
-                        break;
+                //switch (_initialQuad)
+                //{
+                //    case StartingQuadrant.TopRight:
+                //        if ((_initialClickVec.x - currentClickVec.x) + (currentClickVec.y - _initialClickVec.y) > 0)
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                //        }
+                //        else
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                //        }
+                //        break;
+                //    case StartingQuadrant.TopLeft:
+                //        if ((_initialClickVec.x - currentClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                //        }
+                //        else
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                //        }
+                //        break;
+                //    case StartingQuadrant.BottomRight:
+                //        if ((_initialClickVec.x + currentClickVec.x) + (currentClickVec.y + _initialClickVec.y) > 0)
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                //        }
+                //        else
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                //        }
+                //        break;
+                //    case StartingQuadrant.BottomLeft:
+                //        if ((currentClickVec.x - _initialClickVec.x) + (_initialClickVec.y - currentClickVec.y) > 0)
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle + angleInDegrees, Vector3.forward);
+                //        }
+                //        else
+                //        {
+                //            _spiralLogo.transform.rotation = Quaternion.AngleAxis(_initialAngle - angleInDegrees, Vector3.forward);
+                //        }
+                //        break;
+                //    default:
+                //        Debug.Log("That Quadrant doesn't exist. I mean there are only four. That's why it's called a QUADrant. Keep this nonsense up and I'll go on a QUAD rant.");
+                //        break;
+                //}
 
-                    default:
-                        Debug.Log("That Quadrant doesn't exist. I mean there are only four. That's why it's called a QUADrant. Keep this nonsense up and I'll go on a QUAD rant.");
-                        break;
-                }
+                //Debug.Log(Mathf.Abs(currentClickVec.y / currentClickVec.x) + " > " + Mathf.Abs(_initialClickVec.y / _initialClickVec.x));
+                //if (Mathf.Abs(currentClickVec.y / currentClickVec.x) > Mathf.Abs(_initialClickVec.y / _initialClickVec.x))
+                //{
+                //    Debug.Log("+");
+                //}
+                //else
+                //    Debug.Log("-");
+
+                Debug.Log(angleInDegrees);
             }
             else
                 Debug.Log("NaN!!!");
