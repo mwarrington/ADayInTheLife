@@ -437,11 +437,11 @@ public class MainMenu : MonoBehaviour
             if (_initialQuad == StartingQuadrant.TopRight)
                 currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
             else if (_initialQuad == StartingQuadrant.TopLeft)
-                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
+                currentClickVec = new Vector2(_spiralLogo.transform.position.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y - _spiralLogo.transform.position.y);
             else if (_initialQuad == StartingQuadrant.BottomRight)
-                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x - _spiralLogo.transform.position.x, _spiralLogo.transform.position.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
             else if (_initialQuad == StartingQuadrant.BottomLeft)
-                currentClickVec = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x + _spiralLogo.transform.position.x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y + _spiralLogo.transform.position.y);
+                currentClickVec = new Vector2(_spiralLogo.transform.position.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x, _spiralLogo.transform.position.y - Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
             else
                 currentClickVec = Vector2.zero;
 
