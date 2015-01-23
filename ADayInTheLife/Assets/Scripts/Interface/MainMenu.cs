@@ -162,6 +162,7 @@ public class MainMenu : MonoBehaviour
                     switch (_hit.collider.name)
                     {
                         case "TopCloud":
+                            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                             _hit.collider.renderer.material = _startCloudActive;
                             _bottomCloud.renderer.material = _creditsCloudInactive;
                             _bottomArrow.renderer.enabled = false;
@@ -181,6 +182,7 @@ public class MainMenu : MonoBehaviour
                             break;
 
                         case "BottomCloud":
+                            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                             _hit.collider.renderer.material = _creditsCloudActive;
                             _topCloud.renderer.material = _startCloudInactive;
                             _bottomArrow.renderer.enabled = true;
@@ -216,6 +218,7 @@ public class MainMenu : MonoBehaviour
                     switch (_hit.collider.name)
                     {
                         case "TopCloud":
+                            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                             _hit.collider.renderer.material = _sarylynActive;
                             _bottomCloud.renderer.material = _sanomeInactive;
                             _bottomArrow.renderer.enabled = false;
@@ -241,6 +244,7 @@ public class MainMenu : MonoBehaviour
                             break;
 
                         case "BottomCloud":
+                            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                             _hit.collider.renderer.material = _sanomeActive;
                             _topCloud.renderer.material = _sarylynInactive;
                             _bottomArrow.renderer.enabled = true;
@@ -266,6 +270,7 @@ public class MainMenu : MonoBehaviour
                             break;
 
                         case "BackButton":
+                            _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                             _backCloud.renderer.material = _backCloudActive;
 							_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
 							_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
@@ -292,6 +297,7 @@ public class MainMenu : MonoBehaviour
 
                     if (_hit.collider.name == "BackButton")
                     {
+                        _spiralLogo.transform.Rotate(new Vector3(0, 0, 1));
                         _backCloud.renderer.material = _backCloudActive;
 						_currentAudioSource = _hit.collider.gameObject.GetComponent<AudioSource>();
 						_currentAudioSource.clip = PrefabLoaderScript.instance.CloudHover;
