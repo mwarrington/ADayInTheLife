@@ -125,7 +125,8 @@ public class PlayerScript : MonoBehaviour
                  BobbingAmount,
                  TranslateChange;
     public bool ConfusedMovement, //At 5 seconds to day end the movements of the player is messed up
-                DontHideSprite;
+                DontHideSprite,
+                CanMove = true;
 
     public GameObject SlowBGM, FastBGM;
 
@@ -164,7 +165,8 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //This method handles all types of movement
-        InputBasedMovement();
+        if (CanMove)
+            InputBasedMovement();
 
         //Some scenes alow you move at a faster speed
         if (_hasSpeedControls)

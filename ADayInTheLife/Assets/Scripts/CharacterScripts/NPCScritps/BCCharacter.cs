@@ -162,9 +162,12 @@ public class BCCharacter : NPCScript
         //This checks to see if progress has been made. If so, then the progress popup will appear.
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {
+            actor.GetComponent<PlayerScript>().CanMove = false;
             myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
-            this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
+
+            if (this.GetComponentInChildren<Animator>() != null)
+                this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
         }
     }
 

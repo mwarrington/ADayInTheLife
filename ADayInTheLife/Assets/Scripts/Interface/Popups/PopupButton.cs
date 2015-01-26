@@ -52,7 +52,10 @@ public class PopupButton : MonoBehaviour
                         GameObject.Find(_myGameManager.LastCharacterTalkedTo).GetComponent<BCCharacter>().StartCoroutine("ResetProgressForAnimator"); //After three seconds the ProgressAchieved bool is reset to false
                         //Destroy(this.transform.parent.gameObject);
                         //}
+                        FindObjectOfType<PlayerScript>().CanMove = true;
                     }
+                    else
+                        FindObjectOfType<PlayerScript>().CanMove = true;
 
                     //This destorys the popup if any button is clicked.
                     //If we go with multiple popups this will be commented out or deleted.
