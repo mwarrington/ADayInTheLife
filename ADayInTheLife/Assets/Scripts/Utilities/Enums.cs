@@ -35,4 +35,12 @@ public enum EmpathyTypes
 	Community,
 	Another,
     Special
+};
+
+public enum Quadrant
+{
+    TopRight,
+    TopLeft,
+    BottomRight,
+    BottomLeft
 }

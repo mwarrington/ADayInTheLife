@@ -366,14 +366,6 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    enum Quadrant
-    {
-        TopRight,
-        TopLeft,
-        BottomRight,
-        BottomLeft
-    }
-
     void LogoSpiral()
     {
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
