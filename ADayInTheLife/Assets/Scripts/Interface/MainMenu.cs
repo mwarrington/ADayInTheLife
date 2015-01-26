@@ -277,6 +277,9 @@ public class MainMenu : MonoBehaviour
 							if(!_currentAudioSource.isPlaying)
 								_currentAudioSource.Play();
 
+                            _sarylynTilt.Update();
+                            _sanomeTilt.Update();
+
                             if (Input.GetMouseButtonDown(0))
                             {
                                 _topCloud.renderer.material = _startCloudInactive;
@@ -285,6 +288,10 @@ public class MainMenu : MonoBehaviour
 								_secondSFX.Play();
                                 State = MenuState.MAIN;
                             }
+                            break;
+                        case "LogoSpiral":
+                            _sarylynTilt.Update();
+                            _sanomeTilt.Update();
                             break;
                     }
                     break;
