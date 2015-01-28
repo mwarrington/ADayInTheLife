@@ -636,17 +636,15 @@ public class PlayerScript : MonoBehaviour
     //This method handles the player's ability to walk faster or slower
     private void WalkSpeedHandler()
     {
-        //Once player hits either shift key, we enable the blur focus and get it prepped for the gradual change
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-        {
-            _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
-            _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 64;
-            _blurStarted = true;
-        }
-
         //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && IsMoving)
         {
+            if (!_blurStarted)
+            {
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+                _blurStarted = true;
+            }
+
             _playerVelocity = 0.25f;
             BobbingSpeed = 0.25f;
             //Increases the area of screen that the blur covers based on how close we are to the target amount
@@ -662,8 +660,14 @@ public class PlayerScript : MonoBehaviour
                 _spedUp = true;
             }
         }
-        else if (Input.GetKey(KeyCode.RightShift)) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
+        else if (Input.GetKey(KeyCode.RightShift) && IsMoving) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
         {
+            if (!_blurStarted)
+            {
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+                _blurStarted = true;
+            }
+
             _playerVelocity = 0.04f;
             BobbingSpeed = 0.07f;
             //Increases the area of screen that the blur covers based on how close we are to the target amount
