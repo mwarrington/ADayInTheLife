@@ -11,7 +11,8 @@ public class BCCharacter : NPCScript
     public EmpathyTypes MyPastEmpathyType;
     public bool CCharacter,
                 HasMultipleThoughtClouds,
-                FormerCCharacter;
+                FormerCCharacter,
+                HasACall;
 
     //private fields to be set/populated in script
     private Dictionary<string, GameObject> _thoughtCloudDic = new Dictionary<string, GameObject>();
@@ -69,6 +70,9 @@ public class BCCharacter : NPCScript
         //If this is a C class NPC then the spot light will appear
         if (CCharacter)
             ToggleSpotLight(true);
+
+        if (HasACall)
+            this.GetComponent<AudioSource>().enabled = false;
     }
 
     protected override void OnConversationLine(Subtitle line)
@@ -158,6 +162,9 @@ public class BCCharacter : NPCScript
         {
             ToggleSpotLight(false);
         }
+
+        if (HasACall)
+            this.GetComponent<AudioSource>().enabled = true;
 
         //This checks to see if progress has been made. If so, then the progress popup will appear.
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)

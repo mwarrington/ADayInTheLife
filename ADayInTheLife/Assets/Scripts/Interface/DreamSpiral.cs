@@ -72,7 +72,6 @@ public class DreamSpiral : MonoBehaviour
 					if(_currentAudioSource != null)
 						if(_currentAudioSource.isPlaying)
 							_currentAudioSource.Stop();
-                    LogoSpiral();
                     break;
             }
         }
@@ -83,21 +82,6 @@ public class DreamSpiral : MonoBehaviour
 			if(_currentAudioSource != null)
 				if(_currentAudioSource.clip == PrefabLoaderScript.instance.CloudHover)
 					_currentAudioSource.Stop();*/
-        }
-    }
-
-    void LogoSpiral()
-    {
-        //_canMove = false;
-
-        if (Input.GetMouseButton(0))
-        {
-            float x = -Input.GetAxis("Mouse X");
-            float y = -Input.GetAxis("Mouse Y");
-            float speed = 10;
-
-            _hit.transform.rotation *= Quaternion.AngleAxis(x * speed, Vector3.up);
-            _hit.transform.rotation *= Quaternion.AngleAxis(y * speed, Vector3.up);
         }
     }
 }

@@ -575,8 +575,6 @@ public class MainMenu : MonoBehaviour
                         break;
                 }
             }
-            else
-                Debug.Log("NaN!!!");
         }
 
         if (Input.GetMouseButtonUp(0))
