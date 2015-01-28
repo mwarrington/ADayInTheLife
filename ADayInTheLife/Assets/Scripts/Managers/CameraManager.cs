@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PixelCrushers.DialogueSystem;
 
 public class CameraManager : MonoBehaviour
 {
@@ -57,6 +58,8 @@ public class CameraManager : MonoBehaviour
                         _lerpStarted = false;
                         ZoomingIn = false;
                         myHintManager.DeskCurtains.SampleAnimation(myHintManager.DeskCurtains.GetComponent<Animation>().clip, 0);
+                        DialogueManager.StartConversation(FindObjectOfType<Consular>().GetComponent<ConversationTrigger>().conversation);
+
                         break;
                     }
                     float distCovered = (Time.time - _startTime) * 5f;
@@ -65,7 +68,9 @@ public class CameraManager : MonoBehaviour
                     _lerpStarted = true;
                 }
                 else
+                {
                     _startTime = Time.time;
+                }
                 break;
             default:
                 Debug.Log("There shouldn't be a CameraManager in this scene");
