@@ -23,7 +23,7 @@ public class CameraManager : MonoBehaviour
         _player = FindObjectOfType<PlayerScript>().gameObject;
         _endPos = -55f;
         _startPoint = new Vector3(-3.853245f, 5.765692f, -50.30481f);
-        _endPoint = new Vector3(-2.861506f, 2.626634f, -43.38896f);
+        _endPoint = new Vector3(-2.861506f, 2.752161f, -43.38896f);
         _startTime = Time.time;
         _journeyLength = Vector3.Distance(_startPoint, _endPoint);
     }
