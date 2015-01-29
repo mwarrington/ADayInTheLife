@@ -683,7 +683,7 @@ public class PlayerScript : MonoBehaviour
         {
             //Decreases the area of screen that the blur covers based on how close we are to the target amount
             //In other words: the farther we are to the target the slower the blur area will decrease and vice versa
-            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes < 63 && _blurStarted)
+            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes < 50 && _blurStarted)
                 _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes += Time.deltaTime * (5 * (64 - _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes));
             else //Once the target is reached the blur effect is turned off
             {
