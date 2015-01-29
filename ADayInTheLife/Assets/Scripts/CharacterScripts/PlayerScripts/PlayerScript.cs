@@ -306,6 +306,7 @@ public class PlayerScript : MonoBehaviour
 
     //Movement Types
     #region Movement Methods
+    #region Movement Types
     //This movement type is the most basic four directional movement
     private void Standard2DMove()
     {
@@ -620,7 +621,9 @@ public class PlayerScript : MonoBehaviour
                 Application.LoadLevel("Lobby");
         }
     }
+    #endregion Movement Types
 
+    #region Movement Utilities
     //This turns ConfusedMovement to true and halts all player movement
     public void ConfuseMovement()
     {
@@ -700,6 +703,7 @@ public class PlayerScript : MonoBehaviour
             _spedUp = false;
         }
     }
+    #endregion Movement Utilities
     #endregion
 
     //When player collideds with something
