@@ -7,6 +7,7 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 public class BCCharacter : NPCScript
 {
     //Public fields to be set in the inspector
+    public Transform[] MyCameraAngles;
     public Transform MySpotLightTransform;
     public EmpathyTypes MyPastEmpathyType;
     public bool CCharacter,
@@ -24,6 +25,7 @@ public class BCCharacter : NPCScript
                            _lastEmoticonRenderer;
     private Subtitle _currentLine;
     private List<Subtitle> _viewedLines = new List<Subtitle>();
+    private Transform _currentCameraAngle;
     private string _currentTopic,
                    _currentConversant;
     private float _timeSpentOnLine;
@@ -73,6 +75,9 @@ public class BCCharacter : NPCScript
 
         if (HasACall)
             this.GetComponent<AudioSource>().enabled = false;
+
+        if (MyCameraAngles.Length > 0)
+            InvokeRepeating("ChangeCameraAngle", 3, 3);
     }
 
     protected override void OnConversationLine(Subtitle line)
@@ -176,6 +181,8 @@ public class BCCharacter : NPCScript
             if (this.GetComponentInChildren<Animator>() != null)
                 this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
         }
+
+        CancelInvoke("ChangeCameraAngle");
     }
 
     protected override void RotateTowardPlayer()
@@ -334,5 +341,29 @@ public class BCCharacter : NPCScript
         yield return new WaitForSeconds(3);
 
         this.GetComponentInChildren<Animator>().SetBool("ProgressAchieved", false);
+    }
+
+    private void ChangeCameraAngle()
+    {
+        int rand = Random.Range(0, MyCameraAngles.Length);
+
+        if (_currentCameraAngle != MyCameraAngles[rand])
+        {
+            _currentCameraAngle = MyCameraAngles[rand];
+            CloseUpCamera.transform.position = MyCameraAngles[rand].position;
+            CloseUpCamera.transform.rotation = MyCameraAngles[rand].rotation;
+        }
+        else if(rand == MyCameraAngles.Length - 1)
+        {
+            _currentCameraAngle = MyCameraAngles[rand - 1];
+            CloseUpCamera.transform.position = MyCameraAngles[rand - 1].position;
+            CloseUpCamera.transform.rotation = MyCameraAngles[rand - 1].rotation;
+        }
+        else
+        {
+            _currentCameraAngle = MyCameraAngles[rand + 1];
+            CloseUpCamera.transform.position = MyCameraAngles[rand + 1].position;
+            CloseUpCamera.transform.rotation = MyCameraAngles[rand + 1].rotation;
+        }
     }
 }
