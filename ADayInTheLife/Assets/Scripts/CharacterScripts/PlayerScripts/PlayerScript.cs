@@ -636,48 +636,51 @@ public class PlayerScript : MonoBehaviour
     //This method handles the player's ability to walk faster or slower
     private void WalkSpeedHandler()
     {
-        //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
-        if (Input.GetKey(KeyCode.LeftShift) && IsMoving)
+        if ((_isWalkingLeft && !_hitWallLeft) || (_isWalkingRight && !_hitWallRight) || (_isWalkingForward && !_hitWallForward) || (_isWalkingBack && !_hitWallBack))
         {
-            if (!_blurStarted)
+            //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
-                _blurStarted = true;
-            }
+                if (!_blurStarted)
+                {
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+                    _blurStarted = true;
+                }
 
-            _playerVelocity = 0.25f;
-            BobbingSpeed = 0.25f;
-            //Increases the area of screen that the blur covers based on how close we are to the target amount
-            //In other words: the farther we are to the target the faster the blur area will increase and vice versa
-            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 4)
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 4));
-            else //Once the target is reached the value is set to 4 to accomidate any over shootting
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 4;
-            if (!SpeedSFX.isPlaying && !_spedUp)
-            {
-                SpeedSFX.clip = _mySpeedClips[Random.Range(0, 5)];
-                SpeedSFX.Play();
-                _spedUp = true;
+                _playerVelocity = 0.25f;
+                BobbingSpeed = 0.25f;
+                //Increases the area of screen that the blur covers based on how close we are to the target amount
+                //In other words: the farther we are to the target the faster the blur area will increase and vice versa
+                if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 4)
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 4));
+                else //Once the target is reached the value is set to 4 to accomidate any over shootting
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 4;
+                if (!SpeedSFX.isPlaying && !_spedUp)
+                {
+                    SpeedSFX.clip = _mySpeedClips[Random.Range(0, 5)];
+                    SpeedSFX.Play();
+                    _spedUp = true;
+                }
             }
-        }
-        else if (Input.GetKey(KeyCode.RightShift) && IsMoving) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
-        {
-            if (!_blurStarted)
+            else if (Input.GetKey(KeyCode.RightShift)) //Hold right shift to slow player velocity and bobbing speed, adds a motion blur, and lowers pitch of the BGM
             {
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
-                _blurStarted = true;
-            }
+                if (!_blurStarted)
+                {
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+                    _blurStarted = true;
+                }
 
-            _playerVelocity = 0.04f;
-            BobbingSpeed = 0.07f;
-            //Increases the area of screen that the blur covers based on how close we are to the target amount
-            //In other words: the farther we are to the target the faster the blur area will increase and vice versa
-            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6)
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 6));
-            else //Once the target is reached the value is set to 4 to accomidate any over shootting
-                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 6;
-            if (_myManager.Timer > 60)
-                _myManager.MainBGM.pitch = 0.7f;
+                _playerVelocity = 0.04f;
+                BobbingSpeed = 0.07f;
+                //Increases the area of screen that the blur covers based on how close we are to the target amount
+                //In other words: the farther we are to the target the faster the blur area will increase and vice versa
+                if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6)
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 6));
+                else //Once the target is reached the value is set to 4 to accomidate any over shootting
+                    _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 6;
+                if (_myManager.Timer > 60)
+                    _myManager.MainBGM.pitch = 0.7f;
+            }
         }
         else //Otherwise the motion blur is turned off and all values are set to their default
         {
@@ -730,20 +733,28 @@ public class PlayerScript : MonoBehaviour
     //When the player stops colliding with something
     void OnCollisionExit(Collision col)
     {
-        for (int i = 0; i < col.contacts.Length; i++)
+        Vector3 centerColPoint = new Vector3();
+
+        //Finds centermost point of collision
+        foreach (ContactPoint colPoint in col.contacts)
         {
-            Debug.DrawLine(this.transform.position, col.contacts[i].point, Color.red, 100);
-
-            if (col.contacts[i].point.x > this.transform.position.x + 0.4f && _hitWallRight)
-                _hitWallRight = false;
-            else if (col.contacts[i].point.x < this.transform.position.x - 0.4f && _hitWallLeft)
-                _hitWallLeft = false;
-
-            if (col.contacts[i].point.y > this.transform.position.y + 0.4f && _hitWallForward)
-                _hitWallForward = false;
-            else if (col.contacts[i].point.y < this.transform.position.y - 0.4f && _hitWallBack)
-                _hitWallBack = false;
+            float centerDistance = 50;
+            if (Vector3.Distance(colPoint.point, transform.position) < centerDistance)
+            {
+                centerDistance = Vector3.Distance(colPoint.point, transform.position);
+                centerColPoint = colPoint.point;
+            }
         }
+
+        if (centerColPoint.x > this.transform.position.x + 0.4f && _hitWallRight)
+            _hitWallRight = false;
+        else if (centerColPoint.x < this.transform.position.x - 0.4f && _hitWallLeft)
+            _hitWallLeft = false;
+
+        if (centerColPoint.y > this.transform.position.z + 0.4f && _hitWallForward)
+            _hitWallForward = false;
+        else if (centerColPoint.z < this.transform.position.z - 0.4f && _hitWallBack)
+            _hitWallBack = false;
     }
 
     void OnConversationStart(Transform actor)
