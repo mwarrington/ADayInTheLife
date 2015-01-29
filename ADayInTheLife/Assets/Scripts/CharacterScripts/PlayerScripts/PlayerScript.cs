@@ -730,12 +730,20 @@ public class PlayerScript : MonoBehaviour
     //When the player stops colliding with something
     void OnCollisionExit(Collision col)
     {
-        //Sets all hit wall bools to false
-        //HACK: This needs some work since only the relavent hit wall bool should be turned to false.
-        _hitWallForward = false;
-        _hitWallBack = false;
-        _hitWallLeft = false;
-        _hitWallRight = false;
+        for (int i = 0; i < col.contacts.Length; i++)
+        {
+            Debug.DrawLine(this.transform.position, col.contacts[i].point, Color.red, 100);
+
+            if (col.contacts[i].point.x > this.transform.position.x + 0.4f && _hitWallRight)
+                _hitWallRight = false;
+            else if (col.contacts[i].point.x < this.transform.position.x - 0.4f && _hitWallLeft)
+                _hitWallLeft = false;
+
+            if (col.contacts[i].point.y > this.transform.position.y + 0.4f && _hitWallForward)
+                _hitWallForward = false;
+            else if (col.contacts[i].point.y < this.transform.position.y - 0.4f && _hitWallBack)
+                _hitWallBack = false;
+        }
     }
 
     void OnConversationStart(Transform actor)
