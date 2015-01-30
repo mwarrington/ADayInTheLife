@@ -8,6 +8,11 @@ public class DayEndManager : MonoBehaviour
     private GameManager _myGameManager;
     private PlayerScript _player;
     private SpriteRenderer _fadeMask;
+    private bool _lockersShaking,
+                 _lockersFloating,
+                 _desksFloating,
+                 _computersSpinning,
+                 _setHasFallen;
 
     void Start()
     {
@@ -59,7 +64,7 @@ public class DayEndManager : MonoBehaviour
         switch (Application.loadedLevelName)
         {
             case "Hallway":
-                if (_myGameManager.Timer <= 30 && _myGameManager.MainBGM.pitch > 0.75f)
+                if (_myGameManager.Timer <= 30 && !_lockersShaking)
                 {
                     _myGameManager.MainBGM.pitch = 0.75f;
                     _myGameManager.MainBGM.volume = 0.5f;
@@ -67,12 +72,12 @@ public class DayEndManager : MonoBehaviour
                     GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");
                     foreach (GameObject _locker in _lockerSearch)
                     {
-                        Debug.Log("sdf");
                         StartCoroutine(StaggeredAnimationPlay(_locker.GetComponent<Animation>(), 0.7f));
                     }
+                    _lockersShaking = true;
                 }
 
-                if (_myGameManager.Timer <= 10 && _myGameManager.Timer > 9.9)
+                if (_myGameManager.Timer <= 10 && !_lockersFloating)
                 {
                     GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");
                     foreach (GameObject _locker in _lockerSearch)
@@ -81,10 +86,11 @@ public class DayEndManager : MonoBehaviour
                         _locker.collider.enabled = true;
                         _locker.rigidbody.AddForce(1f, 1f, 1f);
                     }
+                    _lockersFloating = true;
                 }
                 break;
             case "Labrary":
-                if (_myGameManager.Timer <= 30 && _myGameManager.MainBGM.pitch > 0.75f)
+                if (_myGameManager.Timer <= 30 && !_computersSpinning)
                 {
                     _myGameManager.MainBGM.pitch = 0.75f;
                     _myGameManager.MainBGM.volume = 0.5f;
@@ -94,10 +100,11 @@ public class DayEndManager : MonoBehaviour
                     {
                         StartCoroutine(StaggeredAnimationPlay(_computer.GetComponent<Animation>(), 1f));
                     }
+                    _computersSpinning = true;
                 }
                 break;
             case "Classroom":
-                if (_myGameManager.Timer <= 30 && _myGameManager.MainBGM.pitch > 0.75f)
+                if (_myGameManager.Timer <= 30 && !_desksFloating)
                 {
                     _myGameManager.MainBGM.pitch = 0.75f;
                     _myGameManager.MainBGM.volume = 0.5f;
@@ -108,10 +115,11 @@ public class DayEndManager : MonoBehaviour
                         _desk.rigidbody.useGravity = true;
                         _desk.rigidbody.isKinematic = false;
                     }
+                    _desksFloating = true;
                 }
                 break;
             case "Roomclass":
-                if (_myGameManager.Timer <= 30 && _myGameManager.MainBGM.pitch > 0.75f)
+                if (_myGameManager.Timer <= 30 && !_desksFloating)
                 {
                     _myGameManager.MainBGM.pitch = 0.75f;
                     _myGameManager.MainBGM.volume = 0.5f;
@@ -122,10 +130,11 @@ public class DayEndManager : MonoBehaviour
                         _desk.rigidbody.isKinematic = false;
                         _desk.rigidbody.AddForce(0, 100, 0);
                     }
+                    _desksFloating = true;
                 }
                 break;
             case "GreenWorld":
-                if (_myGameManager.Timer <= 30 && _myGameManager.MainBGM.pitch > 0.75f)
+                if (_myGameManager.Timer <= 30 && !_setHasFallen)
                 {
                     _myGameManager.MainBGM.pitch = 0.75f;
                     _myGameManager.MainBGM.volume = 0.5f;
@@ -145,6 +154,7 @@ public class DayEndManager : MonoBehaviour
                         //This way all of the set pieces fall at once
                         //animations[i].Play();
                     }
+                    _setHasFallen = true;
                 }
                 break;
             default:
