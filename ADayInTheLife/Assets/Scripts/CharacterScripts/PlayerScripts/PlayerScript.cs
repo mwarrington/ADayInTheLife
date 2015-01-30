@@ -639,7 +639,7 @@ public class PlayerScript : MonoBehaviour
     //This method handles the player's ability to walk faster or slower
     private void WalkSpeedHandler()
     {
-        if ((_isWalkingLeft && !_hitWallLeft) || (_isWalkingRight && !_hitWallRight) || (_isWalkingForward && !_hitWallForward) || (_isWalkingBack && !_hitWallBack))
+        if (((_isWalkingLeft && !_hitWallLeft) || (_isWalkingRight && !_hitWallRight) || (_isWalkingForward && !_hitWallForward) || (_isWalkingBack && !_hitWallBack)) && Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             //Hold left shift to speed up player velocity and bobbing speed, adds a motion blur, and plays a speed sfx
             if (Input.GetKey(KeyCode.LeftShift))
