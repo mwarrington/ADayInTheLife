@@ -26,7 +26,7 @@ public class CharacterTilt
         {
             if (!_switchDirections)
             {
-                _character.transform.eulerAngles += new Vector3(.35f, 0, 0);
+                _character.transform.eulerAngles += new Vector3(16f * Time.deltaTime, 0, 0);
 
                 if (_character.transform.eulerAngles.x >= 10 && _character.transform.eulerAngles.x <= 100)
                 {
@@ -35,7 +35,7 @@ public class CharacterTilt
             }
             else
             {
-                _character.transform.eulerAngles -= new Vector3(.35f, 0, 0);
+                _character.transform.eulerAngles -= new Vector3(16f * Time.deltaTime, 0, 0);
 
                 if (_character.transform.eulerAngles.x <= 350 && _character.transform.eulerAngles.x > 100)
                 {
@@ -47,7 +47,7 @@ public class CharacterTilt
         {
             if (!_switchDirections)
             {
-                _character.transform.eulerAngles -= new Vector3(.35f, 0, 0);
+                _character.transform.eulerAngles -= new Vector3(16f * Time.deltaTime, 0, 0);
 
                 if (_character.transform.eulerAngles.x <= 350 && _character.transform.eulerAngles.x > 100)
                 {
@@ -56,7 +56,7 @@ public class CharacterTilt
             }
             else
             {
-                _character.transform.eulerAngles += new Vector3(.35f, 0, 0);
+                _character.transform.eulerAngles += new Vector3(16f * Time.deltaTime, 0, 0);
 
                 if (_character.transform.eulerAngles.x >= 10 && _character.transform.eulerAngles.x <= 100)
                 {
