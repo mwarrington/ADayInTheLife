@@ -586,8 +586,8 @@ public class MainMenu : MonoBehaviour
     {
         if (!_bounce)
         {
-            _topArrow.transform.position += new Vector3(0, .055f, 0);
-            _bottomArrow.transform.position += new Vector3(0, .055f, 0);
+            _topArrow.transform.position += new Vector3(0, 3.5f * Time.deltaTime, 0);
+            _bottomArrow.transform.position += new Vector3(0, 3.5f * Time.deltaTime, 0);
 
             if (_topArrow.transform.position.y >= _topArrowOrgPos.y + .5)
             {
@@ -596,8 +596,8 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            _topArrow.transform.position -= new Vector3(0, .055f, 0);
-            _bottomArrow.transform.position -= new Vector3(0, .055f, 0);
+            _topArrow.transform.position -= new Vector3(0, 3.5f * Time.deltaTime, 0);
+            _bottomArrow.transform.position -= new Vector3(0, 3.5f * Time.deltaTime, 0);
 
             if (_bottomArrow.transform.position.y <= _bottomArrowOrgPos.y - .5)
             {

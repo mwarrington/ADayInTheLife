@@ -371,19 +371,19 @@ public class PlayerScript : MonoBehaviour
         //This is how the method uses the bools set by pressing the keys
         if (_isWalkingForward && !_hitWallForward)
         {
-            this.transform.Translate(Vector3.forward * _playerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingBack && !_hitWallBack)
         {
-            this.transform.Translate(Vector3.back * _playerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingLeft && !_hitWallLeft)
         {
-            this.transform.Translate(Vector3.left * _playerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingRight && !_hitWallRight)
         {
-            this.transform.Translate(Vector3.right * _playerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity * Time.deltaTime);
         }
     }
 
@@ -423,11 +423,11 @@ public class PlayerScript : MonoBehaviour
         //This is how the method uses the bools set by pressing the keys
         if (_isWalkingLeft && !_hitWallLeft)
         {
-            this.transform.Translate(Vector3.left * _playerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingRight && !_hitWallRight)
         {
-            this.transform.Translate(Vector3.right * _playerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity * Time.deltaTime);
         }
     }
 
@@ -495,19 +495,19 @@ public class PlayerScript : MonoBehaviour
         //This is how the method uses the bools set by pressing the keys
         if (_isWalkingForward && !_hitWallForward)
         {
-            this.transform.Translate(Vector3.forward * _playerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingBack && !_hitWallBack)
         {
-            this.transform.Translate(Vector3.back * _playerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity * Time.deltaTime);
         }
         if (_isRotatingLeft)
         {
-            this.transform.Rotate(Vector3.down * 1.3f);
+            this.transform.Rotate(Vector3.down * 5f * Time.deltaTime);
         }
         if (_isRotatingRight)
         {
-            this.transform.Rotate(Vector3.up * 1.3f);
+            this.transform.Rotate(Vector3.up * 5f * Time.deltaTime);
         }
     }
 
@@ -579,19 +579,19 @@ public class PlayerScript : MonoBehaviour
         //This is how the method uses the bools set by pressing the keys
         if (_isWalkingForward && !_hitWallForward)
         {
-            this.transform.Translate(Vector3.forward * _playerVelocity);
+            this.transform.Translate(Vector3.forward * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingBack && !_hitWallBack)
         {
-            this.transform.Translate(Vector3.back * _playerVelocity);
+            this.transform.Translate(Vector3.back * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingLeft && !_hitWallLeft)
         {
-            this.transform.Translate(Vector3.left * _playerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity * Time.deltaTime);
         }
         if (_isWalkingRight && !_hitWallRight)
         {
-            this.transform.Translate(Vector3.right * _playerVelocity);
+            this.transform.Translate(Vector3.right * _playerVelocity * Time.deltaTime);
         }
     }
 
@@ -606,7 +606,7 @@ public class PlayerScript : MonoBehaviour
 
         //This is how the method uses the bool set by pressing the keys
         if (_isWalkingLeft)
-            this.transform.Translate(Vector3.left * _playerVelocity);
+            this.transform.Translate(Vector3.left * _playerVelocity * Time.deltaTime);
     }
 
     //This is for scenes where the player can't move
@@ -650,8 +650,8 @@ public class PlayerScript : MonoBehaviour
                     _blurStarted = true;
                 }
 
-                _playerVelocity = 0.25f;
-                BobbingSpeed = 0.25f;
+                _playerVelocity = 15f;
+                BobbingSpeed = 20 * Time.deltaTime;
                 //Increases the area of screen that the blur covers based on how close we are to the target amount
                 //In other words: the farther we are to the target the faster the blur area will increase and vice versa
                 if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 4)
@@ -673,8 +673,8 @@ public class PlayerScript : MonoBehaviour
                     _blurStarted = true;
                 }
 
-                _playerVelocity = 0.04f;
-                BobbingSpeed = 0.07f;
+                _playerVelocity = 2.4f;
+                BobbingSpeed = 5.6f * Time.deltaTime;
                 //Increases the area of screen that the blur covers based on how close we are to the target amount
                 //In other words: the farther we are to the target the faster the blur area will increase and vice versa
                 if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6)
@@ -697,7 +697,7 @@ public class PlayerScript : MonoBehaviour
                 _blurStarted = false;
             }
             _playerVelocity = StandardVelocity;
-            BobbingSpeed = 0.15f;
+            BobbingSpeed = 12 * Time.deltaTime;
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 1f;
             _spedUp = false;
