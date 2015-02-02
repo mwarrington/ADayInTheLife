@@ -210,6 +210,9 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Application.loadedLevelName != "Hallway")
             HasBeenIntroduced = true;
+
+        //This line turns vSync off for sure if we're in editor
+        QualitySettings.vSyncCount = 0;
 #endif
     }
 
