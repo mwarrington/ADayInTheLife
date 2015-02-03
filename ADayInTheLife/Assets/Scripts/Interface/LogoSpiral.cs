@@ -15,7 +15,7 @@ public class LogoSpiral : MonoBehaviour
     {
         if (_canRotate)
         {
-            transform.Rotate(new Vector3(0, 1, 0));
+            transform.Rotate(new Vector3(0, 50 * Time.deltaTime, 0));
         }
     }
 

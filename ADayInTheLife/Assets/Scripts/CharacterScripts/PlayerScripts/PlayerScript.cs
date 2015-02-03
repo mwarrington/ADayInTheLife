@@ -503,11 +503,11 @@ public class PlayerScript : MonoBehaviour
         }
         if (_isRotatingLeft)
         {
-            this.transform.Rotate(Vector3.down * 5f * Time.deltaTime);
+            this.transform.Rotate(Vector3.down * 50f * Time.deltaTime);
         }
         if (_isRotatingRight)
         {
-            this.transform.Rotate(Vector3.up * 5f * Time.deltaTime);
+            this.transform.Rotate(Vector3.up * 50f * Time.deltaTime);
         }
     }
 
