@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && _nearDoor)
         {
-            Application.LoadLevel(SceneToLoad);
+            OpenDoor();
         }
     }
 
@@ -25,5 +25,11 @@ public class Door : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
             _nearDoor = false;
+    }
+
+    private void OpenDoor()
+    {
+        Application.LoadLevel(SceneToLoad);
+        //Animation stuff will go here
     }
 }
