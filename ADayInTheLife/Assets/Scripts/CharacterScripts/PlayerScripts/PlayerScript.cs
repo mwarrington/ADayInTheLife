@@ -706,7 +706,7 @@ public class PlayerScript : MonoBehaviour
     #endregion Movement Utilities
     #endregion
 
-    //When player collideds with something
+    //When player collides with something
     void OnCollisionEnter(Collision col)
     {
         Vector3 centerColPoint = new Vector3();
@@ -722,16 +722,20 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        //Checks to see if the centermost point of collision is on the same side as the player is moving.
-        //If so, then the bool associated with hitting the wall in that direction is set to true.
-        if (_isWalkingForward && centerColPoint.z > this.transform.position.z + 0.7f)
-            _hitWallForward = true;
-        if (_isWalkingBack && centerColPoint.z < this.transform.position.z - 0.7f)
-            _hitWallBack = true;
-        if (_isWalkingLeft && centerColPoint.x < this.transform.position.x - 0.7f)
-            _hitWallLeft = true;
-        if (_isWalkingRight && centerColPoint.x > this.transform.position.x + 0.7f)
-            _hitWallRight = true;
+        //HACK: This is a temp fix until I figure out how to get collision working for Rotatable2DMove
+        if (CurrentScene != Scenes.Classroom || CurrentScene != Scenes.Roomclass)
+        {
+            //Checks to see if the centermost point of collision is on the same side as the player is moving.
+            //If so, then the bool associated with hitting the wall in that direction is set to true.
+            if (_isWalkingForward && centerColPoint.z > this.transform.position.z + 0.7f)
+                _hitWallForward = true;
+            if (_isWalkingBack && centerColPoint.z < this.transform.position.z - 0.7f)
+                _hitWallBack = true;
+            if (_isWalkingLeft && centerColPoint.x < this.transform.position.x - 0.7f)
+                _hitWallLeft = true;
+            if (_isWalkingRight && centerColPoint.x > this.transform.position.x + 0.7f)
+                _hitWallRight = true;
+        }
     }
 
     //When the player stops colliding with something
