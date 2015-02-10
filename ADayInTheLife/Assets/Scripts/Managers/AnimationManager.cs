@@ -25,9 +25,7 @@ public class AnimationManager : MonoBehaviour
             case ("Clock"):
                 if (dayCountCheck == 0)
                 {
-                    currentGameObject = GameObject.Find("Clock_out");
-
-                    foreach (AnimationState state in currentGameObject.animation)
+                    foreach (AnimationState state in this.animation)
                     {
                         animations.Add(state.clip.name);
                     }
@@ -36,9 +34,7 @@ public class AnimationManager : MonoBehaviour
                 }
                 else if (dayCountCheck == 1)
                 {
-                    currentGameObject = GameObject.Find("Clock_out");
-
-                    foreach (AnimationState state in currentGameObject.animation)
+                    foreach (AnimationState state in this.animation)
                     {
                         animations.Add(state.clip.name);
                     }
@@ -57,7 +53,7 @@ public class AnimationManager : MonoBehaviour
         bool playedOnce = false;
 
         //this.gameObject.animation.clip = currentClip;
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0]].name;
 
         lengthOfCurrentClip = this.gameObject.animation.clip.length;
 
@@ -73,7 +69,7 @@ public class AnimationManager : MonoBehaviour
         playedOnce = false;
 
         //this.gameObject.animation.clip = currentClip;
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0]].name;
 
         this.gameObject.animation[animations[0]].speed = -1;
         //lengthOfCurrentClip = this.gameObject.animation.clip.length;
@@ -93,7 +89,7 @@ public class AnimationManager : MonoBehaviour
         playedOnce = false;
         animation.wrapMode = WrapMode.Loop;
         //this.gameObject.animation.clip = currentClip;
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[1].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[1]].name;
         this.gameObject.animation[animations[1]].speed = 1;
 
         //lengthOfCurrentClip = this.gameObject.animation.clip.length;
@@ -107,7 +103,20 @@ public class AnimationManager : MonoBehaviour
             animation.Play(this.gameObject.animation.clip.name);
         }
 
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(1.5f);
+
+        this.gameObject.animation[animations[1]].speed *= -1;
+
+        yield return new WaitForSeconds(1.5f);
+
+        this.gameObject.animation[animations[1]].speed *= -1;
+        FindObjectOfType<GameManager>().FadingAway = true;
+
+        yield return new WaitForSeconds(1.5f);
+
+        this.gameObject.animation[animations[1]].speed *= -1;
+
+        yield return new WaitForSeconds(1.5f);
 
         LoadLevel();
     }
@@ -118,7 +127,7 @@ public class AnimationManager : MonoBehaviour
         bool playedOnce = false;
 
         //this.gameObject.animation.clip = currentClip;
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[0]].name;
 
         lengthOfCurrentClip = this.gameObject.animation.clip.length;
 
@@ -133,7 +142,7 @@ public class AnimationManager : MonoBehaviour
         animation.Stop();
 
         //this.gameObject.animation.clip = currentClip;
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[1].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[1]].name;
 
         Debug.Log(this.gameObject.animation.clip.name);
         lengthOfCurrentClip = this.gameObject.animation.clip.length;
@@ -150,7 +159,7 @@ public class AnimationManager : MonoBehaviour
 
         animation.Stop();
 
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[2].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[2]].name;
 
         Debug.Log(this.gameObject.animation.clip.name);
         lengthOfCurrentClip = this.gameObject.animation.clip.length;
@@ -167,7 +176,7 @@ public class AnimationManager : MonoBehaviour
 
         animation.Stop();
 
-        this.gameObject.animation.clip.name = this.gameObject.animation[animations[3].ToString()].name;
+        this.gameObject.animation.clip.name = this.gameObject.animation[animations[3]].name;
 
         Debug.Log(this.gameObject.animation.clip.name);
         lengthOfCurrentClip = this.gameObject.animation.clip.length;
