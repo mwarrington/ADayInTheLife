@@ -208,7 +208,6 @@ public class AnimationManager : MonoBehaviour
                 Application.LoadLevel("Hallway");
                 break;
             case 2:
-                Debug.Log("Sup");
                 Application.LoadLevel("Lobby");
                 break;
             case 3:

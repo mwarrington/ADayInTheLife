@@ -129,10 +129,11 @@ public class GameManager : MonoBehaviour
     //Simple Static fields
     static bool lvl1DatabasesLoaded = false,
                 lvl2DatabasesLoaded = false,
-                testDatabasesLoaded = false,
-                iTestThereforeIAm = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
+                testDatabasesLoaded = false;
 
     //Private fields
+    private bool codes = true,
+                 iTestThereforeIam = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
     private float _alpha = 0;
     private SpriteRenderer _fadeMask;
     private PlayerScript _player;
@@ -164,17 +165,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Loads the test list of databases
-        if (iTestThereforeIAm && !testDatabasesLoaded)
-        {
-            DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
-
-            foreach (DialogueDatabase dd in myDatabaseLoader.TestModeDatabases)
-            {
-                DialogueManager.AddDatabase(dd);
-            }
-            testDatabasesLoaded = true;
-        }
-        else if (LevelCount == 1 && !lvl1DatabasesLoaded && !iTestThereforeIAm) //Loads the databases for lvl 1
+        if (LevelCount == 1 && !lvl1DatabasesLoaded) //Loads the databases for lvl 1
         {
             DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
 
@@ -184,7 +175,7 @@ public class GameManager : MonoBehaviour
             }
             lvl1DatabasesLoaded = true;
         }
-        else if (LevelCount == 2 && !lvl2DatabasesLoaded && !iTestThereforeIAm) //Loads the databases for lvl 2
+        else if (LevelCount == 2 && !lvl2DatabasesLoaded) //Loads the databases for lvl 2
         {
             DialogueManager.MasterDatabase.Clear();
             DatabaseLoader myDatabaseLoader = this.GetComponent<DatabaseLoader>();
@@ -219,17 +210,21 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //Allows the player to load differnt levels for test purposes
-        if (iTestThereforeIAm)
+        if (codes) //codes? games? codes for games?
         {
             if (Input.GetKey(KeyCode.N) && Input.GetKey(KeyCode.O) && Input.GetKey(KeyCode.T))
             {
-                Application.LoadLevel("Lobby");
+                iTestThereforeIam = true;
+                LastEmpathyTypeCompleted = EmpathyTypes.Another;
+                LoadNextLevel();
             }
-            if (Input.GetKey(KeyCode.P) && Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.E))
+
+            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.U) && Input.GetKey(KeyCode.N))
             {
-                Application.LoadLevel("Hallway");
+                timer = 5;
             }
         }
+
         //Runs the game clock if GameTimerActive is true
         if (GameTimerActive)
         {
@@ -290,6 +285,9 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (iTestThereforeIam)
+            loadNewLevel = true;
+
         //Resets DayCount and adds 1 to LevelCount if a win condition is met
         if (loadNewLevel)
         {
@@ -300,9 +298,10 @@ public class GameManager : MonoBehaviour
         {
             this.GetComponent<VariableManager>().ResetEventVars();
             DayCount++;
+            if (LevelCount == 1)
+                HasBeenIntroduced = false;
         }
         //Always resets hasBeenIntroduced and loads the "DreamSpiral" scene
-        HasBeenIntroduced = false;
         Application.LoadLevel("DreamSpiral");
 
         //Resets game timer, starts the fade process, stops game timer, and tells the EmpathicEmoticons script that it will need to load new EEs
