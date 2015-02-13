@@ -134,7 +134,8 @@ public class GameManager : MonoBehaviour
     //Private fields
     private bool codes = true,
                  iTestThereforeIam = false; //HACK: for testing purposes (iTestTherforeIHack{not an interface}); Make false when not in test mode.
-    private float _alpha = 0;
+    private float _alpha = 0,
+                  _timeAtFastForward;
     private SpriteRenderer _fadeMask;
     private PlayerScript _player;
 
@@ -157,6 +158,7 @@ public class GameManager : MonoBehaviour
     private bool _fadingAway;
 
     //Public fields
+    public float TimerMultiplyer;
     public Camera MainCamera;
     public AudioSource Countdown30,
                        Countdown10,
@@ -228,8 +230,14 @@ public class GameManager : MonoBehaviour
         //Runs the game clock if GameTimerActive is true
         if (GameTimerActive)
         {
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * TimerMultiplyer;
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && Timer > 60)
+            ToggleFastForward(true);
+
+        if (TimerMultiplyer != 1 && (Timer < _timeAtFastForward - 60 || Timer <= 60))
+            ToggleFastForward(false);
 
         //Runs the Fade method if FadingAway is true
         if (FadingAway)
@@ -242,6 +250,22 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    public void ToggleFastForward(bool on)
+    {
+        if (on)
+        {
+            _timeAtFastForward = Timer;
+            TimerMultiplyer = 30;
+            FindObjectOfType<VisualTimer>().FastForwarding = true;
+        }
+        else
+        {
+            TimerMultiplyer = 1;
+            FindObjectOfType<VisualTimer>().FastForwarding = false;
+        }
+
+        MainCamera.GetComponent<CameraFilterPack_TV_Artefact>().enabled = !MainCamera.GetComponent<CameraFilterPack_TV_Artefact>().enabled;
+    }
 
     //Handles fade away
     private void Fade()

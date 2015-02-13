@@ -66,6 +66,8 @@ public class VisualTimer : MonoBehaviour
     private int _gameTimer;
     private bool _reminding;
 
+    public bool FastForwarding;
+
     void Start()
     {
         _myGameManager = GameObject.FindObjectOfType<GameManager>();
@@ -109,6 +111,8 @@ public class VisualTimer : MonoBehaviour
                 showingGameTimer = true;
             }
             else if (Input.GetKey(KeyCode.LeftControl))
+                showingGameTimer = true;
+            else if (FastForwarding)
                 showingGameTimer = true;
             else if (_myGameManager.Timer % 30 < 25 && showingGameTimer && !Input.GetKey(KeyCode.LeftControl) && !_reminding)
                 showingGameTimer = false;

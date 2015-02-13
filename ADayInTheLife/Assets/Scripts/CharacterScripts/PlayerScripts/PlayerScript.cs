@@ -652,6 +652,7 @@ public class PlayerScript : MonoBehaviour
 
                 _playerVelocity = 15f;
                 BobbingSpeed = 20 * Time.deltaTime;
+
                 //Increases the area of screen that the blur covers based on how close we are to the target amount
                 //In other words: the farther we are to the target the faster the blur area will increase and vice versa
                 if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 4)
@@ -675,6 +676,7 @@ public class PlayerScript : MonoBehaviour
 
                 _playerVelocity = 2.4f;
                 BobbingSpeed = 5.6f * Time.deltaTime;
+
                 //Increases the area of screen that the blur covers based on how close we are to the target amount
                 //In other words: the farther we are to the target the faster the blur area will increase and vice versa
                 if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6)
@@ -696,8 +698,10 @@ public class PlayerScript : MonoBehaviour
                 _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = false;
                 _blurStarted = false;
             }
+
             _playerVelocity = StandardVelocity;
             BobbingSpeed = 12 * Time.deltaTime;
+
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 1f;
             _spedUp = false;
