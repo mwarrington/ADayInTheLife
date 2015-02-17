@@ -89,7 +89,7 @@ public class CameraFilterPack_Blur_Focus : MonoBehaviour {
 			CenterX = ChangeCenterX ;
 			CenterY = ChangeCenterY;
 			_Size = ChangeSize;
-			_Eyes = ChangeEyes;
+			//_Eyes = ChangeEyes;
 		}
 		#if UNITY_EDITOR
 		if (Application.isPlaying!=true)
