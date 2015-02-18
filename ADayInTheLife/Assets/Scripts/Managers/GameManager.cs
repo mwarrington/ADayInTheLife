@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     //Static fields with properties that have get and set accessors
     #region Static fields with public accessors
     //Game timer. Day resets after this runs out
-    static float timer = 33;
+    static float timer = 360;
     public float Timer
     {
         get
