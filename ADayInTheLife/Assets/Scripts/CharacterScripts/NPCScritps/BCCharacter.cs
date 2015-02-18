@@ -29,7 +29,7 @@ public class BCCharacter : NPCScript
     private string _currentTopic,
                    _currentConversant;
     private float _timeSpentOnLine;
-    private int _myProgress = 1;
+    private int _myProgress;
     private bool _conversationActive;
 
     //Initializes some fields
@@ -41,6 +41,7 @@ public class BCCharacter : NPCScript
         _dLights = GameObject.FindGameObjectWithTag("D-Lights");
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
+        _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
 
         //Initializes what animation should be active for the NPC based on this NPCs progress var
         if (this.GetComponentInChildren<Animator>() != null)
@@ -175,12 +176,14 @@ public class BCCharacter : NPCScript
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {
             actor.GetComponent<PlayerScript>().CanMove = false;
-            myGameManager.gameObject.GetComponent<PopupManager>().ShowPopup();
+            myGameManager.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
 
             if (this.GetComponentInChildren<Animator>() != null)
                 this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
         }
+        //We could add something here if we want to have special popups that tell you that you're done with that NPC for the day.
+        //We could use an else if that checks to see if progress has been made but not recently.
 
         CancelInvoke("ChangeCameraAngle");
     }
