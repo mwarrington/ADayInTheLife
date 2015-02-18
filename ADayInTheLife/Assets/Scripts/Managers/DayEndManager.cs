@@ -79,10 +79,14 @@ public class DayEndManager : MonoBehaviour
 
                 if (_myGameManager.Timer <= 10 && !_lockersFloating)
                 {
-                    GameObject[] _lockerSearch = GameObject.FindGameObjectsWithTag("locker30");
+                    List<GameObject> _lockerSearch = new List<GameObject>();
+                    _lockerSearch.AddRange(GameObject.FindGameObjectsWithTag("locker30"));
+                    _lockerSearch.AddRange(GameObject.FindGameObjectsWithTag("locker33"));
+
                     foreach (GameObject _locker in _lockerSearch)
                     {
-                        _locker.GetComponent<Animation>().Stop();
+                        if (_locker.GetComponent<Animation>() != null)
+                            _locker.GetComponent<Animation>().Stop();
                         _locker.collider.enabled = true;
                         _locker.rigidbody.AddForce(1f, 1f, 1f);
                     }
