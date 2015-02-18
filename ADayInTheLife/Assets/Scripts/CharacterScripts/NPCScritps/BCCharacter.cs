@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers.DialogueSystem.UnityGUI;
+using PixelCrushers.DialogueSystem.Examples;
 
 public class BCCharacter : NPCScript
 {
@@ -175,6 +176,7 @@ public class BCCharacter : NPCScript
         //This checks to see if progress has been made. If so, then the progress popup will appear.
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {
+            player.GetComponent<ProximitySelector>().enabled = false;
             actor.GetComponent<PlayerScript>().CanMove = false;
             myGameManager.GetComponent<PopupManager>().ShowPopup();
             _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
@@ -341,9 +343,10 @@ public class BCCharacter : NPCScript
     //Rests the the ProgressAchieved bool in this character's Animator after 3 seconds
     private IEnumerator ResetProgressForAnimator()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(0.5f);
 
         this.GetComponentInChildren<Animator>().SetBool("ProgressAchieved", false);
+        player.GetComponent<ProximitySelector>().enabled = true;
     }
 
     private void ChangeCameraAngle()
