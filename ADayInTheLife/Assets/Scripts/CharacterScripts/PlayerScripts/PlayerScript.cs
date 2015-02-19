@@ -17,7 +17,8 @@ public class PlayerScript : MonoBehaviour
                  _playingFootSound = false,
                  _isSarylyn = true,
                  _hasSpeedControls = false,
-                 _blurStarted = false;
+                 _blurStarted = false,
+                 _fastRotateStarted = false;
     private float _bobTimer,
                   _waveslice,
                   _midpoint,
@@ -491,6 +492,24 @@ public class PlayerScript : MonoBehaviour
             else
                 _isWalkingBack = false;
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!ConfusedMovement)
+                FastTurn(true);
+            else
+                FastTurn(false);
+
+            _fastRotateStarted = true;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!ConfusedMovement)
+                FastTurn(false);
+            else
+                FastTurn(true);
+
+            _fastRotateStarted = true;
+        }
 
         //This is how the method uses the bools set by pressing the keys
         if (_isWalkingForward && !_hitWallForward)
@@ -508,6 +527,25 @@ public class PlayerScript : MonoBehaviour
         if (_isRotatingRight)
         {
             this.transform.Rotate(Vector3.up * 50f * Time.deltaTime);
+        }
+
+        //For fast rotations
+        //if (_fastRotating && !ConfusedMovement && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)))
+        //    _fastRotating = false;
+        //else if (_fastRotating && ConfusedMovement && (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S)))
+        //    _fastRotating = false;
+
+        //Increases the area of screen that the blur covers based on how close we are to the target amount
+        //In other words: the farther we are to the target the faster the blur area will increase and vice versa
+        if (_fastRotateStarted)
+        {
+            if (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes > 6.2f)
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes -= Time.deltaTime * (25 * (_myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes - 6));
+            else //Once the target is reached the value is set to 4 to accomidate any over shootting
+            {
+                _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>()._Eyes = 6;
+                _fastRotateStarted = false;
+            }
         }
     }
 
@@ -687,7 +725,7 @@ public class PlayerScript : MonoBehaviour
                     _myManager.MainBGM.pitch = 0.7f;
             }
         }
-        else //Otherwise the motion blur is turned off and all values are set to their default
+        else if(!_fastRotateStarted) //Otherwise the motion blur is turned off and all values are set to their default
         {
             //Decreases the area of screen that the blur covers based on how close we are to the target amount
             //In other words: the farther we are to the target the slower the blur area will decrease and vice versa
@@ -705,6 +743,21 @@ public class PlayerScript : MonoBehaviour
             if (_myManager.Timer > 60)
                 _myManager.MainBGM.pitch = 1f;
             _spedUp = false;
+        }
+    }
+
+    //When called this method flips the player 180 degrees
+    private void FastTurn(bool left)
+    {
+        if (left)
+            iTween.RotateTo(this.gameObject, new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y - 179, this.transform.rotation.eulerAngles.z), 0.5f);
+        else
+            iTween.RotateTo(this.gameObject, new Vector3(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 179, this.transform.rotation.eulerAngles.z), 0.5f);
+
+        if (!_blurStarted)
+        {
+            _myManager.MainCamera.GetComponent<CameraFilterPack_Blur_Focus>().enabled = true;
+            _blurStarted = true;
         }
     }
     #endregion Movement Utilities
