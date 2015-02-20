@@ -175,6 +175,11 @@ public class GameManager : MonoBehaviour
             {
                 DialogueManager.AddDatabase(dd);
             }
+
+            //These two lines might mitigate the slow load problem when the game starts
+            //I'll need a different computer to test this, though.
+            //DialogueManager.PreloadDialogueUI();
+            //DialogueManager.PreloadMasterDatabase();
             lvl1DatabasesLoaded = true;
         }
         else if (LevelCount == 2 && !lvl2DatabasesLoaded) //Loads the databases for lvl 2

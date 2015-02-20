@@ -42,7 +42,6 @@ public class BCCharacter : NPCScript
         _dLights = GameObject.FindGameObjectWithTag("D-Lights");
         _mySpotLight = GameObject.FindGameObjectWithTag("SpotLight");
         _roomPieces = GameObject.FindGameObjectsWithTag("RoomPiece");
-        _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
 
         //Initializes what animation should be active for the NPC based on this NPCs progress var
         if (this.GetComponentInChildren<Animator>() != null)
@@ -79,7 +78,11 @@ public class BCCharacter : NPCScript
             this.GetComponent<AudioSource>().enabled = false;
 
         if (MyCameraAngles.Length > 0)
-            InvokeRepeating("ChangeCameraAngle", 3, 3);
+            InvokeRepeating("ChangeCameraAngle", 10, 10);
+
+        //Sets the progress going in to the convo
+        _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
+        Debug.Log(_myProgress);
     }
 
     protected override void OnConversationLine(Subtitle line)
@@ -173,6 +176,7 @@ public class BCCharacter : NPCScript
         if (HasACall)
             this.GetComponent<AudioSource>().enabled = true;
 
+        Debug.Log(_myProgress + " < " + DialogueLua.GetVariable(this.name + "Progress").AsInt);
         //This checks to see if progress has been made. If so, then the progress popup will appear.
         if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
         {

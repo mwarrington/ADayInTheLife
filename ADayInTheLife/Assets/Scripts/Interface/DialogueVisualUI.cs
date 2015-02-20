@@ -29,5 +29,4 @@ public class DialogueVisualUI : UnityDialogueUI {
 		isSubtitleVisible = true;
 		base.ShowSubtitle(subtitle);
 	}
-
 }
