@@ -148,7 +148,10 @@ public class NPCScript : MonoBehaviour
     {
         //Changes which DialogUI the game uses for convos
         if (MyDialogGui != null && col.tag == "Player")
+        {
+            GameObject.Destroy(FindObjectOfType<DialogueVisualUI>().gameObject);
             DialogueManager.DialogueUI = MyDialogGui;
+        }
     }
 
     //This method handles the rotation of NPCs in rotates toward player scenes
