@@ -121,6 +121,9 @@ public class PlayerScript : MonoBehaviour
     public SpriteRenderer SarylynSprite,
                           SanomeSprite;
     public AudioSource SpeedSFX;
+    public LayerMask CollisionLayers;
+    public Transform ForwardCollisionPoint,
+                     BackwardCollisionPoint;
     public float StandardVelocity,
                  BobbingSpeed,
                  BobbingAmount,
@@ -529,12 +532,6 @@ public class PlayerScript : MonoBehaviour
             this.transform.Rotate(Vector3.up * 50f * Time.deltaTime);
         }
 
-        //For fast rotations
-        //if (_fastRotating && !ConfusedMovement && (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)))
-        //    _fastRotating = false;
-        //else if (_fastRotating && ConfusedMovement && (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.S)))
-        //    _fastRotating = false;
-
         //Increases the area of screen that the blur covers based on how close we are to the target amount
         //In other words: the farther we are to the target the faster the blur area will increase and vice versa
         if (_fastRotateStarted)
@@ -547,6 +544,11 @@ public class PlayerScript : MonoBehaviour
                 _fastRotateStarted = false;
             }
         }
+
+        //These lines handle whether we are at a wall in front of us or behind us.
+        //We create a very small sphere in front and behind the player to see if anything other than the player is overlaping the sphere.
+        _hitWallForward = (Physics.OverlapSphere(ForwardCollisionPoint.position, 0.1f, CollisionLayers).Length > 0);
+        _hitWallBack = (Physics.OverlapSphere(BackwardCollisionPoint.position, 0.1f, CollisionLayers).Length > 0);
     }
 
     //This is used for rooms that have a second person view as if the player is being watched by a security camera
