@@ -62,6 +62,11 @@ public class BCCharacter : NPCScript
         //If a convo is active then LineTimer will be called
         if (_conversationActive)
             LineTimer();
+
+        if (Input.GetKeyDown(KeyCode.H) && DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI) && this.name == myGameManager.LastCharacterTalkedTo)
+        {
+            FindObjectOfType<MultiDialogUI>().ChangeDialog("BottomLeft");
+        }
     }
 
     protected override void OnConversationStart(Transform actor)
@@ -82,7 +87,6 @@ public class BCCharacter : NPCScript
 
         //Sets the progress going in to the convo
         _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
-        Debug.Log(_myProgress);
     }
 
     protected override void OnConversationLine(Subtitle line)
@@ -107,6 +111,9 @@ public class BCCharacter : NPCScript
         LineManager(line);
 
         EmpathicEmoticonHandler(line, characterName);
+
+        if (DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI))
+            myGameManager.CurrentSubtitle = line;
     }
 
     public void EmpathicEmoticonHandler(Subtitle currentLine, string name)

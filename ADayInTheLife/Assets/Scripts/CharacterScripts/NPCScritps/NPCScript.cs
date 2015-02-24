@@ -101,6 +101,8 @@ public class NPCScript : MonoBehaviour
                 }
             }
         }
+
+        myGameManager.LastCharacterTalkedTo = this.name;
     }
 
     //Called per dialog line
