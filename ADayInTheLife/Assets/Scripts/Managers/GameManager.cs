@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour
 
     //Public fields
     public float TimerMultiplyer;
+    public List<Response> CurrentResponses = new List<Response>();
     public Subtitle CurrentSubtitle;
     public Camera MainCamera;
     public AudioSource Countdown30,

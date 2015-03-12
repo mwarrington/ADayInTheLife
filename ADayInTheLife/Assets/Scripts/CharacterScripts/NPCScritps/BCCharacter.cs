@@ -62,11 +62,6 @@ public class BCCharacter : NPCScript
         //If a convo is active then LineTimer will be called
         if (_conversationActive)
             LineTimer();
-
-        if (Input.GetKeyDown(KeyCode.H) && DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI) && this.name == myGameManager.LastCharacterTalkedTo)
-        {
-            FindObjectOfType<MultiDialogUI>().ChangeDialog("BottomLeft");
-        }
     }
 
     protected override void OnConversationStart(Transform actor)
@@ -83,7 +78,9 @@ public class BCCharacter : NPCScript
             this.GetComponent<AudioSource>().enabled = false;
 
         if (MyCameraAngles.Length > 0)
-            InvokeRepeating("ChangeCameraAngle", 10, 10);
+        {
+            InvokeRepeating("ChangeCameraAngle", 5, 5);
+        }
 
         //Sets the progress going in to the convo
         _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
@@ -114,6 +111,40 @@ public class BCCharacter : NPCScript
 
         if (DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI))
             myGameManager.CurrentSubtitle = line;
+    }
+
+    //Called whenver a conversation ends
+    protected override void OnConversationEnd(Transform actor)
+    {
+        base.OnConversationEnd(actor);
+
+        _conversationActive = false;
+        DialogSetup();
+        RemoveThoughtCloud();
+
+        if (CCharacter)
+        {
+            ToggleSpotLight(false);
+        }
+
+        if (HasACall)
+            this.GetComponent<AudioSource>().enabled = true;
+
+        //This checks to see if progress has been made. If so, then the progress popup will appear.
+        if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
+        {
+            player.GetComponent<ProximitySelector>().enabled = false;
+            actor.GetComponent<PlayerScript>().CanMove = false;
+            myGameManager.GetComponent<PopupManager>().ShowPopup();
+            _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
+
+            if (this.GetComponentInChildren<Animator>() != null)
+                this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
+        }
+        //We could add something here if we want to have special popups that tell you that you're done with that NPC for the day.
+        //We could use an else if that checks to see if progress has been made but not recently.
+
+        CancelInvoke("ChangeCameraAngle");
     }
 
     public void EmpathicEmoticonHandler(Subtitle currentLine, string name)
@@ -164,41 +195,6 @@ public class BCCharacter : NPCScript
             if (_emoticonRenderer != null)
                 _emoticonRenderer.enabled = false;
         }
-    }
-
-    //Called whenver a conversation ends
-    protected override void OnConversationEnd(Transform actor)
-    {
-        base.OnConversationEnd(actor);
-
-        _conversationActive = false;
-        DialogSetup();
-        RemoveThoughtCloud();
-
-        if (CCharacter)
-        {
-            ToggleSpotLight(false);
-        }
-
-        if (HasACall)
-            this.GetComponent<AudioSource>().enabled = true;
-
-        Debug.Log(_myProgress + " < " + DialogueLua.GetVariable(this.name + "Progress").AsInt);
-        //This checks to see if progress has been made. If so, then the progress popup will appear.
-        if (_myProgress < DialogueLua.GetVariable(this.name + "Progress").AsInt)
-        {
-            player.GetComponent<ProximitySelector>().enabled = false;
-            actor.GetComponent<PlayerScript>().CanMove = false;
-            myGameManager.GetComponent<PopupManager>().ShowPopup();
-            _myProgress = DialogueLua.GetVariable(this.name + "Progress").AsInt;
-
-            if (this.GetComponentInChildren<Animator>() != null)
-                this.GetComponentInChildren<Animator>().SetInteger("Progress", DialogueLua.GetVariable(this.name + "Progress").AsInt);
-        }
-        //We could add something here if we want to have special popups that tell you that you're done with that NPC for the day.
-        //We could use an else if that checks to see if progress has been made but not recently.
-
-        CancelInvoke("ChangeCameraAngle");
     }
 
     protected override void RotateTowardPlayer()
@@ -291,7 +287,7 @@ public class BCCharacter : NPCScript
         }
         _viewedLines.Add(myLine);
 
-        //This first checks to see if the dialog line has "Topic" in the description
+        //This first checks to see if the dialog line has "Topic" in the description\
         //It then checks to see if the topic is the same as it's been if not, it resets the timer
         if (myLine.dialogueEntry.fields[2].value != "")
         {
@@ -362,25 +358,32 @@ public class BCCharacter : NPCScript
 
     private void ChangeCameraAngle()
     {
-        int rand = Random.Range(0, MyCameraAngles.Length);
+        //int rand = Random.Range(0, MyCameraAngles.Length);\
 
-        if (_currentCameraAngle != MyCameraAngles[rand])
-        {
+        int rand = 2;
+
+        //if (_currentCameraAngle != MyCameraAngles[rand])
+        //{
             _currentCameraAngle = MyCameraAngles[rand];
             CloseUpCamera.transform.position = MyCameraAngles[rand].position;
             CloseUpCamera.transform.rotation = MyCameraAngles[rand].rotation;
-        }
-        else if(rand == MyCameraAngles.Length - 1)
+        //}
+        //else if(rand == MyCameraAngles.Length - 1)
+        //{
+        //    _currentCameraAngle = MyCameraAngles[rand - 1];
+        //    CloseUpCamera.transform.position = MyCameraAngles[rand - 1].position;
+        //    CloseUpCamera.transform.rotation = MyCameraAngles[rand - 1].rotation;
+        //}
+        //else
+        //{
+        //    _currentCameraAngle = MyCameraAngles[rand + 1];
+        //    CloseUpCamera.transform.position = MyCameraAngles[rand + 1].position;
+        //    CloseUpCamera.transform.rotation = MyCameraAngles[rand + 1].rotation;
+        //}
+
+        if (DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI) && this.name == myGameManager.LastCharacterTalkedTo)
         {
-            _currentCameraAngle = MyCameraAngles[rand - 1];
-            CloseUpCamera.transform.position = MyCameraAngles[rand - 1].position;
-            CloseUpCamera.transform.rotation = MyCameraAngles[rand - 1].rotation;
-        }
-        else
-        {
-            _currentCameraAngle = MyCameraAngles[rand + 1];
-            CloseUpCamera.transform.position = MyCameraAngles[rand + 1].position;
-            CloseUpCamera.transform.rotation = MyCameraAngles[rand + 1].rotation;
+            FindObjectOfType<MultiDialogUI>().ChangeDialog(_currentCameraAngle.tag);
         }
     }
 }
