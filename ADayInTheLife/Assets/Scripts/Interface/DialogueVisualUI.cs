@@ -33,6 +33,7 @@ public class DialogueVisualUI : UnityDialogueUI
 		isSubtitleVisible = true;
 
         responsesScrabled = false;
+        //Debug.Log("Sup");
 
 		base.ShowSubtitle(subtitle);
 	}

@@ -358,28 +358,28 @@ public class BCCharacter : NPCScript
 
     private void ChangeCameraAngle()
     {
-        //int rand = Random.Range(0, MyCameraAngles.Length);\
+        int rand = Random.Range(0, MyCameraAngles.Length);
 
-        int rand = 2;
+        //int rand = 2;
 
-        //if (_currentCameraAngle != MyCameraAngles[rand])
-        //{
+        if (_currentCameraAngle != MyCameraAngles[rand])
+        {
             _currentCameraAngle = MyCameraAngles[rand];
             CloseUpCamera.transform.position = MyCameraAngles[rand].position;
             CloseUpCamera.transform.rotation = MyCameraAngles[rand].rotation;
-        //}
-        //else if(rand == MyCameraAngles.Length - 1)
-        //{
-        //    _currentCameraAngle = MyCameraAngles[rand - 1];
-        //    CloseUpCamera.transform.position = MyCameraAngles[rand - 1].position;
-        //    CloseUpCamera.transform.rotation = MyCameraAngles[rand - 1].rotation;
-        //}
-        //else
-        //{
-        //    _currentCameraAngle = MyCameraAngles[rand + 1];
-        //    CloseUpCamera.transform.position = MyCameraAngles[rand + 1].position;
-        //    CloseUpCamera.transform.rotation = MyCameraAngles[rand + 1].rotation;
-        //}
+        }
+        else if (rand == MyCameraAngles.Length - 1)
+        {
+            _currentCameraAngle = MyCameraAngles[rand - 1];
+            CloseUpCamera.transform.position = MyCameraAngles[rand - 1].position;
+            CloseUpCamera.transform.rotation = MyCameraAngles[rand - 1].rotation;
+        }
+        else
+        {
+            _currentCameraAngle = MyCameraAngles[rand + 1];
+            CloseUpCamera.transform.position = MyCameraAngles[rand + 1].position;
+            CloseUpCamera.transform.rotation = MyCameraAngles[rand + 1].rotation;
+        }
 
         if (DialogueManager.DialogueUI.GetType() == typeof(MultiDialogUI) && this.name == myGameManager.LastCharacterTalkedTo)
         {

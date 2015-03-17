@@ -9,8 +9,11 @@ public class MultiDialogUI : DialogueVisualUI
 {
     public UnityDialogueControls[] DialogUiSets;
     public string[] DialogUiNames;
-
+    
     private Dictionary<string, UnityDialogueControls> _dialogUiSets = new Dictionary<string, UnityDialogueControls>();
+    private List<TypewriterEffect> _typewriterEffects = new List<TypewriterEffect>();
+    private List<FadeEffect> _fadeEffects = new List<FadeEffect>();
+    private List<SlideEffect> _slideEffects = new List<SlideEffect>();
     private GameManager _myGameManager;
     private bool _showDialog = true;
 
@@ -24,6 +27,13 @@ public class MultiDialogUI : DialogueVisualUI
         }
 
         dialogue = DialogUiSets[0];
+
+        DialogSystemEffectInitialization();
+
+        for(int i = 0; i < DialogUiSets.Length; i++)
+        {
+            DialogUiSets[i].panel.gameObject.SetActive(false);
+        }
     }
 
     public override void ShowResponses(Subtitle subtitle, Response[] responses, float timeout)
@@ -49,11 +59,16 @@ public class MultiDialogUI : DialogueVisualUI
 
     public void ChangeDialog(string setUpName)
     {
+        ToggleDialogSystemEffects();
         Close();
         dialogue = _dialogUiSets[setUpName];
         Open();
+
         if (_showDialog)
+        {
             ShowSubtitle(_myGameManager.CurrentSubtitle);
+            HideResponses();
+        }
         else
         {
             Response[] currentResponses = new Response[_myGameManager.CurrentResponses.Count];
@@ -64,6 +79,55 @@ public class MultiDialogUI : DialogueVisualUI
             }
 
             ShowResponses(_myGameManager.CurrentSubtitle, currentResponses, 0);
+            HideSubtitle(_myGameManager.CurrentSubtitle);
+        }
+        Invoke("ToggleDialogSystemEffects", 0.5f);
+    }
+
+    private void ToggleDialogSystemEffects()
+    {
+        foreach (TypewriterEffect te in _typewriterEffects)
+        {
+            if (te.charactersPerSecond < 1000)
+                te.charactersPerSecond = 1000;
+            else
+                te.charactersPerSecond = 50;
+        }
+
+        foreach (FadeEffect fe in _fadeEffects)
+        {
+            if (fe.fadeInDuration > 0.0001f)
+                fe.fadeInDuration = 0.0001f;
+            else
+                fe.fadeInDuration = 0.3f;
+        }
+
+        foreach (SlideEffect se in _slideEffects)
+        {
+            Debug.Log(se.transform.parent.name);
+
+            if (se.duration > 0.0001f)
+                se.duration = 0.0001f;
+            else
+                se.duration = 0.3f;
+        }
+    }
+
+    private void DialogSystemEffectInitialization()
+    {
+        foreach (TypewriterEffect te in this.GetComponentsInChildren<TypewriterEffect>())
+        {
+            _typewriterEffects.Add(te);
+        }
+
+        foreach (FadeEffect fe in this.GetComponentsInChildren<FadeEffect>())
+        {
+            _fadeEffects.Add(fe);
+        }
+
+        foreach (SlideEffect se in this.GetComponentsInChildren<SlideEffect>())
+        {
+            _slideEffects.Add(se);
         }
     }
 }
