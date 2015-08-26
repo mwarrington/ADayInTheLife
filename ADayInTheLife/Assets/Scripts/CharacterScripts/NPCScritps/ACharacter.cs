@@ -42,7 +42,7 @@ public class ACharacter : NPCScript
 
 	protected override void DialogSetup ()
 	{
-        //If the AlvlChar is a team member thne it will use the player's name to find which convo to load
+        //If the A lvl Char is a team member then it will use the player's name to find which convo to load
 		if(IsTeamMember)
 			dialogString = this.name + "_" + DialogIndex.ToString();
 		else //Else it will use a number set in the inspector

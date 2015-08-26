@@ -259,19 +259,24 @@ public class GameManager : MonoBehaviour
 
     public void ToggleFastForward(bool on)
     {
+        VisualTimer visualTimer = FindObjectOfType<VisualTimer>();
+
         if (on)
         {
             _timeAtFastForward = Timer;
             TimerMultiplyer = 30;
-            FindObjectOfType<VisualTimer>().FastForwarding = true;
+            visualTimer.FastForwarding = true;
         }
         else
         {
             TimerMultiplyer = 1;
-            FindObjectOfType<VisualTimer>().FastForwarding = false;
+            visualTimer.FastForwarding = false;
         }
 
-        MainCamera.GetComponent<CameraFilterPack_TV_Artefact>().enabled = !MainCamera.GetComponent<CameraFilterPack_TV_Artefact>().enabled;
+        CameraFilterPack_TV_Artefact fastForwardFilter = MainCamera.GetComponent<CameraFilterPack_TV_Artefact>();
+
+        if (fastForwardFilter != null)
+            fastForwardFilter.enabled = !fastForwardFilter.enabled;
     }
 
     //Handles fade away
